@@ -108,7 +108,7 @@
             callback(templateConfig);
         } else if (isDocumentFragment(templateConfig)) {
             // Document fragment - use its child nodes
-            callback(ko.utils.makeArray(templateConfig.childNodes));
+            callback(_.toArray(templateConfig.childNodes));
         } else if (templateConfig.element) {
             var element = templateConfig.element;
             if (isDomElement(element)) {

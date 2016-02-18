@@ -122,7 +122,7 @@ ko.utils = (function () {
         moveCleanedNodesToContainerElement: function(nodes) {
             // Ensure it's a real array, as we're about to reparent the nodes and
             // we don't want the underlying collection to change while we're doing that.
-            var nodesArray = ko.utils.makeArray(nodes);
+            var nodesArray = _.toArray(nodes);
             var templateDocument = (nodesArray[0] && nodesArray[0].ownerDocument) || document;
 
             var container = templateDocument.createElement('div');
@@ -365,20 +365,12 @@ ko.utils = (function () {
             return result;
         },
 
-        makeArray: function(arrayLikeObject) {
-            var result = [];
-            for (var i = 0, j = arrayLikeObject.length; i < j; i++) {
-                result.push(arrayLikeObject[i]);
-            };
-            return result;
-        },
-
         createSymbolOrString: function(identifier) {
             return canUseSymbols ? Symbol(identifier) : identifier;
         },
 
         getFormFields: function(form, fieldName) {
-            var fields = ko.utils.makeArray(form.getElementsByTagName("input")).concat(ko.utils.makeArray(form.getElementsByTagName("textarea")));
+            var fields = _.toArray(form.getElementsByTagName("input")).concat(_.toArray(form.getElementsByTagName("textarea")));
             var isMatchingField = (typeof fieldName === 'string')
                 ? function(field) { return field.name === fieldName }
                 : function(field) { return fieldName.test(field.name) }; // Treat fieldName as regex or object containing predicate

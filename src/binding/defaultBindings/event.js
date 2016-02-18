@@ -26,7 +26,7 @@ ko.bindingHandlers.event = {
 
                     try {
                         // Take all the event args, and prefix with the viewmodel
-                        var argsForHandler = ko.utils.makeArray(arguments);
+                        var argsForHandler = _.toArray(arguments);
                         viewModel = bindingContext.$data;
                         argsForHandler.unshift(viewModel);
                         handlerReturnValue = handlerFunction.apply(viewModel, argsForHandler);

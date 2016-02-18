@@ -9,7 +9,7 @@ ko.nativeTemplateEngine.prototype.renderTemplateSource = function (templateSourc
         templateNodes = templateNodesFunc ? templateSource.nodes() : null;
 
     if (templateNodes) {
-        return ko.utils.makeArray(templateNodes.cloneNode(true).childNodes);
+        return _.toArray(templateNodes.cloneNode(true).childNodes);
     } else {
         var templateText = templateSource.text();
         return ko.utils.parseHtmlFragment(templateText, templateDocument);

@@ -53,7 +53,7 @@
         while (depth--)
             div = div.lastChild;
 
-        return ko.utils.makeArray(div.lastChild.childNodes);
+        return _.toArray(div.lastChild.childNodes);
     }
 
     function jQueryHtmlParse(html, documentContext) {
