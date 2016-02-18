@@ -1,16 +1,5 @@
 (function () {
 
-if (window && window.navigator) {
-    var parseVersion = function (matches) {
-        if (matches) {
-            return parseFloat(matches[1]);
-        }
-    };
-
-    // Detect various browser versions because some old versions don't fully support the 'input' event
-    var operaVersion = window.opera && window.opera.version && parseInt(window.opera.version());
-}
-
 ko.bindingHandlers['textInput'] = {
     'init': function (element, valueAccessor, allBindings) {
 
@@ -80,12 +69,6 @@ ko.bindingHandlers['textInput'] = {
               // All other supported browsers support the 'input' event, which fires whenever the content of the element is changed
               // through the user interface.
               onEvent('input', updateModel);
-
-              if (operaVersion < 11) {
-                  // Opera 10 doesn't always fire the 'input' event for cut, paste, undo & drop operations.
-                  // We can try to catch some of those using 'keydown'.
-                  onEvent('keydown', deferUpdateModel);
-              }
         }
 
         // Bind to the change event so that we can catch programmatic updates of the value that fire this event.
