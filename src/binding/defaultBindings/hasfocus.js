@@ -1,6 +1,6 @@
 var hasfocusUpdatingProperty = '__ko_hasfocusUpdating';
 var hasfocusLastValue = '__ko_hasfocusLastValue';
-ko.bindingHandlers['hasfocus'] = {
+ko.bindingHandlers.hasfocus = {
     'init': function(element, valueAccessor, allBindings) {
         var handleElementFocusChange = function(isFocused) {
             // Where possible, ignore which event was raised and determine focus state using activeElement,
@@ -47,7 +47,7 @@ ko.bindingHandlers['hasfocus'] = {
         }
     }
 };
-ko.expressionRewriting.twoWayBindings['hasfocus'] = true;
+ko.expressionRewriting.twoWayBindings.hasfocus = true;
 
-ko.bindingHandlers['hasFocus'] = ko.bindingHandlers['hasfocus']; // Make "hasFocus" an alias
-ko.expressionRewriting.twoWayBindings['hasFocus'] = true;
+ko.bindingHandlers.hasFocus = ko.bindingHandlers.hasfocus; // Make "hasFocus" an alias
+ko.expressionRewriting.twoWayBindings.hasFocus = true;

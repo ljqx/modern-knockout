@@ -22,13 +22,13 @@ ko.observable = function (initialValue) {
 
     observable[observableLatestValue] = initialValue;
 
-    ko.subscribable['fn'].init(observable);
+    ko.subscribable.fn.init(observable);
 
     // Inherit from 'observable'
     ko.utils.setPrototypeOf(observable, observableFn);
 
-    if (ko.options['deferUpdates']) {
-        ko.extenders['deferred'](observable, true);
+    if (ko.options.deferUpdates) {
+        ko.extenders.deferred(observable, true);
     }
 
     return observable;
@@ -38,11 +38,11 @@ ko.observable = function (initialValue) {
 var observableFn = {
     'equalityComparer': valuesArePrimitiveAndEqual,
     peek: function() { return this[observableLatestValue]; },
-    valueHasMutated: function () { this['notifySubscribers'](this[observableLatestValue]); },
-    valueWillMutate: function () { this['notifySubscribers'](this[observableLatestValue], 'beforeChange'); }
+    valueHasMutated: function () { this.notifySubscribers(this[observableLatestValue]); },
+    valueWillMutate: function () { this.notifySubscribers(this[observableLatestValue], 'beforeChange'); }
 };
 
-ko.utils.setPrototypeOf(observableFn, ko.subscribable['fn']);
+ko.utils.setPrototypeOf(observableFn, ko.subscribable.fn);
 
 var protoProperty = ko.observable.protoProperty = '__ko_proto__';
 observableFn[protoProperty] = ko.observable;

@@ -1,17 +1,17 @@
 ko.nativeTemplateEngine = function () {
-    this['allowTemplateRewriting'] = false;
+    this.allowTemplateRewriting = false;
 }
 
 ko.nativeTemplateEngine.prototype = new ko.templateEngine();
 ko.nativeTemplateEngine.prototype.constructor = ko.nativeTemplateEngine;
-ko.nativeTemplateEngine.prototype['renderTemplateSource'] = function (templateSource, bindingContext, options, templateDocument) {
-    var templateNodesFunc = templateSource['nodes'],
-        templateNodes = templateNodesFunc ? templateSource['nodes']() : null;
+ko.nativeTemplateEngine.prototype.renderTemplateSource = function (templateSource, bindingContext, options, templateDocument) {
+    var templateNodesFunc = templateSource.nodes,
+        templateNodes = templateNodesFunc ? templateSource.nodes() : null;
 
     if (templateNodes) {
         return ko.utils.makeArray(templateNodes.cloneNode(true).childNodes);
     } else {
-        var templateText = templateSource['text']();
+        var templateText = templateSource.text();
         return ko.utils.parseHtmlFragment(templateText, templateDocument);
     }
 };

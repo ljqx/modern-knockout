@@ -1,17 +1,17 @@
 
 ko.templateRewriting = (function () {
-    var memoizeDataBindingAttributeSyntaxRegex = /(<([a-z]+\d*)(?:\s+(?!data-bind\s*=\s*)[a-z0-9\-]+(?:=(?:\"[^\"]*\"|\'[^\']*\'|[^>]*))?)*\s+)data-bind\s*=\s*(["'])([\s\S]*?)\3/gi;
+    var memoizeDataBindingAttributeSyntaxRegex = /(<([a-z]+\d*)(?:\s+(?!data-bind\s*=\s*)[a-z0-9\-]+(?:=(?:\"[^\"]*\"|\'[^\']*\'|[^>]*))?)*\s+)data-bind\s*=\s*(.)([\s\S]*?)\3/gi;
     var memoizeVirtualContainerBindingSyntaxRegex = /<!--\s*ko\b\s*([\s\S]*?)\s*-->/g;
 
     function validateDataBindValuesForRewriting(keyValueArray) {
         var allValidators = ko.expressionRewriting.bindingRewriteValidators;
         for (var i = 0; i < keyValueArray.length; i++) {
-            var key = keyValueArray[i]['key'];
+            var key = keyValueArray[i].key;
             if (allValidators.hasOwnProperty(key)) {
                 var validator = allValidators[key];
 
                 if (typeof validator === "function") {
-                    var possibleErrorMessage = validator(keyValueArray[i]['value']);
+                    var possibleErrorMessage = validator(keyValueArray[i].value);
                     if (possibleErrorMessage)
                         throw new Error(possibleErrorMessage);
                 } else if (!validator) {
@@ -31,13 +31,13 @@ ko.templateRewriting = (function () {
         // extra indirection.
         var applyBindingsToNextSiblingScript =
             "ko.__tr_ambtns(function($context,$element){return(function(){return{ " + rewrittenDataBindAttributeValue + " } })()},'" + nodeName.toLowerCase() + "')";
-        return templateEngine['createJavaScriptEvaluatorBlock'](applyBindingsToNextSiblingScript) + tagToRetain;
+        return templateEngine.createJavaScriptEvaluatorBlock(applyBindingsToNextSiblingScript) + tagToRetain;
     }
 
     return {
         ensureTemplateIsRewritten: function (template, templateEngine, templateDocument) {
-            if (!templateEngine['isTemplateRewritten'](template, templateDocument))
-                templateEngine['rewriteTemplate'](template, function (htmlString) {
+            if (!templateEngine.isTemplateRewritten(template, templateDocument))
+                templateEngine.rewriteTemplate(template, function (htmlString) {
                     return ko.templateRewriting.memoizeBindingAttributeSyntax(htmlString, templateEngine);
                 }, templateDocument);
         },

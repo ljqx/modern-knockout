@@ -1,7 +1,7 @@
 (function (undefined) {
     // Overridable API for determining which component name applies to a given node. By overriding this,
     // you can for example map specific tagNames to components that are not preregistered.
-    ko.components['getComponentNameForNode'] = function(node) {
+    ko.components.getComponentNameForNode = function(node) {
         var tagNameLower = ko.utils.tagNameLower(node);
         if (ko.components.isRegistered(tagNameLower)) {
             // Try to determine that this node can be considered a *custom* element; see https://github.com/knockout/knockout/issues/1603
@@ -14,19 +14,19 @@
     ko.components.addBindingsForCustomElement = function(allBindings, node, bindingContext, valueAccessors) {
         // Determine if it's really a custom element matching a component
         if (node.nodeType === 1) {
-            var componentName = ko.components['getComponentNameForNode'](node);
+            var componentName = ko.components.getComponentNameForNode(node);
             if (componentName) {
                 // It does represent a component, so add a component binding for it
                 allBindings = allBindings || {};
 
-                if (allBindings['component']) {
+                if (allBindings.component) {
                     // Avoid silently overwriting some other 'component' binding that may already be on the element
                     throw new Error('Cannot use the "component" binding on a custom element matching a component');
                 }
 
                 var componentBindingValue = { 'name': componentName, 'params': getComponentParamsFromCustomElement(node, bindingContext) };
 
-                allBindings['component'] = valueAccessors
+                allBindings.component = valueAccessors
                     ? function() { return componentBindingValue; }
                     : componentBindingValue;
             }
@@ -41,7 +41,7 @@
         var paramsAttribute = elem.getAttribute('params');
 
         if (paramsAttribute) {
-            var params = nativeBindingProviderInstance['parseBindingsString'](paramsAttribute, bindingContext, elem, { 'valueAccessors': true, 'bindingParams': true }),
+            var params = nativeBindingProviderInstance.parseBindingsString(paramsAttribute, bindingContext, elem, { 'valueAccessors': true, 'bindingParams': true }),
                 rawParamComputedValues = ko.utils.objectMap(params, function(paramValue, paramName) {
                     return ko.computed(paramValue, null, { disposeWhenNodeIsRemoved: elem });
                 }),
@@ -73,7 +73,7 @@
             // This is in case the developer wants to react to outer (binding) observability separately from inner
             // (model value) observability, or in case the model value observable has subobservables.
             if (!result.hasOwnProperty('$raw')) {
-                result['$raw'] = rawParamComputedValues;
+                result.$raw = rawParamComputedValues;
             }
 
             return result;

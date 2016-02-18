@@ -29,7 +29,7 @@ ko.utils = (function () {
     var knownEvents = {}, knownEventTypesByEventName = {};
     var keyEventTypeName = (navigator && /Firefox\/2/i.test(navigator.userAgent)) ? 'KeyboardEvent' : 'UIEvents';
     knownEvents[keyEventTypeName] = ['keyup', 'keydown', 'keypress'];
-    knownEvents['MouseEvents'] = ['click', 'dblclick', 'mousedown', 'mouseup', 'mousemove', 'mouseover', 'mouseout', 'mouseenter', 'mouseleave'];
+    knownEvents.MouseEvents = ['click', 'dblclick', 'mousedown', 'mouseup', 'mousemove', 'mouseover', 'mouseout', 'mouseenter', 'mouseleave'];
     objectForEach(knownEvents, function(eventType, knownEventsForType) {
         if (knownEventsForType.length) {
             for (var i = 0, j = knownEventsForType.length; i < j; i++)
@@ -56,7 +56,7 @@ ko.utils = (function () {
                 ko.utils.arrayForEach(classNames.match(cssClassNameRegex), function(className) {
                     addOrRemoveFn.call(node.classList, className);
                 });
-            } else if (typeof node.className['baseVal'] === 'string') {
+            } else if (typeof node.className.baseVal === 'string') {
                 // SVG tag .classNames is an SVGAnimatedString instance
                 toggleObjectClassPropertyString(node.className, 'baseVal', classNames, shouldHaveClass);
             } else {
@@ -315,11 +315,11 @@ ko.utils = (function () {
         },
 
         catchFunctionErrors: function (delegate) {
-            return ko['onError'] ? function () {
+            return ko.onError ? function () {
                 try {
                     return delegate.apply(this, arguments);
                 } catch (e) {
-                    ko['onError'] && ko['onError'](e);
+                    ko.onError && ko.onError(e);
                     throw e;
                 }
             } : delegate;
@@ -331,7 +331,7 @@ ko.utils = (function () {
 
         deferError: function (error) {
             setTimeout(function () {
-                ko['onError'] && ko['onError'](error);
+                ko.onError && ko.onError(error);
                 throw error;
             }, 0);
         },
@@ -339,8 +339,8 @@ ko.utils = (function () {
         registerEventHandler: function (element, eventType, handler) {
             var wrappedHandler = ko.utils.catchFunctionErrors(handler);
 
-            if (!ko.options['useOnlyNativeEvents'] && jQueryInstance) {
-                jQueryInstance(element)['bind'](eventType, wrappedHandler);
+            if (!ko.options.useOnlyNativeEvents && jQueryInstance) {
+                jQueryInstance(element).bind(eventType, wrappedHandler);
             } else if (typeof element.addEventListener == "function")
                 element.addEventListener(eventType, wrappedHandler, false);
             else if (typeof element.attachEvent != "undefined") {
@@ -367,8 +367,8 @@ ko.utils = (function () {
             // In both cases, we'll use the click method instead.
             var useClickWorkaround = isClickOnCheckableElement(element, eventType);
 
-            if (!ko.options['useOnlyNativeEvents'] && jQueryInstance && !useClickWorkaround) {
-                jQueryInstance(element)['trigger'](eventType);
+            if (!ko.options.useOnlyNativeEvents && jQueryInstance && !useClickWorkaround) {
+                jQueryInstance(element).trigger(eventType);
             } else if (typeof document.createEvent == "function") {
                 if (typeof element.dispatchEvent == "function") {
                     var eventCategory = knownEventTypesByEventName[eventType] || "HTMLEvents";
@@ -471,8 +471,8 @@ ko.utils = (function () {
 
         postJson: function (urlOrForm, data, options) {
             options = options || {};
-            var params = options['params'] || {};
-            var includeFields = options['includeFields'] || this.fieldsIncludedWithJsonPost;
+            var params = options.params || {};
+            var includeFields = options.includeFields || this.fieldsIncludedWithJsonPost;
             var url = urlOrForm;
 
             // If we were given a form, use its 'action' URL and pick out any requested field values
@@ -507,7 +507,7 @@ ko.utils = (function () {
                 form.appendChild(input);
             });
             document.body.appendChild(form);
-            options['submitter'] ? options['submitter'](form) : form.submit();
+            options.submitter ? options.submitter(form) : form.submit();
             setTimeout(function () { form.parentNode.removeChild(form); }, 0);
         }
     }

@@ -5,11 +5,11 @@ ko.observableArray = function (initialValues) {
         throw new Error("The argument passed when initializing an observable array must be an array, or null, or undefined.");
 
     var result = ko.observable(initialValues);
-    ko.utils.setPrototypeOf(result, ko.observableArray['fn']);
+    ko.utils.setPrototypeOf(result, ko.observableArray.fn);
     return result.extend({'trackArrayChanges':true});
 };
 
-ko.observableArray['fn'] = {
+ko.observableArray.fn = {
     'remove': function (valueOrPredicate) {
         var underlyingArray = this.peek();
         var removedValues = [];
@@ -44,7 +44,7 @@ ko.observableArray['fn'] = {
         // If you passed an arg, we interpret it as an array of entries to remove
         if (!arrayOfValues)
             return [];
-        return this['remove'](function (value) {
+        return this.remove(function (value) {
             return ko.utils.arrayIndexOf(arrayOfValues, value) >= 0;
         });
     },
@@ -56,7 +56,7 @@ ko.observableArray['fn'] = {
         for (var i = underlyingArray.length - 1; i >= 0; i--) {
             var value = underlyingArray[i];
             if (predicate(value))
-                underlyingArray[i]["_destroy"] = true;
+                underlyingArray[i]._destroy = true;
         }
         this.valueHasMutated();
     },
@@ -64,12 +64,12 @@ ko.observableArray['fn'] = {
     'destroyAll': function (arrayOfValues) {
         // If you passed zero args, we destroy everything
         if (arrayOfValues === undefined)
-            return this['destroy'](function() { return true });
+            return this.destroy(function() { return true });
 
         // If you passed an arg, we interpret it as an array of entries to destroy
         if (!arrayOfValues)
             return [];
-        return this['destroy'](function (value) {
+        return this.destroy(function (value) {
             return ko.utils.arrayIndexOf(arrayOfValues, value) >= 0;
         });
     },
@@ -80,7 +80,7 @@ ko.observableArray['fn'] = {
     },
 
     'replace': function(oldItem, newItem) {
-        var index = this['indexOf'](oldItem);
+        var index = this.indexOf(oldItem);
         if (index >= 0) {
             this.valueWillMutate();
             this.peek()[index] = newItem;
@@ -89,13 +89,13 @@ ko.observableArray['fn'] = {
     }
 };
 
-ko.utils.setPrototypeOf(ko.observableArray['fn'], ko.observable['fn']);
+ko.utils.setPrototypeOf(ko.observableArray.fn, ko.observable.fn);
 
 // Populate ko.observableArray.fn with read/write functions from native arrays
 // Important: Do not add any additional functions here that may reasonably be used to *read* data from the array
 // because we'll eval them without causing subscriptions, so ko.computed output could end up getting stale
 ko.utils.arrayForEach(["pop", "push", "reverse", "shift", "sort", "splice", "unshift"], function (methodName) {
-    ko.observableArray['fn'][methodName] = function () {
+    ko.observableArray.fn[methodName] = function () {
         // Use "peek" to avoid creating a subscription in any computed that we're executing in the context of
         // (for consistency with mutating regular observables)
         var underlyingArray = this.peek();
@@ -109,8 +109,8 @@ ko.utils.arrayForEach(["pop", "push", "reverse", "shift", "sort", "splice", "uns
 });
 
 // Populate ko.observableArray.fn with read-only functions from native arrays
-ko.utils.arrayForEach(["slice"], function (methodName) {
-    ko.observableArray['fn'][methodName] = function () {
+ko.utils.arrayForEach(.slice, function (methodName) {
+    ko.observableArray.fn[methodName] = function () {
         var underlyingArray = this();
         return underlyingArray[methodName].apply(underlyingArray, arguments);
     };

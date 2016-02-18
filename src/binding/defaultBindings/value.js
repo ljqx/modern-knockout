@@ -1,4 +1,4 @@
-ko.bindingHandlers['value'] = {
+ko.bindingHandlers.value = {
     'after': ['options', 'foreach'],
     'init': function (element, valueAccessor, allBindings) {
         // If the value binding is placed on a radio/checkbox, then just pass through to checkedValue and quit
@@ -89,4 +89,4 @@ ko.bindingHandlers['value'] = {
     },
     'update': function() {} // Keep for backwards compatibility with code that may have wrapped value binding
 };
-ko.expressionRewriting.twoWayBindings['value'] = true;
+ko.expressionRewriting.twoWayBindings.value = true;

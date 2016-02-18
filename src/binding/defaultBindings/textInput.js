@@ -1,6 +1,6 @@
 (function () {
 
-ko.bindingHandlers['textInput'] = {
+ko.bindingHandlers.textInput = {
     'init': function (element, valueAccessor, allBindings) {
 
         var previousElementValue = element.value,
@@ -14,7 +14,7 @@ ko.bindingHandlers['textInput'] = {
             var elementValue = element.value;
             if (previousElementValue !== elementValue) {
                 // Provide a way for tests to know exactly which event was processed
-                if (DEBUG && event) element['_ko_textInputProcessedEvent'] = event.type;
+                if (DEBUG && event) element._ko_textInputProcessedEvent = event.type;
                 previousElementValue = elementValue;
                 ko.expressionRewriting.writeValueToProperty(valueAccessor(), allBindings, 'textInput', elementValue);
             }
@@ -56,9 +56,9 @@ ko.bindingHandlers['textInput'] = {
             ko.utils.registerEventHandler(element, event, handler);
         };
 
-        if (DEBUG && ko.bindingHandlers['textInput']['_forceUpdateOn']) {
+        if (DEBUG && ko.bindingHandlers.textInput._forceUpdateOn) {
             // Provide a way for tests to specify exactly which events are bound
-            ko.utils.arrayForEach(ko.bindingHandlers['textInput']['_forceUpdateOn'], function(eventName) {
+            ko.utils.arrayForEach(ko.bindingHandlers.textInput._forceUpdateOn, function(eventName) {
                 if (eventName.slice(0,5) == 'after') {
                     onEvent(eventName.slice(5), deferUpdateModel);
                 } else {
@@ -77,10 +77,10 @@ ko.bindingHandlers['textInput'] = {
         ko.computed(updateView, null, { disposeWhenNodeIsRemoved: element });
     }
 };
-ko.expressionRewriting.twoWayBindings['textInput'] = true;
+ko.expressionRewriting.twoWayBindings.textInput = true;
 
 // textinput is an alias for textInput
-ko.bindingHandlers['textinput'] = {
+ko.bindingHandlers.textinput = {
     // preprocess is the only way to set up a full alias
     'preprocess': function (value, name, addBinding) {
         addBinding('textInput', value);

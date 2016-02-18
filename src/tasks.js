@@ -47,7 +47,7 @@ ko.tasks = (function () {
     }
 
     function scheduleTaskProcessing() {
-        ko.tasks['scheduler'](scheduledProcess);
+        ko.tasks.scheduler(scheduledProcess);
     }
 
     var tasks = {

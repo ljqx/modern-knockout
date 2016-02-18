@@ -1,13 +1,13 @@
 (function() {
 
-ko.bindingHandlers['checked'] = {
+ko.bindingHandlers.checked = {
     'after': ['value', 'attr'],
     'init': function (element, valueAccessor, allBindings) {
         var checkedValue = ko.pureComputed(function() {
             // Treat "value" like "checkedValue" when it is included with "checked" binding
-            if (allBindings['has']('checkedValue')) {
+            if (allBindings.has('checkedValue')) {
                 return ko.utils.unwrapObservable(allBindings.get('checkedValue'));
-            } else if (allBindings['has']('value')) {
+            } else if (allBindings.has('value')) {
                 return ko.utils.unwrapObservable(allBindings.get('value'));
             }
 
@@ -100,9 +100,9 @@ ko.bindingHandlers['checked'] = {
         rawValue = undefined;
     }
 };
-ko.expressionRewriting.twoWayBindings['checked'] = true;
+ko.expressionRewriting.twoWayBindings.checked = true;
 
-ko.bindingHandlers['checkedValue'] = {
+ko.bindingHandlers.checkedValue = {
     'update': function (element, valueAccessor) {
         element.value = ko.utils.unwrapObservable(valueAccessor());
     }

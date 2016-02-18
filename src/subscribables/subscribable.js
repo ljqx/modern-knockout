@@ -94,8 +94,8 @@ var ko_subscribable_fn = {
             ignoreBeforeChange, previousValue, pendingValue, beforeChange = 'beforeChange';
 
         if (!self._origNotifySubscribers) {
-            self._origNotifySubscribers = self["notifySubscribers"];
-            self["notifySubscribers"] = limitNotifySubscribers;
+            self._origNotifySubscribers = self.notifySubscribers;
+            self.notifySubscribers = limitNotifySubscribers;
         }
 
         var finish = limitFunction(function() {
@@ -143,7 +143,7 @@ var ko_subscribable_fn = {
     },
 
     isDifferent: function(oldValue, newValue) {
-        return !this['equalityComparer'] || !this['equalityComparer'](oldValue, newValue);
+        return !this.equalityComparer || !this.equalityComparer(oldValue, newValue);
     },
 
     extend: applyExtenders
@@ -155,11 +155,11 @@ ko.exportProperty(ko_subscribable_fn, 'getSubscriptionsCount', ko_subscribable_f
 
 ko.utils.setPrototypeOf(ko_subscribable_fn, Function.prototype);
 
-ko.subscribable['fn'] = ko_subscribable_fn;
+ko.subscribable.fn = ko_subscribable_fn;
 
 
 ko.isSubscribable = function (instance) {
-    return instance != null && typeof instance.subscribe == "function" && typeof instance["notifySubscribers"] == "function";
+    return instance != null && typeof instance.subscribe == "function" && typeof instance.notifySubscribers == "function";
 };
 
 ko.exportSymbol('subscribable', ko.subscribable);

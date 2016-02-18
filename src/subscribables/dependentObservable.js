@@ -8,13 +8,13 @@ ko.computed = ko.dependentObservable = function (evaluatorFunctionOrOptions, eva
         // Multi-parameter syntax - construct the options according to the params passed
         options = options || {};
         if (evaluatorFunctionOrOptions) {
-            options["read"] = evaluatorFunctionOrOptions;
+            options.read = evaluatorFunctionOrOptions;
         }
     }
-    if (typeof options["read"] != "function")
+    if (typeof options.read != "function")
         throw Error("Pass a function that returns the value of the ko.computed");
 
-    var writeFunction = options["write"];
+    var writeFunction = options.write;
     var state = {
         latestValue: undefined,
         isStale: true,
@@ -23,10 +23,10 @@ ko.computed = ko.dependentObservable = function (evaluatorFunctionOrOptions, eva
         isDisposed: false,
         pure: false,
         isSleeping: false,
-        readFunction: options["read"],
-        evaluatorFunctionTarget: evaluatorFunctionTarget || options["owner"],
-        disposeWhenNodeIsRemoved: options["disposeWhenNodeIsRemoved"] || options.disposeWhenNodeIsRemoved || null,
-        disposeWhen: options["disposeWhen"] || options.disposeWhen,
+        readFunction: options.read,
+        evaluatorFunctionTarget: evaluatorFunctionTarget || options.owner,
+        disposeWhenNodeIsRemoved: options.disposeWhenNodeIsRemoved || options.disposeWhenNodeIsRemoved || null,
+        disposeWhen: options.disposeWhen || options.disposeWhen,
         domNodeDisposalCallback: null,
         dependencyTracking: {},
         dependenciesCount: 0,
@@ -55,26 +55,26 @@ ko.computed = ko.dependentObservable = function (evaluatorFunctionOrOptions, eva
     computedObservable[computedState] = state;
     computedObservable.hasWriteFunction = typeof writeFunction === "function";
 
-    ko.subscribable['fn'].init(computedObservable);
+    ko.subscribable.fn.init(computedObservable);
 
     // Inherit from 'computed'
     ko.utils.setPrototypeOf(computedObservable, computedFn);
 
-    if (options['pure']) {
+    if (options.pure) {
         state.pure = true;
         state.isSleeping = true;     // Starts off sleeping; will awake on the first subscription
         ko.utils.extend(computedObservable, pureComputedOverrides);
-    } else if (options['deferEvaluation']) {
+    } else if (options.deferEvaluation) {
         ko.utils.extend(computedObservable, deferEvaluationOverrides);
     }
 
-    if (ko.options['deferUpdates']) {
-        ko.extenders['deferred'](computedObservable, true);
+    if (ko.options.deferUpdates) {
+        ko.extenders.deferred(computedObservable, true);
     }
 
     if (DEBUG) {
         // #1731 - Aid debugging by exposing the computed's options
-        computedObservable["_options"] = options;
+        computedObservable._options = options;
     }
 
     if (state.disposeWhenNodeIsRemoved) {
@@ -93,7 +93,7 @@ ko.computed = ko.dependentObservable = function (evaluatorFunctionOrOptions, eva
     }
 
     // Evaluate, unless sleeping or deferEvaluation is true
-    if (!state.isSleeping && !options['deferEvaluation']) {
+    if (!state.isSleeping && !options.deferEvaluation) {
         computedObservable.evaluateImmediate();
     }
 
@@ -190,7 +190,7 @@ var computedFn = {
     },
     evaluatePossiblyAsync: function () {
         var computedObservable = this,
-            throttleEvaluationTimeout = computedObservable['throttleEvaluation'];
+            throttleEvaluationTimeout = computedObservable.throttleEvaluation;
         if (throttleEvaluationTimeout && throttleEvaluationTimeout >= 0) {
             clearTimeout(this[computedState].evaluationTimeoutInstance);
             this[computedState].evaluationTimeoutInstance = ko.utils.setTimeout(function () {
@@ -277,7 +277,7 @@ var computedFn = {
 
         if (computedObservable.isDifferent(state.latestValue, newValue)) {
             if (!state.isSleeping) {
-                computedObservable["notifySubscribers"](state.latestValue, "beforeChange");
+                computedObservable.notifySubscribers(state.latestValue, "beforeChange");
             }
 
             state.latestValue = newValue;
@@ -286,14 +286,14 @@ var computedFn = {
             if (state.isSleeping) {
                 computedObservable.updateVersion();
             } else if (notifyChange) {
-                computedObservable["notifySubscribers"](state.latestValue);
+                computedObservable.notifySubscribers(state.latestValue);
             }
 
             changed = true;
         }
 
         if (isInitial) {
-            computedObservable["notifySubscribers"](state.latestValue, "awake");
+            computedObservable.notifySubscribers(state.latestValue, "awake");
         }
 
         return changed;
@@ -328,7 +328,7 @@ var computedFn = {
     },
     limit: function (limitFunction) {
         // Override the limit function with one that delays evaluation as well
-        ko.subscribable['fn'].limit.call(this, limitFunction);
+        ko.subscribable.fn.limit.call(this, limitFunction);
         this._evalDelayed = function () {
             this._limitBeforeChange(this[computedState].latestValue);
 
@@ -389,7 +389,7 @@ var pureComputedOverrides = {
                 });
             }
             if (!state.isDisposed) {     // test since evaluating could trigger disposal
-                computedObservable["notifySubscribers"](state.latestValue, "awake");
+                computedObservable.notifySubscribers(state.latestValue, "awake");
             }
         }
     },
@@ -407,7 +407,7 @@ var pureComputedOverrides = {
                 }
             });
             state.isSleeping = true;
-            this["notifySubscribers"](undefined, "asleep");
+            this.notifySubscribers(undefined, "asleep");
         }
     },
     getVersion: function () {
@@ -418,7 +418,7 @@ var pureComputedOverrides = {
         if (state.isSleeping && (state.isStale || this.haveDependenciesChanged())) {
             this.evaluateImmediate();
         }
-        return ko.subscribable['fn'].getVersion.call(this);
+        return ko.subscribable.fn.getVersion.call(this);
     }
 };
 
@@ -431,7 +431,7 @@ var deferEvaluationOverrides = {
     }
 };
 
-ko.utils.setPrototypeOf(computedFn, ko.subscribable['fn']);
+ko.utils.setPrototypeOf(computedFn, ko.subscribable.fn);
 
 // Set the proto chain values for ko.hasPrototype
 var protoProp = ko.observable.protoProperty; // == "__ko_proto__"
@@ -462,7 +462,7 @@ ko.pureComputed = function (evaluatorFunctionOrOptions, evaluatorFunctionTarget)
         return ko.computed(evaluatorFunctionOrOptions, evaluatorFunctionTarget, {'pure':true});
     } else {
         evaluatorFunctionOrOptions = ko.utils.extend({}, evaluatorFunctionOrOptions);   // make a copy of the parameter object
-        evaluatorFunctionOrOptions['pure'] = true;
+        evaluatorFunctionOrOptions.pure = true;
         return ko.computed(evaluatorFunctionOrOptions, evaluatorFunctionTarget);
     }
 }

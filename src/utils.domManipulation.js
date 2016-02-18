@@ -22,7 +22,7 @@
 
     function simpleHtmlParse(html, documentContext) {
         documentContext || (documentContext = document);
-        var windowContext = documentContext['parentWindow'] || documentContext['defaultView'] || window;
+        var windowContext = documentContext.parentWindow || documentContext.defaultView || window;
 
         // Based on jQuery's "clean" function, but only accounting for table-related elements.
         // If you have referenced jQuery, this won't be used anyway - KO will use jQuery's "clean" function directly
@@ -40,11 +40,11 @@
         // Go to html and back, then peel off extra wrappers
         // Note that we always prefix with some dummy text, because otherwise, IE<9 will strip out leading comment nodes in descendants. Total madness.
         var markup = "ignored<div>" + wrap[1] + html + wrap[2] + "</div>";
-        if (typeof windowContext['innerShiv'] == "function") {
+        if (typeof windowContext.innerShiv == "function") {
             // Note that innerShiv is deprecated in favour of html5shiv. We should consider adding
             // support for html5shiv (except if no explicit support is needed, e.g., if html5shiv
             // somehow shims the native APIs so it just works anyway)
-            div.appendChild(windowContext['innerShiv'](markup));
+            div.appendChild(windowContext.innerShiv(markup));
         } else {
             div.innerHTML = markup;
         }
@@ -58,11 +58,11 @@
 
     function jQueryHtmlParse(html, documentContext) {
         // jQuery's "parseHTML" function was introduced in jQuery 1.8.0 and is a documented public API.
-        if (jQueryInstance['parseHTML']) {
-            return jQueryInstance['parseHTML'](html, documentContext) || []; // Ensure we always return an array and never null
+        if (jQueryInstance.parseHTML) {
+            return jQueryInstance.parseHTML(html, documentContext) || []; // Ensure we always return an array and never null
         } else {
             // For jQuery < 1.8.0, we fall back on the undocumented internal "clean" function.
-            var elems = jQueryInstance['clean']([html], documentContext);
+            var elems = jQueryInstance.clean([html], documentContext);
 
             // As of jQuery 1.7.1, jQuery parses the HTML by appending it to some dummy parent nodes held in an in-memory document fragment.
             // Unfortunately, it never clears the dummy parent nodes from the document fragment, so it leaks memory over time.
@@ -101,7 +101,7 @@
             // for example <tr> elements which are not normally allowed to exist on their own.
             // If you've referenced jQuery we'll use that rather than duplicating its code.
             if (jQueryInstance) {
-                jQueryInstance(node)['html'](html);
+                jQueryInstance(node).html(html);
             } else {
                 // ... otherwise, use KO's own parsing logic.
                 var parsedNodes = ko.utils.parseHtmlFragment(html, node.ownerDocument);

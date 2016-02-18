@@ -1,5 +1,5 @@
 var captionPlaceholder = {};
-ko.bindingHandlers['options'] = {
+ko.bindingHandlers.options = {
     'init': function(element) {
         if (ko.utils.tagNameLower(element) !== "select")
             throw new Error("options binding applies only to SELECT elements");
@@ -21,7 +21,7 @@ ko.bindingHandlers['options'] = {
             multiple = element.multiple,
             previousScrollTop = (!selectWasPreviouslyEmpty && multiple) ? element.scrollTop : null,
             unwrappedArray = ko.utils.unwrapObservable(valueAccessor()),
-            valueAllowUnset = allBindings.get('valueAllowUnset') && allBindings['has']('value'),
+            valueAllowUnset = allBindings.get('valueAllowUnset') && allBindings.has('value'),
             includeDestroyed = allBindings.get('optionsIncludeDestroyed'),
             arrayToDomNodeChildrenOptions = {},
             captionValue,
@@ -42,11 +42,11 @@ ko.bindingHandlers['options'] = {
 
             // Filter out any entries marked as destroyed
             filteredArray = ko.utils.arrayFilter(unwrappedArray, function(item) {
-                return includeDestroyed || item === undefined || item === null || !ko.utils.unwrapObservable(item['_destroy']);
+                return includeDestroyed || item === undefined || item === null || !ko.utils.unwrapObservable(item._destroy);
             });
 
             // If caption is included, add it to the array
-            if (allBindings['has']('optionsCaption')) {
+            if (allBindings.has('optionsCaption')) {
                 captionValue = ko.utils.unwrapObservable(allBindings.get('optionsCaption'));
                 // If caption value is null or undefined, don't show a caption
                 if (captionValue !== null && captionValue !== undefined) {
@@ -95,7 +95,7 @@ ko.bindingHandlers['options'] = {
 
         // By using a beforeRemove callback, we delay the removal until after new items are added. This fixes a selection
         // problem in IE<=8 and Firefox. See https://github.com/knockout/knockout/issues/1208
-        arrayToDomNodeChildrenOptions['beforeRemove'] =
+        arrayToDomNodeChildrenOptions.beforeRemove =
             function (option) {
                 element.removeChild(option);
             };
@@ -119,7 +119,7 @@ ko.bindingHandlers['options'] = {
         }
 
         var callback = setSelectionCallback;
-        if (allBindings['has']('optionsAfterRender') && typeof allBindings.get('optionsAfterRender') == "function") {
+        if (allBindings.has('optionsAfterRender') && typeof allBindings.get('optionsAfterRender') == "function") {
             callback = function(arrayEntry, newOptions) {
                 setSelectionCallback(arrayEntry, newOptions);
                 ko.dependencyDetection.ignore(allBindings.get('optionsAfterRender'), null, [newOptions[0], arrayEntry !== captionPlaceholder ? arrayEntry : undefined]);
@@ -160,4 +160,4 @@ ko.bindingHandlers['options'] = {
             element.scrollTop = previousScrollTop;
     }
 };
-ko.bindingHandlers['options'].optionValueDomDataKey = ko.utils.domData.nextKey();
+ko.bindingHandlers.options.optionValueDomDataKey = ko.utils.domData.nextKey();
