@@ -10,8 +10,7 @@ if (window && window.navigator) {
     // Detect various browser versions because some old versions don't fully support the 'input' event
     var operaVersion = window.opera && window.opera.version && parseInt(window.opera.version()),
         userAgent = window.navigator.userAgent,
-        safariVersion = parseVersion(userAgent.match(/^(?:(?!chrome).)*version\/([^ ]*) safari/i)),
-        firefoxVersion = parseVersion(userAgent.match(/Firefox\/([^ ]*)/));
+        safariVersion = parseVersion(userAgent.match(/^(?:(?!chrome).)*version\/([^ ]*) safari/i));
 }
 
 ko.bindingHandlers['textInput'] = {
@@ -94,13 +93,6 @@ ko.bindingHandlers['textInput'] = {
                   // Opera 10 doesn't always fire the 'input' event for cut, paste, undo & drop operations.
                   // We can try to catch some of those using 'keydown'.
                   onEvent('keydown', deferUpdateModel);
-              } else if (firefoxVersion < 4.0) {
-                  // Firefox <= 3.6 doesn't fire the 'input' event when text is filled in through autocomplete
-                  onEvent('DOMAutoComplete', updateModel);
-
-                  // Firefox <=3.5 doesn't fire the 'input' event when text is dropped into the input.
-                  onEvent('dragdrop', updateModel);       // <3.5
-                  onEvent('drop', updateModel);           // 3.5
               }
         }
 

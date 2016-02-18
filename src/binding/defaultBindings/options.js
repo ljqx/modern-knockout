@@ -156,9 +156,6 @@ ko.bindingHandlers['options'] = {
             }
         });
 
-        // Workaround for IE bug
-        ko.utils.ensureSelectElementIsRenderedCorrectly(element);
-
         if (previousScrollTop && Math.abs(previousScrollTop - element.scrollTop) > 20)
             element.scrollTop = previousScrollTop;
     }
