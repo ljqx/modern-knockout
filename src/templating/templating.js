@@ -198,9 +198,9 @@
                 unwrappedArray = [unwrappedArray];
 
             // Filter out any entries marked as destroyed
-            var filteredArray = ko.utils.arrayFilter(unwrappedArray, function(item) {
+            var filteredArray = _.isArray(unwrappedArray) ? _.filter(unwrappedArray, function(item) {
                 return options.includeDestroyed || item === undefined || item === null || !ko.utils.unwrapObservable(item._destroy);
-            });
+            }) : [];
 
             // Call setDomNodeChildrenFromArrayMapping, ignoring any observables unwrapped within (most likely from a callback function).
             // If the array items are observables, though, they will be unwrapped in executeTemplateForArrayItem and managed within setDomNodeChildrenFromArrayMapping.

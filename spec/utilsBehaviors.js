@@ -85,39 +85,6 @@ describe('arrayGetDistinctValues', function () {
     });
 });
 
-describe('arrayFilter', function () {
-    it('Should filter the array to only show matching members', function () {
-        var evenOnly = function (x, i) {
-            return i % 2 == 0;
-        };
-
-        var result = ko.utils.arrayFilter(["a", "b", "c", "d"], evenOnly);
-
-        expect(result).toEqual(["a", "c"]);
-    });
-
-    it('Should return empty arrays for empty arrays, and not call the filter function', function () {
-        var filterFunction = jasmine.createSpy('filterFunction');
-
-        var result = ko.utils.arrayFilter([], filterFunction);
-
-        expect(result).toEqual([]);
-        expect(filterFunction).not.toHaveBeenCalled();
-    });
-
-    it('Should copy the array before returning it', function () {
-        var alwaysTrue = function(x) {
-            return true;
-        }
-
-        var input = ["a", "b", "c"];
-        var result = ko.utils.arrayFilter(input, alwaysTrue);
-
-        expect(result).toEqual(input);
-        expect(result).not.toBe(input);
-    });
-});
-
 describe('arrayPushAll', function () {
     it('appends the second array elements to the first array', function () {
         var targetArray = [1,2,3];

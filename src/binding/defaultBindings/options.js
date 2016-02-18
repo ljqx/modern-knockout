@@ -14,7 +14,7 @@ ko.bindingHandlers.options = {
     },
     'update': function (element, valueAccessor, allBindings) {
         function selectedOptions() {
-            return ko.utils.arrayFilter(element.options, function (node) { return node.selected; });
+            return _.filter(element.options, function (node) { return node.selected; });
         }
 
         var selectWasPreviouslyEmpty = element.length === 0,
@@ -41,7 +41,7 @@ ko.bindingHandlers.options = {
                 unwrappedArray = [unwrappedArray];
 
             // Filter out any entries marked as destroyed
-            filteredArray = ko.utils.arrayFilter(unwrappedArray, function(item) {
+            filteredArray = _.filter(unwrappedArray, function(item) {
                 return includeDestroyed || item === undefined || item === null || !ko.utils.unwrapObservable(item._destroy);
             });
 

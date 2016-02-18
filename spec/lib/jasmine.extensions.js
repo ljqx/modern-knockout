@@ -83,7 +83,7 @@ jasmine.Matchers.prototype.toHaveValues = function (expectedValues) {
 };
 
 jasmine.Matchers.prototype.toHaveSelectedValues = function (expectedValues) {
-    var selectedNodes = ko.utils.arrayFilter(this.actual.childNodes, function (node) { return node.selected; }),
+    var selectedNodes = _.filter(this.actual.childNodes, function (node) { return node.selected; }),
         selectedValues = _.map(selectedNodes, function (node) { return ko.selectExtensions.readValue(node); });
     this.actual = selectedValues;   // Fix explanatory message
     return this.env.equals_(selectedValues, expectedValues);
