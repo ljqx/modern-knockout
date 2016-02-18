@@ -2,7 +2,7 @@ var attrHtmlToJavascriptMap = { 'class': 'className', 'for': 'htmlFor' };
 ko.bindingHandlers.attr = {
     'update': function(element, valueAccessor, allBindings) {
         var value = ko.utils.unwrapObservable(valueAccessor()) || {};
-        ko.utils.objectForEach(value, function(attrName, attrValue) {
+        _.forOwn(value, function(attrValue, attrName) {
             attrValue = ko.utils.unwrapObservable(attrValue);
 
             // To cover cases like "attr: { checked:someProp }", we want to remove the attribute entirely

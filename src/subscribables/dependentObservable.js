@@ -312,7 +312,7 @@ var computedFn = {
 
             // For each subscription no longer being used, remove it from the active subscriptions list and dispose it
             if (dependencyDetectionContext.disposalCount && !state.isSleeping) {
-                ko.utils.objectForEach(dependencyDetectionContext.disposalCandidates, computedDisposeDependencyCallback);
+                _.forOwn(dependencyDetectionContext.disposalCandidates, _.rearg(computedDisposeDependencyCallback, 1, 0));
             }
 
             state.isStale = false;
@@ -342,7 +342,7 @@ var computedFn = {
     dispose: function () {
         var state = this[computedState];
         if (!state.isSleeping && state.dependencyTracking) {
-            ko.utils.objectForEach(state.dependencyTracking, function (id, dependency) {
+            _.forOwn(state.dependencyTracking, function (dependency, id) {
                 if (dependency.dispose)
                     dependency.dispose();
             });
@@ -376,7 +376,7 @@ var pureComputedOverrides = {
             } else {
                 // First put the dependencies in order
                 var dependeciesOrder = [];
-                ko.utils.objectForEach(state.dependencyTracking, function (id, dependency) {
+                _.forOwn(state.dependencyTracking, function (dependency, id) {
                     dependeciesOrder[dependency._order] = id;
                 });
                 // Next, subscribe to each one
@@ -396,7 +396,7 @@ var pureComputedOverrides = {
     afterSubscriptionRemove: function (event) {
         var state = this[computedState];
         if (!state.isDisposed && event === 'change' && !this.hasSubscriptionsForEvent('change')) {
-            ko.utils.objectForEach(state.dependencyTracking, function (id, dependency) {
+            _.forOwn(state.dependencyTracking, function (dependency, id) {
                 if (dependency.dispose) {
                     state.dependencyTracking[id] = {
                         _target: dependency._target,

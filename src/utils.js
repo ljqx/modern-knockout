@@ -19,7 +19,7 @@ ko.utils = (function () {
     var keyEventTypeName = (navigator && /Firefox\/2/i.test(navigator.userAgent)) ? 'KeyboardEvent' : 'UIEvents';
     knownEvents[keyEventTypeName] = ['keyup', 'keydown', 'keypress'];
     knownEvents.MouseEvents = ['click', 'dblclick', 'mousedown', 'mouseup', 'mousemove', 'mouseover', 'mouseout', 'mouseenter', 'mouseleave'];
-    objectForEach(knownEvents, function(eventType, knownEventsForType) {
+    _.forOwn(knownEvents, function(knownEventsForType, eventType) {
         if (knownEventsForType.length) {
             for (var i = 0, j = knownEventsForType.length; i < j; i++)
                 knownEventTypesByEventName[knownEventsForType[i]] = eventType;
@@ -418,7 +418,7 @@ ko.utils = (function () {
                 input.value = ko.utils.stringifyJson(ko.utils.unwrapObservable(data[key]));
                 form.appendChild(input);
             }
-            objectForEach(params, function(key, value) {
+            _.forOwn(params, function(value, key) {
                 var input = document.createElement("input");
                 input.type = "hidden";
                 input.name = key;

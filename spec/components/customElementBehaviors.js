@@ -129,7 +129,7 @@ describe('Components: Custom elements', function() {
                 suppliedParams.push(params);
 
                 // The raw value for each param is a computed giving the literal value
-                ko.utils.objectForEach(params, function(key, value) {
+                _.forOwn(params, function(value, key) {
                     if (key !== '$raw') {
                         expect(ko.isComputed(params.$raw[key])).toBe(true);
                         expect(params.$raw[key]()).toBe(value);
