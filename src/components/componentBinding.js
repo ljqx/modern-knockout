@@ -2,12 +2,12 @@
 
     var componentLoadingOperationUniqueId = 0;
 
-    ko.bindingHandlers['component'] = {
+    ko.bindingHandlers.component = {
         'init': function(element, valueAccessor, ignored1, ignored2, bindingContext) {
             var currentViewModel,
                 currentLoadingOperationId,
                 disposeAssociatedComponentViewModel = function () {
-                    var currentViewModelDispose = currentViewModel && currentViewModel['dispose'];
+                    var currentViewModelDispose = currentViewModel && currentViewModel.dispose;
                     if (typeof currentViewModelDispose === 'function') {
                         currentViewModelDispose.call(currentViewModel);
                     }
@@ -26,8 +26,8 @@
                 if (typeof value === 'string') {
                     componentName = value;
                 } else {
-                    componentName = ko.utils.unwrapObservable(value['name']);
-                    componentParams = ko.utils.unwrapObservable(value['params']);
+                    componentName = ko.utils.unwrapObservable(value.name);
+                    componentParams = ko.utils.unwrapObservable(value.params);
                 }
 
                 if (!componentName) {
@@ -50,9 +50,9 @@
                     }
                     cloneTemplateIntoElement(componentName, componentDefinition, element);
                     var componentViewModel = createViewModel(componentDefinition, element, originalChildNodes, componentParams),
-                        childBindingContext = bindingContext['createChildContext'](componentViewModel, /* dataItemAlias */ undefined, function(ctx) {
-                            ctx['$component'] = componentViewModel;
-                            ctx['$componentTemplateNodes'] = originalChildNodes;
+                        childBindingContext = bindingContext.createChildContext(componentViewModel, /* dataItemAlias */ undefined, function(ctx) {
+                            ctx.$component = componentViewModel;
+                            ctx.$componentTemplateNodes = originalChildNodes;
                         });
                     currentViewModel = componentViewModel;
                     ko.applyBindingsToDescendants(childBindingContext, element);
@@ -63,10 +63,10 @@
         }
     };
 
-    ko.virtualElements.allowedBindings['component'] = true;
+    ko.virtualElements.allowedBindings.component = true;
 
     function cloneTemplateIntoElement(componentName, componentDefinition, element) {
-        var template = componentDefinition['template'];
+        var template = componentDefinition.template;
         if (!template) {
             throw new Error('Component \'' + componentName + '\' has no template');
         }
@@ -76,7 +76,7 @@
     }
 
     function createViewModel(componentDefinition, element, originalChildNodes, componentParams) {
-        var componentViewModelFactory = componentDefinition['createViewModel'];
+        var componentViewModelFactory = componentDefinition.createViewModel;
         return componentViewModelFactory
             ? componentViewModelFactory.call(componentDefinition, componentParams, { 'element': element, 'templateNodes': originalChildNodes })
             : componentParams; // Template-only component

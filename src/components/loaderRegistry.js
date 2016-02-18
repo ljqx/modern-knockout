@@ -42,7 +42,7 @@
             subscribable.subscribe(callback);
 
             beginLoadingComponent(componentName, function(definition, config) {
-                var isSynchronousComponent = !!(config && config['synchronous']);
+                var isSynchronousComponent = !!(config && config.synchronous);
                 loadedDefinitionsCache[componentName] = { definition: definition, isSynchronousComponent: isSynchronousComponent };
                 delete loadingSubscribablesCache[componentName];
 
@@ -55,10 +55,10 @@
                 if (completedAsync || isSynchronousComponent) {
                     // Note that notifySubscribers ignores any dependencies read within the callback.
                     // See comment in loaderRegistryBehaviors.js for reasoning
-                    subscribable['notifySubscribers'](definition);
+                    subscribable.notifySubscribers(definition);
                 } else {
                     ko.tasks.schedule(function() {
-                        subscribable['notifySubscribers'](definition);
+                        subscribable.notifySubscribers(definition);
                     });
                 }
             });
@@ -88,7 +88,7 @@
     function getFirstResultFromLoaders(methodName, argsExceptCallback, callback, candidateLoaders) {
         // On the first call in the stack, start with the full set of loaders
         if (!candidateLoaders) {
-            candidateLoaders = ko.components['loaders'].slice(0); // Use a copy, because we'll be mutating this array
+            candidateLoaders = ko.components.loaders.slice(0); // Use a copy, because we'll be mutating this array
         }
 
         // Try the next candidate
@@ -118,7 +118,7 @@
                     // Method to suppress exceptions will remain undocumented. This is only to keep
                     // KO's specs running tidily, since we can observe the loading got aborted without
                     // having exceptions cluttering up the console too.
-                    if (!currentCandidateLoader['suppressLoaderExceptions']) {
+                    if (!currentCandidateLoader.suppressLoaderExceptions) {
                         throw new Error('Component loaders must supply values by invoking the callback, not by returning values synchronously.');
                     }
                 }
@@ -134,7 +134,7 @@
 
     // Reference the loaders via string name so it's possible for developers
     // to replace the whole array by assigning to ko.components.loaders
-    ko.components['loaders'] = [];
+    ko.components.loaders = [];
 
     ko.exportSymbol('components', ko.components);
     ko.exportSymbol('components.get', ko.components.get);

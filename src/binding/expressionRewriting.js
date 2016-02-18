@@ -107,10 +107,10 @@ ko.expressionRewriting = (function () {
         function processKeyValue(key, val) {
             var writableVal;
             function callPreprocessHook(obj) {
-                return (obj && obj['preprocess']) ? (val = obj['preprocess'](val, key, processKeyValue)) : true;
+                return (obj && obj.preprocess) ? (val = obj.preprocess(val, key, processKeyValue)) : true;
             }
             if (!bindingParams) {
-                if (!callPreprocessHook(ko['getBindingHandler'](key)))
+                if (!callPreprocessHook(ko.getBindingHandler(key)))
                     return;
 
                 if (twoWayBindings[key] && (writableVal = getWriteableValue(val))) {
@@ -128,13 +128,13 @@ ko.expressionRewriting = (function () {
 
         var resultStrings = [],
             propertyAccessorResultStrings = [],
-            makeValueAccessors = bindingOptions['valueAccessors'],
-            bindingParams = bindingOptions['bindingParams'],
+            makeValueAccessors = bindingOptions.valueAccessors,
+            bindingParams = bindingOptions.bindingParams,
             keyValueArray = typeof bindingsStringOrKeyValueArray === "string" ?
                 parseObjectLiteral(bindingsStringOrKeyValueArray) : bindingsStringOrKeyValueArray;
 
         ko.utils.arrayForEach(keyValueArray, function(keyValue) {
-            processKeyValue(keyValue.key || keyValue['unknown'], keyValue.value);
+            processKeyValue(keyValue.key || keyValue.unknown, keyValue.value);
         });
 
         if (propertyAccessorResultStrings.length)
@@ -154,7 +154,7 @@ ko.expressionRewriting = (function () {
 
         keyValueArrayContainsKey: function(keyValueArray, key) {
             for (var i = 0; i < keyValueArray.length; i++)
-                if (keyValueArray[i]['key'] == key)
+                if (keyValueArray[i].key == key)
                     return true;
             return false;
         },

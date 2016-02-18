@@ -40,7 +40,7 @@
         var isFirstExecution = ko.utils.domData.get(domNode, lastMappingResultDomDataKey) === undefined;
         var lastMappingResult = ko.utils.domData.get(domNode, lastMappingResultDomDataKey) || [];
         var lastArray = ko.utils.arrayMap(lastMappingResult, function (x) { return x.arrayEntry; });
-        var editScript = ko.utils.compareArrays(lastArray, array, options['dontLimitMoves']);
+        var editScript = ko.utils.compareArrays(lastArray, array, options.dontLimitMoves);
 
         // Build the new mapping result
         var newMappingResult = [];
@@ -78,8 +78,8 @@
         }
 
         for (var i = 0, editScriptItem, movedIndex; editScriptItem = editScript[i]; i++) {
-            movedIndex = editScriptItem['moved'];
-            switch (editScriptItem['status']) {
+            movedIndex = editScriptItem.moved;
+            switch (editScriptItem.status) {
                 case "deleted":
                     if (movedIndex === undefined) {
                         mapData = lastMappingResult[lastMappingResultIndex];
@@ -92,7 +92,7 @@
 
                         // Queue these nodes for later removal
                         if (ko.utils.fixUpContinuousNodeArray(mapData.mappedNodes, domNode).length) {
-                            if (options['beforeRemove']) {
+                            if (options.beforeRemove) {
                                 newMappingResult.push(mapData);
                                 itemsToProcess.push(mapData);
                                 if (mapData.arrayEntry === deletedItemDummyValue) {
@@ -117,7 +117,7 @@
                     if (movedIndex !== undefined) {
                         itemMovedOrRetained(i, movedIndex);
                     } else {
-                        mapData = { arrayEntry: editScriptItem['value'], indexObservable: ko.observable(newMappingResultIndex++) };
+                        mapData = { arrayEntry: editScriptItem.value, indexObservable: ko.observable(newMappingResultIndex++) };
                         newMappingResult.push(mapData);
                         itemsToProcess.push(mapData);
                         if (!isFirstExecution)
@@ -131,10 +131,10 @@
         ko.utils.domData.set(domNode, lastMappingResultDomDataKey, newMappingResult);
 
         // Call beforeMove first before any changes have been made to the DOM
-        callCallback(options['beforeMove'], itemsForMoveCallbacks);
+        callCallback(options.beforeMove, itemsForMoveCallbacks);
 
         // Next remove nodes for deleted items (or just clean if there's a beforeRemove callback)
-        ko.utils.arrayForEach(nodesToDelete, options['beforeRemove'] ? ko.cleanNode : ko.removeNode);
+        ko.utils.arrayForEach(nodesToDelete, options.beforeRemove ? ko.cleanNode : ko.removeNode);
 
         // Next add/reorder the remaining items (will include deleted items if there's a beforeRemove callback)
         for (var i = 0, nextNode = ko.virtualElements.firstChild(domNode), lastNode, node; mapData = itemsToProcess[i]; i++) {
@@ -160,7 +160,7 @@
         // some sort of animation, which is why we first reorder the nodes that will be removed. If the
         // callback instead removes the nodes right away, it would be more efficient to skip reordering them.
         // Perhaps we'll make that change in the future if this scenario becomes more common.
-        callCallback(options['beforeRemove'], itemsForBeforeRemoveCallbacks);
+        callCallback(options.beforeRemove, itemsForBeforeRemoveCallbacks);
 
         // Replace the stored values of deleted items with a dummy value. This provides two benefits: it marks this item
         // as already "removed" so we won't call beforeRemove for it again, and it ensures that the item won't match up
@@ -172,8 +172,8 @@
         }
 
         // Finally call afterMove and afterAdd callbacks
-        callCallback(options['afterMove'], itemsForMoveCallbacks);
-        callCallback(options['afterAdd'], itemsForAfterAddCallbacks);
+        callCallback(options.afterMove, itemsForMoveCallbacks);
+        callCallback(options.afterAdd, itemsForAfterAddCallbacks);
     }
 })();
 

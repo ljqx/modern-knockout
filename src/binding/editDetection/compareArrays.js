@@ -4,9 +4,9 @@ ko.utils.findMovesInArrayComparison = function (left, right, limitFailedCompares
         var failedCompares, l, r, leftItem, rightItem;
         for (failedCompares = l = 0; (!limitFailedCompares || failedCompares < limitFailedCompares) && (leftItem = left[l]); ++l) {
             for (r = 0; rightItem = right[r]; ++r) {
-                if (leftItem['value'] === rightItem['value']) {
-                    leftItem['moved'] = rightItem['index'];
-                    rightItem['moved'] = leftItem['index'];
+                if (leftItem.value === rightItem.value) {
+                    leftItem.moved = rightItem.index;
+                    rightItem.moved = leftItem.index;
                     right.splice(r, 1);         // This item is marked as moved; so remove it from right list
                     failedCompares = r = 0;     // Reset failed compares count because we're checking for consecutive failures
                     break;
@@ -81,7 +81,7 @@ ko.utils.compareArrays = (function () {
             } else {
                 --bigIndex;
                 --smlIndex;
-                if (!options['sparse']) {
+                if (!options.sparse) {
                     editScript.push({
                         'status': "retained",
                         'value': bigArray[bigIndex] });
@@ -91,7 +91,7 @@ ko.utils.compareArrays = (function () {
 
         // Set a limit on the number of consecutive non-matching comparisons; having it a multiple of
         // smlIndexMax keeps the time complexity of this algorithm linear.
-        ko.utils.findMovesInArrayComparison(notInBig, notInSml, !options['dontLimitMoves'] && smlIndexMax * 10);
+        ko.utils.findMovesInArrayComparison(notInBig, notInSml, !options.dontLimitMoves && smlIndexMax * 10);
 
         return editScript.reverse();
     }

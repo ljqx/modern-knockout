@@ -1,4 +1,4 @@
-ko.bindingHandlers['visible'] = {
+ko.bindingHandlers.visible = {
     'update': function (element, valueAccessor) {
         var value = ko.utils.unwrapObservable(valueAccessor());
         var isCurrentlyVisible = !(element.style.display == "none");

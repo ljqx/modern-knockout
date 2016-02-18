@@ -1,11 +1,11 @@
 var arrayChangeEventName = 'arrayChange';
-ko.extenders['trackArrayChanges'] = function(target, options) {
+ko.extenders.trackArrayChanges = function(target, options) {
     // Use the provided options--each call to trackArrayChanges overwrites the previously set options
     target.compareArrayOptions = {};
     if (options && typeof options == "object") {
         ko.utils.extend(target.compareArrayOptions, options);
     }
-    target.compareArrayOptions['sparse'] = true;
+    target.compareArrayOptions.sparse = true;
 
     // Only modify the target observable once
     if (target.cacheDiffForKnownOperation) {
@@ -33,7 +33,7 @@ ko.extenders['trackArrayChanges'] = function(target, options) {
             underlyingAfterSubscriptionRemoveFunction.call(target, event);
         if (event === arrayChangeEventName && !target.hasSubscriptionsForEvent(arrayChangeEventName)) {
             if (underlyingNotifySubscribersFunction) {
-                target['notifySubscribers'] = underlyingNotifySubscribersFunction;
+                target.notifySubscribers = underlyingNotifySubscribersFunction;
                 underlyingNotifySubscribersFunction = undefined;
             }
             arrayChangeSubscription.dispose();
@@ -50,8 +50,8 @@ ko.extenders['trackArrayChanges'] = function(target, options) {
         trackingChanges = true;
 
         // Intercept "notifySubscribers" to track how many times it was called.
-        underlyingNotifySubscribersFunction = target['notifySubscribers'];
-        target['notifySubscribers'] = function(valueToNotify, event) {
+        underlyingNotifySubscribersFunction = target.notifySubscribers;
+        target.notifySubscribers = function(valueToNotify, event) {
             if (!event || event === defaultEvent) {
                 ++pendingNotifications;
             }
@@ -77,7 +77,7 @@ ko.extenders['trackArrayChanges'] = function(target, options) {
             pendingNotifications = 0;
 
             if (changes && changes.length) {
-                target['notifySubscribers'](changes, arrayChangeEventName);
+                target.notifySubscribers(changes, arrayChangeEventName);
             }
         });
     }

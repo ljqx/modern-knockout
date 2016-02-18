@@ -1,4 +1,4 @@
-ko.bindingHandlers['selectedOptions'] = {
+ko.bindingHandlers.selectedOptions = {
     'after': ['options', 'foreach'],
     'init': function (element, valueAccessor, allBindings) {
         ko.utils.registerEventHandler(element, "change", function () {
@@ -29,4 +29,4 @@ ko.bindingHandlers['selectedOptions'] = {
         element.scrollTop = previousScrollTop;
     }
 };
-ko.expressionRewriting.twoWayBindings['selectedOptions'] = true;
+ko.expressionRewriting.twoWayBindings.selectedOptions = true;

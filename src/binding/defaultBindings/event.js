@@ -8,12 +8,12 @@ function makeEventHandlerShortcut(eventName) {
                 result[eventName] = valueAccessor();
                 return result;
             };
-            return ko.bindingHandlers['event']['init'].call(this, element, newValueAccessor, allBindings, viewModel, bindingContext);
+            return ko.bindingHandlers.event.init.call(this, element, newValueAccessor, allBindings, viewModel, bindingContext);
         }
     }
 }
 
-ko.bindingHandlers['event'] = {
+ko.bindingHandlers.event = {
     'init' : function (element, valueAccessor, allBindings, viewModel, bindingContext) {
         var eventsToHandle = valueAccessor() || {};
         ko.utils.objectForEach(eventsToHandle, function(eventName) {
@@ -27,7 +27,7 @@ ko.bindingHandlers['event'] = {
                     try {
                         // Take all the event args, and prefix with the viewmodel
                         var argsForHandler = ko.utils.makeArray(arguments);
-                        viewModel = bindingContext['$data'];
+                        viewModel = bindingContext.$data;
                         argsForHandler.unshift(viewModel);
                         handlerReturnValue = handlerFunction.apply(viewModel, argsForHandler);
                     } finally {
