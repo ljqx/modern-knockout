@@ -94,7 +94,7 @@
         html = ko.utils.unwrapObservable(html);
 
         if ((html !== null) && (html !== undefined)) {
-            if (typeof html != 'string')
+            if (typeof html !== 'string')
                 html = html.toString();
 
             // jQuery contains a lot of sophisticated code to parse arbitrary HTML fragments,
