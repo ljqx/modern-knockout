@@ -53,7 +53,7 @@ ko.utils = (function () {
         if (classNames) {
             if (typeof node.classList === 'object') {
                 addOrRemoveFn = node.classList[shouldHaveClass ? 'add' : 'remove'];
-                ko.utils.arrayForEach(classNames.match(cssClassNameRegex), function(className) {
+                _.each(classNames.match(cssClassNameRegex), function(className) {
                     addOrRemoveFn.call(node.classList, className);
                 });
             } else if (typeof node.className.baseVal === 'string') {
@@ -69,7 +69,7 @@ ko.utils = (function () {
     function toggleObjectClassPropertyString(obj, prop, classNames, shouldHaveClass) {
         // obj/prop is either a node/'className' or a SVGAnimatedString/'baseVal'.
         var currentClassNames = obj[prop].match(cssClassNameRegex) || [];
-        ko.utils.arrayForEach(classNames.match(cssClassNameRegex), function(className) {
+        _.each(classNames.match(cssClassNameRegex), function(className) {
             ko.utils.addOrRemoveItem(currentClassNames, className, shouldHaveClass);
         });
         obj[prop] = currentClassNames.join(" ");
@@ -77,11 +77,6 @@ ko.utils = (function () {
 
     return {
         fieldsIncludedWithJsonPost: ['authenticity_token', /^__RequestVerificationToken(_.*)?$/],
-
-        arrayForEach: function (array, action) {
-            for (var i = 0, j = array.length; i < j; i++)
-                action(array[i], i);
-        },
 
         arrayIndexOf: function (array, item) {
             if (typeof Array.prototype.indexOf === "function")
@@ -514,7 +509,6 @@ ko.utils = (function () {
 }());
 
 ko.exportSymbol('utils', ko.utils);
-ko.exportSymbol('utils.arrayForEach', ko.utils.arrayForEach);
 ko.exportSymbol('utils.arrayFirst', ko.utils.arrayFirst);
 ko.exportSymbol('utils.arrayFilter', ko.utils.arrayFilter);
 ko.exportSymbol('utils.arrayGetDistinctValues', ko.utils.arrayGetDistinctValues);

@@ -94,7 +94,7 @@ ko.utils.setPrototypeOf(ko.observableArray.fn, ko.observable.fn);
 // Populate ko.observableArray.fn with read/write functions from native arrays
 // Important: Do not add any additional functions here that may reasonably be used to *read* data from the array
 // because we'll eval them without causing subscriptions, so ko.computed output could end up getting stale
-ko.utils.arrayForEach(["pop", "push", "reverse", "shift", "sort", "splice", "unshift"], function (methodName) {
+_.each(["pop", "push", "reverse", "shift", "sort", "splice", "unshift"], function (methodName) {
     ko.observableArray.fn[methodName] = function () {
         // Use "peek" to avoid creating a subscription in any computed that we're executing in the context of
         // (for consistency with mutating regular observables)
@@ -109,7 +109,7 @@ ko.utils.arrayForEach(["pop", "push", "reverse", "shift", "sort", "splice", "uns
 });
 
 // Populate ko.observableArray.fn with read-only functions from native arrays
-ko.utils.arrayForEach(['slice'], function (methodName) {
+_.each(['slice'], function (methodName) {
     ko.observableArray.fn[methodName] = function () {
         var underlyingArray = this();
         return underlyingArray[methodName].apply(underlyingArray, arguments);

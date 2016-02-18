@@ -5,4 +5,5 @@
         document = window.document,
         navigator = window.navigator,
         jQueryInstance = window.jQuery,
-        JSON = window.JSON;
+        JSON = window.JSON,
+        _ = window._;

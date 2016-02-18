@@ -1012,7 +1012,7 @@ describe('Templating', function() {
 
     it('Should not be allowed to rewrite templates that embed control flow bindings', function() {
         // Same reason as above (also include binding names with quotes and spaces to show that formatting doesn't matter)
-        ko.utils.arrayForEach(['if', 'ifnot', 'with', 'foreach', '"if"', ' with '], function(bindingName) {
+        _.each(['if', 'ifnot', 'with', 'foreach', '"if"', ' with '], function(bindingName) {
             ko.setTemplateEngine(new dummyTemplateEngine({ myTemplate: "<div data-bind='" + bindingName + ": \"SomeValue\"'>Hello</div>" }));
             testNode.innerHTML = "<div data-bind='template: { name: \"myTemplate\" }'></div>";
 

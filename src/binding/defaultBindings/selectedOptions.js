@@ -3,7 +3,7 @@ ko.bindingHandlers.selectedOptions = {
     'init': function (element, valueAccessor, allBindings) {
         ko.utils.registerEventHandler(element, "change", function () {
             var value = valueAccessor(), valueToWrite = [];
-            ko.utils.arrayForEach(element.getElementsByTagName("option"), function(node) {
+            _.each(element.getElementsByTagName("option"), function(node) {
                 if (node.selected)
                     valueToWrite.push(ko.selectExtensions.readValue(node));
             });
@@ -18,7 +18,7 @@ ko.bindingHandlers.selectedOptions = {
             previousScrollTop = element.scrollTop;
 
         if (newValue && typeof newValue.length === "number") {
-            ko.utils.arrayForEach(element.getElementsByTagName("option"), function(node) {
+            _.each(element.getElementsByTagName("option"), function(node) {
                 var isSelected = ko.utils.arrayIndexOf(newValue, ko.selectExtensions.readValue(node)) >= 0;
                 if (node.selected != isSelected) {      // This check prevents flashing of the select element in IE
                     ko.utils.setOptionNodeSelectionState(node, isSelected);

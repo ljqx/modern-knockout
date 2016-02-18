@@ -30,11 +30,15 @@
   },
   "basedOn": "3.5.0-pre",
   "licenses": [
-    { "type": "MIT", "url": "http://www.opensource.org/licenses/mit-license.php" }
+    {
+      "type": "MIT",
+      "url": "http://www.opensource.org/licenses/mit-license.php"
+    }
   ],
   "devDependencies": {
+    "closure-compiler": "~0.2.1",
     "grunt": "~0.4.1",
     "grunt-cli": "~0.1.0",
-    "closure-compiler": "~0.2.1"
+    "lodash": "^4.5.0"
   }
 }

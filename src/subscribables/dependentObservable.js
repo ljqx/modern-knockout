@@ -380,7 +380,7 @@ var pureComputedOverrides = {
                     dependeciesOrder[dependency._order] = id;
                 });
                 // Next, subscribe to each one
-                ko.utils.arrayForEach(dependeciesOrder, function (id, order) {
+                _.each(dependeciesOrder, function (id, order) {
                     var dependency = state.dependencyTracking[id],
                         subscription = computedObservable.subscribeToDependency(dependency._target);
                     subscription._order = order;

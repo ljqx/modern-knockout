@@ -44,7 +44,7 @@ describe('Binding: Attr', function() {
         var model = { myprop : ko.observable() };
         testNode.innerHTML = "<div data-bind='attr: { someAttrib: myprop }'></div>";
         ko.applyBindings(model, testNode);
-        ko.utils.arrayForEach([false, null, undefined], function(testValue) {
+        _.each([false, null, undefined], function(testValue) {
             model.myprop("nonempty value");
             expect(testNode.childNodes[0].getAttribute("someAttrib")).toEqual("nonempty value");
             model.myprop(testValue);

@@ -262,7 +262,7 @@
                     // First add dependencies (if any) of the current binding
                     if (binding.after) {
                         cyclicDependencyStack.push(bindingKey);
-                        ko.utils.arrayForEach(binding.after, function(bindingDependencyKey) {
+                        _.each(binding.after, function(bindingDependencyKey) {
                             if (bindings[bindingDependencyKey]) {
                                 if (ko.utils.arrayIndexOf(cyclicDependencyStack, bindingDependencyKey) !== -1) {
                                     throw Error("Cannot combine the following bindings, because they have a cyclic dependency: " + cyclicDependencyStack.join(", "));
@@ -354,7 +354,7 @@
             var orderedBindings = topologicalSortBindings(bindings);
 
             // Go through the sorted bindings, calling init and update for each
-            ko.utils.arrayForEach(orderedBindings, function(bindingKeyAndHandler) {
+            _.each(orderedBindings, function(bindingKeyAndHandler) {
                 // Note that topologicalSortBindings has already filtered out any nonexistent binding handlers,
                 // so bindingKeyAndHandler.handler will always be nonnull.
                 var handlerInitFn = bindingKeyAndHandler.handler.init,

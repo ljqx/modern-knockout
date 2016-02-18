@@ -3,13 +3,13 @@ var temporarilyRegisteredComponents = [];
 describe('Parse HTML fragment', function() {
     beforeEach(jasmine.prepareTestNode);
     afterEach(function() {
-        ko.utils.arrayForEach(temporarilyRegisteredComponents, function(componentName) {
+        _.each(temporarilyRegisteredComponents, function(componentName) {
             ko.components.unregister(componentName);
         });
         temporarilyRegisteredComponents = [];
     });
 
-    ko.utils.arrayForEach(
+    _.each(
     [
         { html: '<tr-component></tr-component>', parsed: ['<tr-component></tr-component>'], jQueryRequiredVersion: "3.0" },
         { html: '<thead><tr><th><thcomponent>hello</thcomponent></th></tr></thead>', parsed: ['<thead><tr><th><thcomponent>hello</thcomponent></th></tr></thead>'], ignoreRedundantTBody: true },

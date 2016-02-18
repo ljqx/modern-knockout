@@ -133,7 +133,7 @@ ko.expressionRewriting = (function () {
             keyValueArray = typeof bindingsStringOrKeyValueArray === "string" ?
                 parseObjectLiteral(bindingsStringOrKeyValueArray) : bindingsStringOrKeyValueArray;
 
-        ko.utils.arrayForEach(keyValueArray, function(keyValue) {
+        _.each(keyValueArray, function(keyValue) {
             processKeyValue(keyValue.key || keyValue.unknown, keyValue.value);
         });
 

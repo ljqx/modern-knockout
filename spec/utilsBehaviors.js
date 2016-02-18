@@ -29,27 +29,6 @@ describe('unwrapObservable', function() {
     });
 });
 
-describe('arrayForEach', function () {
-    it('Should go call the callback for each element of the array, in order', function () {
-        var callback = jasmine.createSpy('callback');
-
-        ko.utils.arrayForEach(["a", "b", "c"], callback);
-
-        expect(callback.calls.length).toBe(3);
-        expect(callback.calls[0].args).toEqual(["a", 0]);
-        expect(callback.calls[1].args).toEqual(["b", 1]);
-        expect(callback.calls[2].args).toEqual(["c", 2]);
-    });
-
-    it('Should do nothing with empty arrays', function () {
-        var callback = jasmine.createSpy('callback');
-
-        ko.utils.arrayForEach([], callback);
-
-        expect(callback).not.toHaveBeenCalled();
-    });
-});
-
 describe('arrayIndexOf', function () {
     it('Should return the index if the element is found in the input array', function () {
         var result = ko.utils.arrayIndexOf(["a", "b", "c"], "b");
@@ -280,7 +259,7 @@ describe('Function.bind', function() {
     });
 
     it('should accept a falsey `thisArg` argument', function () {
-        ko.utils.arrayForEach(['', 0, false, NaN], function (value) {
+        _.each(['', 0, false, NaN], function (value) {
             var bound = fn.bind(value);
             expect(bound()[0].constructor).toEqual(Object(value).constructor);
         });

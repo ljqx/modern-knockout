@@ -69,7 +69,7 @@
             if (callback) {
                 for (var i = 0, n = items.length; i < n; i++) {
                     if (items[i]) {
-                        ko.utils.arrayForEach(items[i].mappedNodes, function(node) {
+                        _.each(items[i].mappedNodes, function(node) {
                             callback(node, i, items[i].arrayEntry);
                         });
                     }
@@ -134,7 +134,7 @@
         callCallback(options.beforeMove, itemsForMoveCallbacks);
 
         // Next remove nodes for deleted items (or just clean if there's a beforeRemove callback)
-        ko.utils.arrayForEach(nodesToDelete, options.beforeRemove ? ko.cleanNode : ko.removeNode);
+        _.each(nodesToDelete, options.beforeRemove ? ko.cleanNode : ko.removeNode);
 
         // Next add/reorder the remaining items (will include deleted items if there's a beforeRemove callback)
         for (var i = 0, nextNode = ko.virtualElements.firstChild(domNode), lastNode, node; mapData = itemsToProcess[i]; i++) {
