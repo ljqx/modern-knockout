@@ -78,13 +78,6 @@ ko.utils = (function () {
     return {
         fieldsIncludedWithJsonPost: ['authenticity_token', /^__RequestVerificationToken(_.*)?$/],
 
-        arrayFirst: function (array, predicate, predicateOwner) {
-            for (var i = 0, j = array.length; i < j; i++)
-                if (predicate.call(predicateOwner, array[i], i))
-                    return array[i];
-            return null;
-        },
-
         arrayRemoveItem: function (array, itemToRemove) {
             var index = _.indexOf(array, itemToRemove);
             if (index > 0) {
@@ -290,7 +283,7 @@ ko.utils = (function () {
         },
 
         anyDomNodeIsAttachedToDocument: function(nodes) {
-            return !!ko.utils.arrayFirst(nodes, ko.utils.domNodeIsAttachedToDocument);
+            return _.some(nodes, ko.utils.domNodeIsAttachedToDocument);
         },
 
         tagNameLower: function(element) {
@@ -500,7 +493,6 @@ ko.utils = (function () {
 }());
 
 ko.exportSymbol('utils', ko.utils);
-ko.exportSymbol('utils.arrayFirst', ko.utils.arrayFirst);
 ko.exportSymbol('utils.arrayFilter', ko.utils.arrayFilter);
 ko.exportSymbol('utils.arrayGetDistinctValues', ko.utils.arrayGetDistinctValues);
 ko.exportSymbol('utils.arrayMap', ko.utils.arrayMap);

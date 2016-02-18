@@ -55,58 +55,6 @@ describe('arrayRemoveItem', function () {
     });
 });
 
-describe('arrayFirst', function () {
-    var matchB, matchD;
-
-    beforeEach(function () {
-        matchB = jasmine.createSpy('matchB').andCallFake(function (x) {
-            return x.charAt(0) === "b";
-        });
-
-        matchD = jasmine.createSpy('matchD').andCallFake(function (x) {
-            return x.charAt(0) === "d";
-        });
-    });
-
-    it('Should return the first matching element from the input array', function () {
-        var result = ko.utils.arrayFirst(["a", "b", "c", "b2"], matchB);
-
-        expect(result).toBe("b");
-    });
-
-    it('Should return null with empty arrays, and not call the predicate', function () {
-        var predicate = jasmine.createSpy('predicate');
-
-        var result = ko.utils.arrayFirst([], predicate);
-
-        expect(result).toBe(null);
-        expect(predicate).not.toHaveBeenCalled();
-    });
-
-    it('Should test the predicate on every element before the first matching element', function () {
-        ko.utils.arrayFirst(["a", "b", "c"], matchB);
-
-        expect(matchB.calls.length).toBe(2);
-        expect(matchB.calls[0].args).toEqual(["a", 0]);
-        expect(matchB.calls[1].args).toEqual(["b", 1]);
-    });
-
-    it('Should return null if no element matches', function () {
-        var result = ko.utils.arrayFirst(["a", "b", "c"], matchD);
-
-        expect(result).toBe(null);
-    });
-
-    it('Should test every element if no element matches', function () {
-        ko.utils.arrayFirst(["a", "b", "c"], matchD);
-
-        expect(matchD.calls.length).toBe(3);
-        expect(matchD.calls[0].args).toEqual(["a", 0]);
-        expect(matchD.calls[1].args).toEqual(["b", 1]);
-        expect(matchD.calls[2].args).toEqual(["c", 2]);
-    });
-});
-
 describe('arrayGetDistinctValues', function () {
     it('Should remove duplicates from an array of non-unique values', function () {
         var result = ko.utils.arrayGetDistinctValues(["a", "b", "b", "c", "c"]);
