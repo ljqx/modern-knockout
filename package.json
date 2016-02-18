@@ -1,10 +1,10 @@
 {
-  "name": "knockout",
+  "name": "modern-knockout",
   "description": "Knockout makes it easier to create rich, responsive UIs with JavaScript",
-  "homepage": "http://knockoutjs.com/",
-  "version": "3.5.0-pre",
+  "homepage": "",
+  "version": "0.0.1",
   "license": "MIT",
-  "author": "The Knockout.js team",
+  "author": "zhbliu",
   "main": "build/output/knockout-latest.debug.js",
   "scripts": {
     "prepublish": "grunt",
@@ -19,7 +19,7 @@
     "preprocess": "build/build.sh",
     "html": "spec/runner.html?src=build/output/knockout-latest.js&testling=true",
     "browsers": [
-      "ie/6..latest",
+      "ie/11..latest",
       "chrome/20..latest",
       "firefox/3..latest",
       "safari/5.0.5..latest",
@@ -28,6 +28,7 @@
       "ipad/6..latest"
     ]
   },
+  "basedOn": "3.5.0-pre",
   "licenses": [
     { "type": "MIT", "url": "http://www.opensource.org/licenses/mit-license.php" }
   ],

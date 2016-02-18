@@ -37,24 +37,6 @@ ko.utils = (function () {
                 knownEventTypesByEventName[knownEventsForType[i]] = eventType;
         }
     });
-    var eventsThatMustBeRegisteredUsingAttachEvent = { 'propertychange': true }; // Workaround for an IE9 issue - https://github.com/SteveSanderson/knockout/issues/406
-
-    // Detect IE versions for bug workarounds (uses IE conditionals, not UA string, for robustness)
-    // Note that, since IE 10 does not support conditional comments, the following logic only detects IE < 10.
-    // Currently this is by design, since IE 10+ behaves correctly when treated as a standard browser.
-    // If there is a future need to detect specific versions of IE10+, we will amend this.
-    var ieVersion = document && (function() {
-        var version = 3, div = document.createElement('div'), iElems = div.getElementsByTagName('i');
-
-        // Keep constructing conditional HTML blocks until we hit one that resolves to an empty fragment
-        while (
-            div.innerHTML = '<!--[if gt IE ' + (++version) + ']><i></i><![endif]-->',
-            iElems[0]
-        ) {}
-        return version > 4 ? version : undefined;
-    }());
-    var isIe6 = ieVersion === 6,
-        isIe7 = ieVersion === 7;
 
     function isClickOnCheckableElement(element, eventType) {
         if ((ko.utils.tagNameLower(element) !== "input") || !element.type) return false;
@@ -290,11 +272,7 @@ ko.utils = (function () {
         },
 
         setOptionNodeSelectionState: function (optionNode, isSelected) {
-            // IE6 sometimes throws "unknown error" if you try to write to .selected directly, whereas Firefox struggles with setAttribute. Pick one based on browser.
-            if (ieVersion < 7)
-                optionNode.setAttribute("selected", isSelected);
-            else
-                optionNode.selected = isSelected;
+            optionNode.selected = isSelected;
         },
 
         stringTrim: function (string) {
@@ -366,10 +344,9 @@ ko.utils = (function () {
         registerEventHandler: function (element, eventType, handler) {
             var wrappedHandler = ko.utils.catchFunctionErrors(handler);
 
-            var mustUseAttachEvent = ieVersion && eventsThatMustBeRegisteredUsingAttachEvent[eventType];
-            if (!ko.options['useOnlyNativeEvents'] && !mustUseAttachEvent && jQueryInstance) {
+            if (!ko.options['useOnlyNativeEvents'] && jQueryInstance) {
                 jQueryInstance(element)['bind'](eventType, wrappedHandler);
-            } else if (!mustUseAttachEvent && typeof element.addEventListener == "function")
+            } else if (typeof element.addEventListener == "function")
                 element.addEventListener(eventType, wrappedHandler, false);
             else if (typeof element.attachEvent != "undefined") {
                 var attachEventHandler = function (event) { wrappedHandler.call(element, event); },
@@ -439,43 +416,10 @@ ko.utils = (function () {
             } else {
                 innerTextNode.data = value;
             }
-
-            ko.utils.forceRefresh(element);
         },
 
         setElementName: function(element, name) {
             element.name = name;
-
-            // Workaround IE 6/7 issue
-            // - https://github.com/SteveSanderson/knockout/issues/197
-            // - http://www.matts411.com/post/setting_the_name_attribute_in_ie_dom/
-            if (ieVersion <= 7) {
-                try {
-                    element.mergeAttributes(document.createElement("<input name='" + element.name + "'/>"), false);
-                }
-                catch(e) {} // For IE9 with doc mode "IE9 Standards" and browser mode "IE9 Compatibility View"
-            }
-        },
-
-        forceRefresh: function(node) {
-            // Workaround for an IE9 rendering bug - https://github.com/SteveSanderson/knockout/issues/209
-            if (ieVersion >= 9) {
-                // For text nodes and comment nodes (most likely virtual elements), we will have to refresh the container
-                var elem = node.nodeType == 1 ? node : node.parentNode;
-                if (elem.style)
-                    elem.style.zoom = elem.style.zoom;
-            }
-        },
-
-        ensureSelectElementIsRenderedCorrectly: function(selectElement) {
-            // Workaround for IE9 rendering bug - it doesn't reliably display all the text in dynamically-added select boxes unless you force it to re-render by updating the width.
-            // (See https://github.com/SteveSanderson/knockout/issues/312, http://stackoverflow.com/questions/5908494/select-only-shows-first-char-of-selected-option)
-            // Also fixes IE7 and IE8 bug that causes selects to be zero width if enclosed by 'if' or 'with'. (See issue #839)
-            if (ieVersion) {
-                var originalWidth = selectElement.style.width;
-                selectElement.style.width = 0;
-                selectElement.style.width = originalWidth;
-            }
         },
 
         range: function (min, max) {
@@ -498,10 +442,6 @@ ko.utils = (function () {
         createSymbolOrString: function(identifier) {
             return canUseSymbols ? Symbol(identifier) : identifier;
         },
-
-        isIe6 : isIe6,
-        isIe7 : isIe7,
-        ieVersion : ieVersion,
 
         getFormFields: function(form, fieldName) {
             var fields = ko.utils.makeArray(form.getElementsByTagName("input")).concat(ko.utils.makeArray(form.getElementsByTagName("textarea")));

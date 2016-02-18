@@ -28,20 +28,6 @@ ko.bindingHandlers['value'] = {
             ko.expressionRewriting.writeValueToProperty(modelValue, allBindings, 'value', elementValue);
         }
 
-        // Workaround for https://github.com/SteveSanderson/knockout/issues/122
-        // IE doesn't fire "change" events on textboxes if the user selects a value from its autocomplete list
-        var ieAutoCompleteHackNeeded = ko.utils.ieVersion && element.tagName.toLowerCase() == "input" && element.type == "text"
-                                       && element.autocomplete != "off" && (!element.form || element.form.autocomplete != "off");
-        if (ieAutoCompleteHackNeeded && ko.utils.arrayIndexOf(eventsToCatch, "propertychange") == -1) {
-            ko.utils.registerEventHandler(element, "propertychange", function () { propertyChangedFired = true });
-            ko.utils.registerEventHandler(element, "focus", function () { propertyChangedFired = false });
-            ko.utils.registerEventHandler(element, "blur", function() {
-                if (propertyChangedFired) {
-                    valueUpdateHandler();
-                }
-            });
-        }
-
         ko.utils.arrayForEach(eventsToCatch, function(eventName) {
             // The syntax "after<eventname>" means "run the handler asynchronously after the event"
             // This is useful, for example, to catch "keydown" events after the browser has updated the control

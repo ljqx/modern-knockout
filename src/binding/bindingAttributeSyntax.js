@@ -227,8 +227,8 @@
         // (1) We need to store the binding context on this node (because it may differ from the DOM parent node's binding context)
         //     Note that we can't store binding contexts on non-elements (e.g., text nodes), as IE doesn't allow expando properties for those
         // (2) It might have bindings (e.g., it has a data-bind attribute, or it's a marker for a containerless template)
-        var isElement = (nodeVerified.nodeType === 1);
-        if (isElement) // Workaround IE <= 8 HTML parsing weirdness
+        var isElement = (nodeVerified.nodeType === Node.ELEMENT_NODE);
+        if (isElement)
             ko.virtualElements.normaliseVirtualElementDomStructure(nodeVerified);
 
         var shouldApplyBindings = (isElement && bindingContextMayDifferFromDomParentElement)             // Case (1)
@@ -420,7 +420,7 @@
     }
 
     ko.applyBindingAccessorsToNode = function (node, bindings, viewModelOrBindingContext) {
-        if (node.nodeType === 1) // If it's an element, workaround IE <= 8 HTML parsing weirdness
+        if (node.nodeType === Node.ELEMENT_NODE)
             ko.virtualElements.normaliseVirtualElementDomStructure(node);
         return applyBindingsToNodeInternal(node, bindings, getBindingContext(viewModelOrBindingContext), true);
     };
@@ -452,8 +452,8 @@
     ko.contextFor = function(node) {
         // We can only do something meaningful for elements and comment nodes (in particular, not text nodes, as IE can't store domdata for them)
         switch (node.nodeType) {
-            case 1:
-            case 8:
+            case Node.ELEMENT_NODE:
+            case Node.COMMENT_NODE:
                 var context = ko.storedBindingContextForNode(node);
                 if (context) return context;
                 if (node.parentNode) return ko.contextFor(node.parentNode);

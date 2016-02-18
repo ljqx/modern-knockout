@@ -12,14 +12,7 @@ ko.bindingHandlers['hasfocus'] = {
             element[hasfocusUpdatingProperty] = true;
             var ownerDoc = element.ownerDocument;
             if ("activeElement" in ownerDoc) {
-                var active;
-                try {
-                    active = ownerDoc.activeElement;
-                } catch(e) {
-                    // IE9 throws if you access activeElement during page load (see issue #703)
-                    active = ownerDoc.body;
-                }
-                isFocused = (active === element);
+                isFocused = (ownerDoc.activeElement === element);
             }
             var modelValue = valueAccessor();
             ko.expressionRewriting.writeValueToProperty(modelValue, allBindings, 'hasfocus', isFocused, true);

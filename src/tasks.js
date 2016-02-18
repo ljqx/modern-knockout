@@ -13,19 +13,6 @@ ko.tasks = (function () {
             new MutationObserver(callback).observe(div, {attributes: true});
             return function () { div.classList.toggle("foo"); };
         })(scheduledProcess);
-    } else if (document && "onreadystatechange" in document.createElement("script")) {
-        // IE 6-10
-        // From https://github.com/YuzuJS/setImmediate * Copyright (c) 2012 Barnesandnoble.com, llc, Donavon West, and Domenic Denicola * License: MIT
-        scheduler = function (callback) {
-            var script = document.createElement("script");
-            script.onreadystatechange = function () {
-                script.onreadystatechange = null;
-                document.documentElement.removeChild(script);
-                script = null;
-                callback();
-            };
-            document.documentElement.appendChild(script);
-        };
     } else {
         scheduler = function (callback) {
             setTimeout(callback, 0);

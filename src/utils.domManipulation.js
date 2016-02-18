@@ -13,10 +13,7 @@
             'th': tr,
             'option': select,
             'optgroup': select
-        },
-
-        // This is needed for old IE if you're *not* using either jQuery or innerShiv. Doesn't affect other cases.
-        mayRequireCreateElementHack = ko.utils.ieVersion <= 8;
+        };
 
     function getWrap(tags) {
         var m = tags.match(/^<([a-z]+)[ >]/);
@@ -49,17 +46,7 @@
             // somehow shims the native APIs so it just works anyway)
             div.appendChild(windowContext['innerShiv'](markup));
         } else {
-            if (mayRequireCreateElementHack) {
-                // The document.createElement('my-element') trick to enable custom elements in IE6-8
-                // only works if we assign innerHTML on an element associated with that document.
-                documentContext.appendChild(div);
-            }
-
             div.innerHTML = markup;
-
-            if (mayRequireCreateElementHack) {
-                div.parentNode.removeChild(div);
-            }
         }
 
         // Move to the right depth
