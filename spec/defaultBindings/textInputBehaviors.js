@@ -194,17 +194,7 @@ describe('Binding: TextInput', function() {
         expect(testNode.childNodes[0].value).toEqual("123");
 
         testNode.childNodes[0].value = "some user-entered value";   // setting the value triggers the propertychange event on IE
-        if (!jasmine.ieVersion || jasmine.ieVersion >= 9) {
-            ko.utils.triggerEvent(testNode.childNodes[0], "input");
-        }
-        if (jasmine.ieVersion === 9) {
-            // IE 9 responds to the event asynchronously (see #1788)
-            waitsFor(function () {
-                return myobservable() === "some user-entered value";
-            }, 50);
-        } else {
-            expect(myobservable()).toEqual("some user-entered value");
-        }
+        ko.utils.triggerEvent(testNode.childNodes[0], "input");
     });
 
     it('Should write only changed values to observable', function () {

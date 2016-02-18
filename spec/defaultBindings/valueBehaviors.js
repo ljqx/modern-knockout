@@ -257,53 +257,6 @@ describe('Binding: Value', function() {
         expect(myobservable()).toEqual("some value from the server");
     });
 
-    it('On IE < 10, should handle autofill selection by treating "propertychange" followed by "blur" as a change event', function() {
-        // This spec describes the awkward choreography of events needed to detect changes to text boxes on IE < 10,
-        // because it doesn't fire regular "change" events when the user selects an autofill entry. It isn't applicable
-        // on IE 10+ or other browsers, because they don't have that problem with autofill.
-        var isOldIE = jasmine.ieVersion && jasmine.ieVersion < 10;
-
-        if (isOldIE) {
-            var myobservable = new ko.observable(123).extend({ notify: 'always' });
-            var numUpdates = 0;
-            myobservable.subscribe(function() { numUpdates++ });
-            testNode.innerHTML = "<input data-bind='value:someProp' />";
-            ko.applyBindings({ someProp: myobservable }, testNode);
-
-            // Simulate a blur occurring before the first real property change.
-            // See that no 'update' event fires.
-            ko.utils.triggerEvent(testNode.childNodes[0], "focus");
-            ko.utils.triggerEvent(testNode.childNodes[0], "blur");
-            expect(numUpdates).toEqual(0);
-
-            // Simulate:
-            // 1. Select from autofill
-            // 2. Modify the textbox further
-            // 3. Tab out of the textbox
-            // --- should be treated as a single change
-            testNode.childNodes[0].value = "some user-entered value";
-            ko.utils.triggerEvent(testNode.childNodes[0], "propertychange");
-            ko.utils.triggerEvent(testNode.childNodes[0], "change");
-            expect(myobservable()).toEqual("some user-entered value");
-            expect(numUpdates).toEqual(1);
-            ko.utils.triggerEvent(testNode.childNodes[0], "blur");
-            expect(numUpdates).toEqual(1);
-
-            // Simulate:
-            // 1. Select from autofill
-            // 2. Tab out of the textbox
-            // 3. Reselect, edit, then tab out of the textbox
-            // --- should be treated as two changes (one after step 2, one after step 3)
-            testNode.childNodes[0].value = "different user-entered value";
-            ko.utils.triggerEvent(testNode.childNodes[0], "propertychange");
-            ko.utils.triggerEvent(testNode.childNodes[0], "blur");
-            expect(myobservable()).toEqual("different user-entered value");
-            expect(numUpdates).toEqual(2);
-            ko.utils.triggerEvent(testNode.childNodes[0], "change");
-            expect(numUpdates).toEqual(3);
-        }
-    });
-
     describe('For select boxes', function() {
         it('Should update selectedIndex when the model changes (options specified before value)', function() {
             var observable = new ko.observable('B');

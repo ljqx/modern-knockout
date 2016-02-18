@@ -27,7 +27,7 @@ describe('Components: Custom elements', function() {
     });
 
     it('Inserts components into custom elements with matching non-dashed names', function() {
-        if (jasmine.ieVersion || window.HTMLUnknownElement) {   // Phantomjs 1.x doesn't include HTMLUnknownElement and will fail this test
+        if (window.HTMLUnknownElement) {   // Phantomjs 1.x doesn't include HTMLUnknownElement and will fail this test
             this.after(function () { ko.components.unregister('somefaroutname'); });
             ko.components.register('somefaroutname', {
                 template: 'custom element <span data-bind="text: 123"></span>'

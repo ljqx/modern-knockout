@@ -575,7 +575,7 @@ describe('Binding: Foreach', function() {
     });
 
     it('Should be able to output HTML5 elements (even on IE<9, as long as you reference either innershiv.js or jQuery1.7+Modernizr)', function() {
-        var isSupported = jasmine.ieVersion >= 9 || window.innerShiv || window.jQuery;
+        var isSupported = window.innerShiv || window.jQuery;
         if (isSupported) {
             // Represents https://github.com/SteveSanderson/knockout/issues/194
             ko.utils.setHtml(testNode, "<div data-bind='foreach:someitems'><section data-bind='text: $data'></section></div>");
@@ -588,7 +588,7 @@ describe('Binding: Foreach', function() {
     });
 
     it('Should be able to output HTML5 elements within container-less templates (same as above)', function() {
-        var isSupported = jasmine.ieVersion >= 9 || window.innerShiv || window.jQuery;
+        var isSupported = window.innerShiv || window.jQuery;
         if (isSupported) {
             // Represents https://github.com/SteveSanderson/knockout/issues/194
             ko.utils.setHtml(testNode, "xxx<!-- ko foreach:someitems --><div><section data-bind='text: $data'></section></div><!-- /ko -->");
