@@ -10,7 +10,7 @@
             switch (node.nodeType) {
                 case Node.ELEMENT_NODE: // Element
                     return node.getAttribute(defaultBindingAttributeName) != null
-                        || ko.components['getComponentNameForNode'](node);
+                        || ko.components.getComponentNameForNode(node);
                 case Node.COMMENT_NODE: // Comment node
                     return ko.virtualElements.hasBindingValue(node);
                 default: return false;
@@ -18,14 +18,14 @@
         },
 
         'getBindings': function(node, bindingContext) {
-            var bindingsString = this['getBindingsString'](node, bindingContext),
-                parsedBindings = bindingsString ? this['parseBindingsString'](bindingsString, bindingContext, node) : null;
+            var bindingsString = this.getBindingsString(node, bindingContext),
+                parsedBindings = bindingsString ? this.parseBindingsString(bindingsString, bindingContext, node) : null;
             return ko.components.addBindingsForCustomElement(parsedBindings, node, bindingContext, /* valueAccessors */ false);
         },
 
         'getBindingAccessors': function(node, bindingContext) {
-            var bindingsString = this['getBindingsString'](node, bindingContext),
-                parsedBindings = bindingsString ? this['parseBindingsString'](bindingsString, bindingContext, node, { 'valueAccessors': true }) : null;
+            var bindingsString = this.getBindingsString(node, bindingContext),
+                parsedBindings = bindingsString ? this.parseBindingsString(bindingsString, bindingContext, node, { 'valueAccessors': true }) : null;
             return ko.components.addBindingsForCustomElement(parsedBindings, node, bindingContext, /* valueAccessors */ true);
         },
 
@@ -52,10 +52,10 @@
         }
     });
 
-    ko.bindingProvider['instance'] = new ko.bindingProvider();
+    ko.bindingProvider.instance = new ko.bindingProvider();
 
     function createBindingsStringEvaluatorViaCache(bindingsString, cache, options) {
-        var cacheKey = bindingsString + (options && options['valueAccessors'] || '');
+        var cacheKey = bindingsString + (options && options.valueAccessors || '');
         return cache[cacheKey]
             || (cache[cacheKey] = createBindingsStringEvaluator(bindingsString, options));
     }

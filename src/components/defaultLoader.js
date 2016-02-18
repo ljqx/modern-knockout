@@ -73,13 +73,13 @@
                     callback(result);
                 }
             },
-            templateConfig = config['template'],
-            viewModelConfig = config['viewModel'];
+            templateConfig = config.template,
+            viewModelConfig = config.viewModel;
 
         if (templateConfig) {
             possiblyGetConfigFromAmd(errorCallback, templateConfig, function(loadedConfig) {
                 ko.components._getFirstResultFromLoaders('loadTemplate', [componentName, loadedConfig], function(resolvedTemplate) {
-                    result['template'] = resolvedTemplate;
+                    result.template = resolvedTemplate;
                     tryIssueCallback();
                 });
             });
@@ -109,8 +109,8 @@
         } else if (isDocumentFragment(templateConfig)) {
             // Document fragment - use its child nodes
             callback(ko.utils.makeArray(templateConfig.childNodes));
-        } else if (templateConfig['element']) {
-            var element = templateConfig['element'];
+        } else if (templateConfig.element) {
+            var element = templateConfig.element;
             if (isDomElement(element)) {
                 // Element instance - copy its child nodes
                 callback(cloneNodesFromTemplateSourceElement(element));
@@ -144,13 +144,13 @@
             callback(viewModelConfig[createViewModelKey]);
         } else if ('instance' in viewModelConfig) {
             // Fixed object instance - promote to createViewModel format for API consistency
-            var fixedInstance = viewModelConfig['instance'];
+            var fixedInstance = viewModelConfig.instance;
             callback(function (params, componentInfo) {
                 return fixedInstance;
             });
         } else if ('viewModel' in viewModelConfig) {
             // Resolved AMD module whose value is of the form { viewModel: ... }
-            resolveViewModel(errorCallback, viewModelConfig['viewModel'], callback);
+            resolveViewModel(errorCallback, viewModelConfig.viewModel, callback);
         } else {
             errorCallback('Unknown viewModel value: ' + viewModelConfig);
         }
@@ -176,7 +176,7 @@
     }
 
     function isDomElement(obj) {
-        if (window['HTMLElement']) {
+        if (window.HTMLElement) {
             return obj instanceof HTMLElement;
         } else {
             return obj && obj.tagName && obj.nodeType === Node.ELEMENT_NODE;
@@ -184,7 +184,7 @@
     }
 
     function isDocumentFragment(obj) {
-        if (window['DocumentFragment']) {
+        if (window.DocumentFragment) {
             return obj instanceof DocumentFragment;
         } else {
             return obj && obj.nodeType === Node.DOCUMENT_FRAGMENT_NODE;
@@ -192,10 +192,10 @@
     }
 
     function possiblyGetConfigFromAmd(errorCallback, config, callback) {
-        if (typeof config['require'] === 'string') {
+        if (typeof config.require === 'string') {
             // The config is the value of an AMD module
-            if (amdRequire || window['require']) {
-                (amdRequire || window['require'])([config['require']], callback);
+            if (amdRequire || window.require) {
+                (amdRequire || window.require)([config.require], callback);
             } else {
                 errorCallback('Uses require, but no AMD loader is present');
             }
@@ -219,7 +219,7 @@
     ko.exportSymbol('components.defaultLoader', ko.components.defaultLoader);
 
     // By default, the default loader is the only registered component loader
-    ko.components['loaders'].push(ko.components.defaultLoader);
+    ko.components.loaders.push(ko.components.defaultLoader);
 
     // Privately expose the underlying config registry for use in old-IE shim
     ko.components._allRegisteredComponents = defaultConfigRegistry;

@@ -27,15 +27,15 @@
 
 ko.templateEngine = function () { };
 
-ko.templateEngine.prototype['renderTemplateSource'] = function (templateSource, bindingContext, options, templateDocument) {
+ko.templateEngine.prototype.renderTemplateSource = function (templateSource, bindingContext, options, templateDocument) {
     throw new Error("Override renderTemplateSource");
 };
 
-ko.templateEngine.prototype['createJavaScriptEvaluatorBlock'] = function (script) {
+ko.templateEngine.prototype.createJavaScriptEvaluatorBlock = function (script) {
     throw new Error("Override createJavaScriptEvaluatorBlock");
 };
 
-ko.templateEngine.prototype['makeTemplateSource'] = function(template, templateDocument) {
+ko.templateEngine.prototype.makeTemplateSource = function(template, templateDocument) {
     // Named template
     if (typeof template == "string") {
         templateDocument = templateDocument || document;
@@ -50,23 +50,23 @@ ko.templateEngine.prototype['makeTemplateSource'] = function(template, templateD
         throw new Error("Unknown template type: " + template);
 };
 
-ko.templateEngine.prototype['renderTemplate'] = function (template, bindingContext, options, templateDocument) {
-    var templateSource = this['makeTemplateSource'](template, templateDocument);
-    return this['renderTemplateSource'](templateSource, bindingContext, options, templateDocument);
+ko.templateEngine.prototype.renderTemplate = function (template, bindingContext, options, templateDocument) {
+    var templateSource = this.makeTemplateSource(template, templateDocument);
+    return this.renderTemplateSource(templateSource, bindingContext, options, templateDocument);
 };
 
-ko.templateEngine.prototype['isTemplateRewritten'] = function (template, templateDocument) {
+ko.templateEngine.prototype.isTemplateRewritten = function (template, templateDocument) {
     // Skip rewriting if requested
-    if (this['allowTemplateRewriting'] === false)
+    if (this.allowTemplateRewriting === false)
         return true;
-    return this['makeTemplateSource'](template, templateDocument)['data']("isRewritten");
+    return this.makeTemplateSource(template, templateDocument).data("isRewritten");
 };
 
-ko.templateEngine.prototype['rewriteTemplate'] = function (template, rewriterCallback, templateDocument) {
-    var templateSource = this['makeTemplateSource'](template, templateDocument);
-    var rewritten = rewriterCallback(templateSource['text']());
-    templateSource['text'](rewritten);
-    templateSource['data']("isRewritten", true);
+ko.templateEngine.prototype.rewriteTemplate = function (template, rewriterCallback, templateDocument) {
+    var templateSource = this.makeTemplateSource(template, templateDocument);
+    var rewritten = rewriterCallback(templateSource.text());
+    templateSource.text(rewritten);
+    templateSource.data("isRewritten", true);
 };
 
 ko.exportSymbol('templateEngine', ko.templateEngine);

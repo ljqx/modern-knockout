@@ -47,7 +47,7 @@
         }
     }
 
-    ko.templateSources.domElement.prototype['text'] = function(/* valueToWrite */) {
+    ko.templateSources.domElement.prototype.text = function(/* valueToWrite */) {
         var elemContentsProperty = this.templateType === templateScript ? "text"
                                  : this.templateType === templateTextArea ? "value"
                                  : "innerHTML";
@@ -64,7 +64,7 @@
     };
 
     var dataDomDataPrefix = ko.utils.domData.nextKey() + "_";
-    ko.templateSources.domElement.prototype['data'] = function(key /*, valueToWrite */) {
+    ko.templateSources.domElement.prototype.data = function(key /*, valueToWrite */) {
         if (arguments.length === 1) {
             return ko.utils.domData.get(this.domElement, dataDomDataPrefix + key);
         } else {
@@ -80,7 +80,7 @@
         ko.utils.domData.set(element, templatesDomDataKey, data);
     }
 
-    ko.templateSources.domElement.prototype['nodes'] = function(/* valueToWrite */) {
+    ko.templateSources.domElement.prototype.nodes = function(/* valueToWrite */) {
         var element = this.domElement;
         if (arguments.length == 0) {
             var templateData = getTemplateDomData(element),
@@ -105,7 +105,7 @@
     }
     ko.templateSources.anonymousTemplate.prototype = new ko.templateSources.domElement();
     ko.templateSources.anonymousTemplate.prototype.constructor = ko.templateSources.anonymousTemplate;
-    ko.templateSources.anonymousTemplate.prototype['text'] = function(/* valueToWrite */) {
+    ko.templateSources.anonymousTemplate.prototype.text = function(/* valueToWrite */) {
         if (arguments.length == 0) {
             var templateData = getTemplateDomData(this.domElement);
             if (templateData.textData === undefined && templateData.containerData)

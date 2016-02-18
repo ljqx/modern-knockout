@@ -4,7 +4,7 @@ ko.extenders = {
 
         // (1) For dependent observables, we throttle *evaluations* so that, no matter how fast its dependencies
         //     notify updates, the target doesn't re-evaluate (and hence doesn't notify) faster than a certain rate
-        target['throttleEvaluation'] = timeout;
+        target.throttleEvaluation = timeout;
 
         // (2) For writable targets (observables, or writable dependent observables), we throttle *writes*
         //     so the target cannot change value synchronously or faster than a certain rate
@@ -26,8 +26,8 @@ ko.extenders = {
         if (typeof options == 'number') {
             timeout = options;
         } else {
-            timeout = options['timeout'];
-            method = options['method'];
+            timeout = options.timeout;
+            method = options.method;
         }
 
         // rateLimit supersedes deferred updates
@@ -51,14 +51,14 @@ ko.extenders = {
                 return function () {
                     ko.tasks.cancel(handle);
                     handle = ko.tasks.schedule(callback);
-                    target['notifySubscribers'](undefined, 'dirty');
+                    target.notifySubscribers(undefined, 'dirty');
                 };
             });
         }
     },
 
     'notify': function(target, notifyWhen) {
-        target["equalityComparer"] = notifyWhen == "always" ?
+        target.equalityComparer = notifyWhen == "always" ?
             null :  // null equalityComparer means to always notify
             valuesArePrimitiveAndEqual;
     }
