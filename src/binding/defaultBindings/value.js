@@ -16,8 +16,7 @@ ko.bindingHandlers.value = {
         if (requestedEventsToCatch) {
             if (typeof requestedEventsToCatch === "string") // Allow both individual event names, and arrays of event names
                 requestedEventsToCatch = [requestedEventsToCatch];
-            ko.utils.arrayPushAll(eventsToCatch, requestedEventsToCatch);
-            eventsToCatch = ko.utils.arrayGetDistinctValues(eventsToCatch);
+            eventsToCatch = _.union(eventsToCatch, requestedEventsToCatch);
         }
 
         var valueUpdateHandler = function() {

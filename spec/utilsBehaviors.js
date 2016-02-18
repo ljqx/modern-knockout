@@ -55,36 +55,6 @@ describe('arrayRemoveItem', function () {
     });
 });
 
-describe('arrayGetDistinctValues', function () {
-    it('Should remove duplicates from an array of non-unique values', function () {
-        var result = ko.utils.arrayGetDistinctValues(["a", "b", "b", "c", "c"]);
-        expect(result).toEqual(["a", "b", "c"]);
-    });
-
-    it('Should do nothing with an empty array', function () {
-        var result = ko.utils.arrayGetDistinctValues([]);
-        expect(result).toEqual([]);
-    });
-
-    it('Should do nothing with an array of unique values', function () {
-        var result = ko.utils.arrayGetDistinctValues(["a", "b", "c"]);
-        expect(result).toEqual(["a", "b", "c"]);
-    });
-
-    it('Should copy the input array', function () {
-        var input = ["a", "b", "c", "c"];
-        var result = ko.utils.arrayGetDistinctValues(input);
-        expect(result).not.toBe(input);
-    });
-
-    it("Should copy the input array, even if it's unchanged", function () {
-        var input = ["a", "b", "c"];
-        var result = ko.utils.arrayGetDistinctValues(input);
-        expect(result).toEqual(input);
-        expect(result).not.toBe(input);
-    });
-});
-
 describe('arrayPushAll', function () {
     it('appends the second array elements to the first array', function () {
         var targetArray = [1,2,3];

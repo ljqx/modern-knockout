@@ -88,16 +88,6 @@ ko.utils = (function () {
             }
         },
 
-        arrayGetDistinctValues: function (array) {
-            array = array || [];
-            var result = [];
-            for (var i = 0, j = array.length; i < j; i++) {
-                if (!_.includes(result, array[i]))
-                    result.push(array[i]);
-            }
-            return result;
-        },
-
         arrayPushAll: function (array, valuesToPush) {
             if (valuesToPush instanceof Array)
                 array.push.apply(array, valuesToPush);
@@ -476,7 +466,6 @@ ko.utils = (function () {
 }());
 
 ko.exportSymbol('utils', ko.utils);
-ko.exportSymbol('utils.arrayGetDistinctValues', ko.utils.arrayGetDistinctValues);
 ko.exportSymbol('utils.arrayPushAll', ko.utils.arrayPushAll);
 ko.exportSymbol('utils.arrayRemoveItem', ko.utils.arrayRemoveItem);
 ko.exportSymbol('utils.extend', ko.utils.extend);
