@@ -33,7 +33,7 @@
         // (possibly a text node) in front of the comment. So, KO does not attempt to workaround this IE issue automatically at present.
 
         // Trim whitespace, otherwise indexOf won't work as expected
-        var tags = ko.utils.stringTrim(html).toLowerCase(), div = documentContext.createElement("div"),
+        var tags = _.trim(html).toLowerCase(), div = documentContext.createElement("div"),
             wrap = getWrap(tags),
             depth = wrap[0];
 

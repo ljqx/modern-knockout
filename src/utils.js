@@ -197,13 +197,6 @@ ko.utils = (function () {
             optionNode.selected = isSelected;
         },
 
-        stringTrim: function (string) {
-            return string === null || string === undefined ? '' :
-                string.trim ?
-                    string.trim() :
-                    string.toString().replace(/^[\s\xa0]+|[\s\xa0]+$/g, '');
-        },
-
         stringStartsWith: function (string, startsWith) {
             string = string || "";
             if (startsWith.length > string.length)
@@ -372,7 +365,7 @@ ko.utils = (function () {
 
         parseJson: function (jsonString) {
             if (typeof jsonString === "string") {
-                jsonString = ko.utils.stringTrim(jsonString);
+                jsonString = _.trim(jsonString);
                 if (jsonString) {
                     if (JSON && JSON.parse) // Use native parsing where available
                         return JSON.parse(jsonString);

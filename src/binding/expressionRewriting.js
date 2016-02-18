@@ -42,7 +42,7 @@ ko.expressionRewriting = (function () {
 
     function parseObjectLiteral(objectLiteralString) {
         // Trim leading and trailing spaces from the string
-        var str = ko.utils.stringTrim(objectLiteralString);
+        var str = _.trim(objectLiteralString);
 
         // Trim braces '{' surrounding the whole object literal
         if (str.charCodeAt(0) === 123) str = str.slice(1, -1);
