@@ -42,7 +42,7 @@
                 tagNameLower === "script" ? templateScript :
                 tagNameLower === "textarea" ? templateTextArea :
                     // For browsers with proper <template> element support, where the .content property gives a document fragment
-                tagNameLower == "template" && element.content && element.content.nodeType === 11 ? templateTemplate :
+                tagNameLower == "template" && element.content && element.content.nodeType === Node.DOCUMENT_FRAGMENT_NODE ? templateTemplate :
                 templateElement;
         }
     }

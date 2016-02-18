@@ -43,7 +43,7 @@ ko.templateEngine.prototype['makeTemplateSource'] = function(template, templateD
         if (!elem)
             throw new Error("Cannot find template with ID " + template);
         return new ko.templateSources.domElement(elem);
-    } else if ((template.nodeType == 1) || (template.nodeType == 8)) {
+    } else if ((template.nodeType == Node.ELEMENT_NODE) || (template.nodeType == Node.COMMENT_NODE)) {
         // Anonymous template
         return new ko.templateSources.anonymousTemplate(template);
     } else

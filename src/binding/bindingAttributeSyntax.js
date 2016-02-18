@@ -361,7 +361,7 @@
                     handlerUpdateFn = bindingKeyAndHandler.handler.update,
                     bindingKey = bindingKeyAndHandler.key;
 
-                if (node.nodeType === 8) {
+                if (node.nodeType === Node.COMMENT_NODE) {
                     validateThatBindingIsAllowedForVirtualElements(bindingKey);
                 }
 
@@ -431,7 +431,7 @@
     };
 
     ko.applyBindingsToDescendants = function(viewModelOrBindingContext, rootNode) {
-        if (rootNode.nodeType === 1 || rootNode.nodeType === 8)
+        if (rootNode.nodeType === Node.ELEMENT_NODE || rootNode.nodeType === Node.COMMENT_NODE)
             applyBindingsToDescendantsInternal(getBindingContext(viewModelOrBindingContext), rootNode, true);
     };
 
@@ -441,7 +441,7 @@
             jQueryInstance = window.jQuery;
         }
 
-        if (rootNode && (rootNode.nodeType !== 1) && (rootNode.nodeType !== 8))
+        if (rootNode && (rootNode.nodeType !== Node.ELEMENT_NODE) && (rootNode.nodeType !== Node.COMMENT_NODE))
             throw new Error("ko.applyBindings: first parameter should be your view model; second parameter should be a DOM node");
         rootNode = rootNode || window.document.body; // Make "rootNode" parameter optional
 

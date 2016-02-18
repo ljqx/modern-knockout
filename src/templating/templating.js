@@ -58,11 +58,11 @@
             // Need to applyBindings *before* unmemoziation, because unmemoization might introduce extra nodes (that we don't want to re-bind)
             // whereas a regular applyBindings won't introduce new memoized nodes
             invokeForEachNodeInContinuousRange(firstNode, lastNode, function(node) {
-                if (node.nodeType === 1 || node.nodeType === 8)
+                if (node.nodeType === Node.ELEMENT_NODE || node.nodeType === Node.COMMENT_NODE)
                     ko.applyBindings(bindingContext, node);
             });
             invokeForEachNodeInContinuousRange(firstNode, lastNode, function(node) {
-                if (node.nodeType === 1 || node.nodeType === 8)
+                if (node.nodeType === Node.ELEMENT_NODE || node.nodeType === Node.COMMENT_NODE)
                     ko.memoization.unmemoizeDomNodeAndDescendants(node, [bindingContext]);
             });
 

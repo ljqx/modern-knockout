@@ -13,7 +13,7 @@
 
     ko.components.addBindingsForCustomElement = function(allBindings, node, bindingContext, valueAccessors) {
         // Determine if it's really a custom element matching a component
-        if (node.nodeType === 1) {
+        if (node.nodeType === Node.ELEMENT_NODE) {
             var componentName = ko.components.getComponentNameForNode(node);
             if (componentName) {
                 // It does represent a component, so add a component binding for it

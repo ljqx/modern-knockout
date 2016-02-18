@@ -17,11 +17,11 @@
     var htmlTagsWithOptionallyClosingChildren = { 'ul': true, 'ol': true };
 
     function isStartComment(node) {
-        return (node.nodeType == 8) && startCommentRegex.test(commentNodesHaveTextProperty ? node.text : node.nodeValue);
+        return (node.nodeType == Node.COMMENT_NODE) && startCommentRegex.test(commentNodesHaveTextProperty ? node.text : node.nodeValue);
     }
 
     function isEndComment(node) {
-        return (node.nodeType == 8) && endCommentRegex.test(commentNodesHaveTextProperty ? node.text : node.nodeValue);
+        return (node.nodeType == Node.COMMENT_NODE) && endCommentRegex.test(commentNodesHaveTextProperty ? node.text : node.nodeValue);
     }
 
     function getVirtualChildren(startComment, allowUnbalanced) {
@@ -167,7 +167,7 @@
             var childNode = elementVerified.firstChild;
             if (childNode) {
                 do {
-                    if (childNode.nodeType === 1) {
+                    if (childNode.nodeType === Node.ELEMENT_NODE) {
                         var unbalancedTags = getUnbalancedChildTags(childNode);
                         if (unbalancedTags) {
                             // Fix up the DOM by moving the unbalanced tags to where they most likely were intended to be placed - *after* the child

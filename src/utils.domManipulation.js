@@ -70,7 +70,7 @@
             if (elems && elems[0]) {
                 // Find the top-most parent element that's a direct child of a document fragment
                 var elem = elems[0];
-                while (elem.parentNode && elem.parentNode.nodeType !== 11 /* i.e., DocumentFragment */)
+                while (elem.parentNode && elem.parentNode.nodeType !== Node.DOCUMENT_FRAGMENT_NODE /* i.e., DocumentFragment */)
                     elem = elem.parentNode;
                 // ... then detach it
                 if (elem.parentNode)

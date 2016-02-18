@@ -179,7 +179,7 @@
         if (window['HTMLElement']) {
             return obj instanceof HTMLElement;
         } else {
-            return obj && obj.tagName && obj.nodeType === 1;
+            return obj && obj.tagName && obj.nodeType === Node.ELEMENT_NODE;
         }
     }
 
@@ -187,7 +187,7 @@
         if (window['DocumentFragment']) {
             return obj instanceof DocumentFragment;
         } else {
-            return obj && obj.nodeType === 11;
+            return obj && obj.nodeType === Node.DOCUMENT_FRAGMENT_NODE;
         }
     }
 

@@ -241,7 +241,7 @@ ko.utils = (function () {
 
             if (continuousNodeArray.length) {
                 // The parent node can be a virtual element; so get the real parent node
-                parentNode = (parentNode.nodeType === 8 && parentNode.parentNode) || parentNode;
+                parentNode = (parentNode.nodeType === Node.COMMENT_NODE && parentNode.parentNode) || parentNode;
 
                 // Rule [A]
                 while (continuousNodeArray.length && continuousNodeArray[0].parentNode !== parentNode)
@@ -287,10 +287,10 @@ ko.utils = (function () {
         domNodeIsContainedBy: function (node, containedByNode) {
             if (node === containedByNode)
                 return true;
-            if (node.nodeType === 11)
+            if (node.nodeType === Node.DOCUMENT_FRAGMENT_NODE)
                 return false; // Fixes issue #1162 - can't use node.contains for document fragments on IE8
             if (containedByNode.contains)
-                return containedByNode.contains(node.nodeType === 3 ? node.parentNode : node);
+                return containedByNode.contains(node.nodeType === Node.TEXT_NODE ? node.parentNode : node);
             if (containedByNode.compareDocumentPosition)
                 return (containedByNode.compareDocumentPosition(node) & 16) == 16;
             while (node && node != containedByNode) {
@@ -406,7 +406,7 @@ ko.utils = (function () {
             // If there are no children, more than one, or if it's not a text node,
             // we'll clear everything and create a single text node.
             var innerTextNode = ko.virtualElements.firstChild(element);
-            if (!innerTextNode || innerTextNode.nodeType != 3 || ko.virtualElements.nextSibling(innerTextNode)) {
+            if (!innerTextNode || innerTextNode.nodeType != Node.TEXT_NODE || ko.virtualElements.nextSibling(innerTextNode)) {
                 ko.virtualElements.setDomNodeChildren(element, [element.ownerDocument.createTextNode(value)]);
             } else {
                 innerTextNode.data = value;

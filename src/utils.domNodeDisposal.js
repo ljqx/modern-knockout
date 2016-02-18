@@ -1,8 +1,8 @@
 
 ko.utils.domNodeDisposal = new (function () {
     var domDataKey = ko.utils.domData.nextKey();
-    var cleanableNodeTypes = { 1: true, 8: true, 9: true };       // Element, Comment, Document
-    var cleanableNodeTypesWithDescendants = { 1: true, 9: true }; // Element, Document
+    var cleanableNodeTypes = { Node.ELEMENT_NODE: true, Node.COMMENT_NODE: true, Node.DOCUMENT_NODE: true };
+    var cleanableNodeTypesWithDescendants = { Node.ELEMENT_NODE: true, Node.DOCUMENT_NODE: true };
 
     function getDisposeCallbacksCollection(node, createIfNotFound) {
         var allDisposeCallbacks = ko.utils.domData.get(node, domDataKey);
@@ -41,7 +41,7 @@ ko.utils.domNodeDisposal = new (function () {
         var child, nextChild = nodeWithChildren.firstChild;
         while (child = nextChild) {
             nextChild = child.nextSibling;
-            if (child.nodeType === 8)
+            if (child.nodeType === Node.COMMENT_NODE)
                 cleanSingleNode(child);
         }
     }
