@@ -2,7 +2,7 @@ var arrayChangeEventName = 'arrayChange';
 ko.extenders.trackArrayChanges = function(target, options) {
     // Use the provided options--each call to trackArrayChanges overwrites the previously set options
     target.compareArrayOptions = {};
-    if (options && typeof options == "object") {
+    if (options && typeof options === "object") {
         ko.utils.extend(target.compareArrayOptions, options);
     }
     target.compareArrayOptions.sparse = true;

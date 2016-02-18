@@ -48,7 +48,7 @@ ko.utils.domNodeDisposal = new (function () {
 
     return {
         addDisposeCallback : function(node, callback) {
-            if (typeof callback != "function")
+            if (typeof callback !== "function")
                 throw new Error("Callback must be a function");
             getDisposeCallbacksCollection(node, true).push(callback);
         },

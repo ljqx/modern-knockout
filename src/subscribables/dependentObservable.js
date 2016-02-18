@@ -11,7 +11,7 @@ ko.computed = ko.dependentObservable = function (evaluatorFunctionOrOptions, eva
             options.read = evaluatorFunctionOrOptions;
         }
     }
-    if (typeof options.read != "function")
+    if (typeof options.read !== "function")
         throw Error("Pass a function that returns the value of the ko.computed");
 
     var writeFunction = options.write;

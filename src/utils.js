@@ -39,7 +39,7 @@ ko.utils = (function () {
 
     function isClickOnCheckableElement(element, eventType) {
         if ((ko.utils.tagNameLower(element) !== "input") || !element.type) return false;
-        if (eventType.toLowerCase() != "click") return false;
+        if (eventType.toLowerCase() !== "click") return false;
         var inputType = element.type;
         return (inputType === "checkbox") || (inputType === "radio");
     }
@@ -380,7 +380,7 @@ ko.utils = (function () {
                     throw new Error("The supplied element doesn't support dispatchEvent");
             } else if (useClickWorkaround && element.click) {
                 element.click();
-            } else if (typeof element.fireEvent != "undefined") {
+            } else if (typeof element.fireEvent !== "undefined") {
                 element.fireEvent("on" + eventType);
             } else {
                 throw new Error("Browser doesn't support triggering events");
@@ -406,7 +406,7 @@ ko.utils = (function () {
             // If there are no children, more than one, or if it's not a text node,
             // we'll clear everything and create a single text node.
             var innerTextNode = ko.virtualElements.firstChild(element);
-            if (!innerTextNode || innerTextNode.nodeType != Node.TEXT_NODE || ko.virtualElements.nextSibling(innerTextNode)) {
+            if (!innerTextNode || innerTextNode.nodeType !== Node.TEXT_NODE || ko.virtualElements.nextSibling(innerTextNode)) {
                 ko.virtualElements.setDomNodeChildren(element, [element.ownerDocument.createTextNode(value)]);
             } else {
                 innerTextNode.data = value;

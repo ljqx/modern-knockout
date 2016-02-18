@@ -1,6 +1,6 @@
 ko.bindingHandlers.submit = {
     'init': function (element, valueAccessor, allBindings, viewModel, bindingContext) {
-        if (typeof valueAccessor() != "function")
+        if (typeof valueAccessor() !== "function")
             throw new Error("The value for a submit binding must be a function");
         ko.utils.registerEventHandler(element, "submit", function (event) {
             var handlerReturnValue;

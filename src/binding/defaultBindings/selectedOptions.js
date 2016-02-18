@@ -11,7 +11,7 @@ ko.bindingHandlers.selectedOptions = {
         });
     },
     'update': function (element, valueAccessor) {
-        if (ko.utils.tagNameLower(element) != "select")
+        if (ko.utils.tagNameLower(element) !== "select")
             throw new Error("values binding applies only to SELECT elements");
 
         var newValue = ko.utils.unwrapObservable(valueAccessor()),

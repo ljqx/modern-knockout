@@ -15,7 +15,7 @@ var DEBUG = true,
         for (var i = 0; i < scriptTags.length; i++) {
             var src = scriptTags[i].src;
             var index = src.toLowerCase().indexOf(scriptTagSrc);
-            if ((index >= 0) && index == (src.length - scriptTagSrc.length))
+            if ((index >= 0) && index === (src.length - scriptTagSrc.length))
                 return src.substring(0, index + 1);
         }
         throw "Cannot find script tag referencing " + scriptTagSrc;
