@@ -165,7 +165,7 @@
     // so that it always gets the latest value and all dependencies are captured. This is used
     // by ko.applyBindingsToNode and getBindingsAndMakeAccessors.
     function makeAccessorsFromFunction(callback) {
-        return ko.utils.objectMap(ko.dependencyDetection.ignore(callback), function(value, key) {
+        return _.mapValues(ko.dependencyDetection.ignore(callback), function(value, key) {
             return function() {
                 return callback()[key];
             };
@@ -178,7 +178,7 @@
         if (typeof bindings === 'function') {
             return makeAccessorsFromFunction(bindings.bind(null, context, node));
         } else {
-            return ko.utils.objectMap(bindings, makeValueAccessor);
+            return _.mapValues(bindings, makeValueAccessor);
         }
     }
 
@@ -340,7 +340,7 @@
 
             // Use of allBindings as a function is maintained for backwards compatibility, but its use is deprecated
             function allBindings() {
-                return ko.utils.objectMap(bindingsUpdater ? bindingsUpdater() : bindings, evaluateValueAccessor);
+                return _.mapValues(bindingsUpdater ? bindingsUpdater() : bindings, evaluateValueAccessor);
             }
             // The following is the 3.x allBindings API
             allBindings.get = function(key) {

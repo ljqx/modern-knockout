@@ -42,10 +42,10 @@
 
         if (paramsAttribute) {
             var params = nativeBindingProviderInstance.parseBindingsString(paramsAttribute, bindingContext, elem, { 'valueAccessors': true, 'bindingParams': true }),
-                rawParamComputedValues = ko.utils.objectMap(params, function(paramValue, paramName) {
+                rawParamComputedValues = _.mapValues(params, function(paramValue, paramName) {
                     return ko.computed(paramValue, null, { disposeWhenNodeIsRemoved: elem });
                 }),
-                result = ko.utils.objectMap(rawParamComputedValues, function(paramValueComputed, paramName) {
+                result = _.mapValues(rawParamComputedValues, function(paramValueComputed, paramName) {
                     var paramValue = paramValueComputed.peek();
                     // Does the evaluation of the parameter value unwrap any observables?
                     if (!paramValueComputed.isActive()) {
