@@ -364,7 +364,7 @@ var pureComputedOverrides = {
         // If asleep, wake up the computed by subscribing to any dependencies.
         var computedObservable = this,
             state = computedObservable[computedState];
-        if (!state.isDisposed && state.isSleeping && event == 'change') {
+        if (!state.isDisposed && state.isSleeping && event === 'change') {
             state.isSleeping = false;
             if (state.isStale || computedObservable.haveDependenciesChanged()) {
                 state.dependencyTracking = null;
@@ -395,7 +395,7 @@ var pureComputedOverrides = {
     },
     afterSubscriptionRemove: function (event) {
         var state = this[computedState];
-        if (!state.isDisposed && event == 'change' && !this.hasSubscriptionsForEvent('change')) {
+        if (!state.isDisposed && event === 'change' && !this.hasSubscriptionsForEvent('change')) {
             ko.utils.objectForEach(state.dependencyTracking, function (id, dependency) {
                 if (dependency.dispose) {
                     state.dependencyTracking[id] = {
@@ -425,7 +425,7 @@ var pureComputedOverrides = {
 var deferEvaluationOverrides = {
     beforeSubscriptionAdd: function (event) {
         // This will force a computed with deferEvaluation to evaluate when the first subscription is registered.
-        if (event == 'change' || event == 'beforeChange') {
+        if (event === 'change' || event === 'beforeChange') {
             this.peek();
         }
     }

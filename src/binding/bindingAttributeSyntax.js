@@ -71,7 +71,7 @@
         }
 
         var self = this,
-            isFunc = typeof(dataItemOrAccessor) == "function" && !ko.isObservable(dataItemOrAccessor),
+            isFunc = typeof(dataItemOrAccessor) === "function" && !ko.isObservable(dataItemOrAccessor),
             nodes,
             subscribable;
 
@@ -140,7 +140,7 @@
             // This "child" context doesn't directly track a parent observable view model,
             // so we need to manually set the $rawData value to match the parent.
             self.$rawData = parentContext.$rawData;
-            ko.utils.extend(self, typeof(properties) == "function" ? properties() : properties);
+            ko.utils.extend(self, typeof(properties) === "function" ? properties() : properties);
         });
     };
 
@@ -367,7 +367,7 @@
 
                 try {
                     // Run init, ignoring any dependencies
-                    if (typeof handlerInitFn == "function") {
+                    if (typeof handlerInitFn === "function") {
                         ko.dependencyDetection.ignore(function() {
                             var initResult = handlerInitFn(node, getValueAccessor(bindingKey), allBindings, bindingContext.$data, bindingContext);
 
@@ -381,7 +381,7 @@
                     }
 
                     // Run update in its own computed wrapper
-                    if (typeof handlerUpdateFn == "function") {
+                    if (typeof handlerUpdateFn === "function") {
                         ko.dependentObservable(
                             function() {
                                 handlerUpdateFn(node, getValueAccessor(bindingKey), allBindings, bindingContext.$data, bindingContext);
@@ -404,7 +404,7 @@
 
     var storedBindingContextDomDataKey = ko.utils.domData.nextKey();
     ko.storedBindingContextForNode = function (node, bindingContext) {
-        if (arguments.length == 2) {
+        if (arguments.length === 2) {
             ko.utils.domData.set(node, storedBindingContextDomDataKey, bindingContext);
             if (bindingContext._subscribable)
                 bindingContext._subscribable._addNode(node);

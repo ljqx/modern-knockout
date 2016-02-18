@@ -42,7 +42,7 @@
                 tagNameLower === "script" ? templateScript :
                 tagNameLower === "textarea" ? templateTextArea :
                     // For browsers with proper <template> element support, where the .content property gives a document fragment
-                tagNameLower == "template" && element.content && element.content.nodeType === Node.DOCUMENT_FRAGMENT_NODE ? templateTemplate :
+                tagNameLower === "template" && element.content && element.content.nodeType === Node.DOCUMENT_FRAGMENT_NODE ? templateTemplate :
                 templateElement;
         }
     }
@@ -52,7 +52,7 @@
                                  : this.templateType === templateTextArea ? "value"
                                  : "innerHTML";
 
-        if (arguments.length == 0) {
+        if (arguments.length === 0) {
             return this.domElement[elemContentsProperty];
         } else {
             var valueToWrite = arguments[0];
@@ -82,7 +82,7 @@
 
     ko.templateSources.domElement.prototype.nodes = function(/* valueToWrite */) {
         var element = this.domElement;
-        if (arguments.length == 0) {
+        if (arguments.length === 0) {
             var templateData = getTemplateDomData(element),
                 containerData = templateData.containerData;
             return containerData || (
@@ -106,7 +106,7 @@
     ko.templateSources.anonymousTemplate.prototype = new ko.templateSources.domElement();
     ko.templateSources.anonymousTemplate.prototype.constructor = ko.templateSources.anonymousTemplate;
     ko.templateSources.anonymousTemplate.prototype.text = function(/* valueToWrite */) {
-        if (arguments.length == 0) {
+        if (arguments.length === 0) {
             var templateData = getTemplateDomData(this.domElement);
             if (templateData.textData === undefined && templateData.containerData)
                 templateData.textData = templateData.containerData.innerHTML;

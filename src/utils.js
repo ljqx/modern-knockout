@@ -41,7 +41,7 @@ ko.utils = (function () {
         if ((ko.utils.tagNameLower(element) !== "input") || !element.type) return false;
         if (eventType.toLowerCase() != "click") return false;
         var inputType = element.type;
-        return (inputType == "checkbox") || (inputType == "radio");
+        return (inputType === "checkbox") || (inputType === "radio");
     }
 
     // For details on the pattern for changing node classes
@@ -84,7 +84,7 @@ ko.utils = (function () {
         },
 
         arrayIndexOf: function (array, item) {
-            if (typeof Array.prototype.indexOf == "function")
+            if (typeof Array.prototype.indexOf === "function")
                 return Array.prototype.indexOf.call(array, item);
             for (var i = 0, j = array.length; i < j; i++)
                 if (array[i] === item)
@@ -341,9 +341,9 @@ ko.utils = (function () {
 
             if (!ko.options.useOnlyNativeEvents && jQueryInstance) {
                 jQueryInstance(element).bind(eventType, wrappedHandler);
-            } else if (typeof element.addEventListener == "function")
+            } else if (typeof element.addEventListener === "function")
                 element.addEventListener(eventType, wrappedHandler, false);
-            else if (typeof element.attachEvent != "undefined") {
+            else if (typeof element.attachEvent !== "undefined") {
                 var attachEventHandler = function (event) { wrappedHandler.call(element, event); },
                     attachEventName = "on" + eventType;
                 element.attachEvent(attachEventName, attachEventHandler);
@@ -369,8 +369,8 @@ ko.utils = (function () {
 
             if (!ko.options.useOnlyNativeEvents && jQueryInstance && !useClickWorkaround) {
                 jQueryInstance(element).trigger(eventType);
-            } else if (typeof document.createEvent == "function") {
-                if (typeof element.dispatchEvent == "function") {
+            } else if (typeof document.createEvent === "function") {
+                if (typeof element.dispatchEvent === "function") {
                     var eventCategory = knownEventTypesByEventName[eventType] || "HTMLEvents";
                     var event = document.createEvent(eventCategory);
                     event.initEvent(eventType, true, true, window, 0, 0, 0, 0, 0, false, false, false, false, 0, element);
@@ -440,7 +440,7 @@ ko.utils = (function () {
 
         getFormFields: function(form, fieldName) {
             var fields = ko.utils.makeArray(form.getElementsByTagName("input")).concat(ko.utils.makeArray(form.getElementsByTagName("textarea")));
-            var isMatchingField = (typeof fieldName == 'string')
+            var isMatchingField = (typeof fieldName === 'string')
                 ? function(field) { return field.name === fieldName }
                 : function(field) { return fieldName.test(field.name) }; // Treat fieldName as regex or object containing predicate
             var matches = [];
@@ -452,7 +452,7 @@ ko.utils = (function () {
         },
 
         parseJson: function (jsonString) {
-            if (typeof jsonString == "string") {
+            if (typeof jsonString === "string") {
                 jsonString = ko.utils.stringTrim(jsonString);
                 if (jsonString) {
                     if (JSON && JSON.parse) // Use native parsing where available
@@ -476,7 +476,7 @@ ko.utils = (function () {
             var url = urlOrForm;
 
             // If we were given a form, use its 'action' URL and pick out any requested field values
-            if((typeof urlOrForm == 'object') && (ko.utils.tagNameLower(urlOrForm) === "form")) {
+            if((typeof urlOrForm === 'object') && (ko.utils.tagNameLower(urlOrForm) === "form")) {
                 var originalForm = urlOrForm;
                 url = originalForm.action;
                 for (var i = includeFields.length - 1; i >= 0; i--) {

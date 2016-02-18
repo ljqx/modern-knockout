@@ -129,7 +129,7 @@
 
     ko.renderTemplate = function (template, dataOrBindingContext, options, targetNodeOrNodeArray, renderMode) {
         options = options || {};
-        if ((options.templateEngine || _templateEngine) == undefined)
+        if ((options.templateEngine || _templateEngine) === undefined)
             throw new Error("Set a template engine before calling renderTemplate");
         renderMode = renderMode || "replaceChildren";
 
@@ -137,7 +137,7 @@
             var firstTargetNode = getFirstNodeFromPossibleArray(targetNodeOrNodeArray);
 
             var whenToDispose = function () { return (!firstTargetNode) || !ko.utils.domNodeIsAttachedToDocument(firstTargetNode); }; // Passive disposal (on next evaluation)
-            var activelyDisposeWhenNodeIsRemoved = (firstTargetNode && renderMode == "replaceNode") ? firstTargetNode.parentNode : firstTargetNode;
+            var activelyDisposeWhenNodeIsRemoved = (firstTargetNode && renderMode === "replaceNode") ? firstTargetNode.parentNode : firstTargetNode;
 
             return ko.dependentObservable( // So the DOM is automatically updated when any dependency changes
                 function () {
@@ -149,7 +149,7 @@
                     var templateName = resolveTemplateName(template, bindingContext.$data, bindingContext),
                         renderedNodesArray = executeTemplate(targetNodeOrNodeArray, renderMode, templateName, bindingContext, options);
 
-                    if (renderMode == "replaceNode") {
+                    if (renderMode === "replaceNode") {
                         targetNodeOrNodeArray = renderedNodesArray;
                         firstTargetNode = getFirstNodeFromPossibleArray(targetNodeOrNodeArray);
                     }
@@ -194,7 +194,7 @@
 
         return ko.dependentObservable(function () {
             var unwrappedArray = ko.utils.unwrapObservable(arrayOrObservableArray) || [];
-            if (typeof unwrappedArray.length == "undefined") // Coerce single value into array
+            if (typeof unwrappedArray.length === "undefined") // Coerce single value into array
                 unwrappedArray = [unwrappedArray];
 
             // Filter out any entries marked as destroyed
@@ -212,7 +212,7 @@
     var templateComputedDomDataKey = ko.utils.domData.nextKey();
     function disposeOldComputedAndStoreNewOne(element, newComputed) {
         var oldComputed = ko.utils.domData.get(element, templateComputedDomDataKey);
-        if (oldComputed && (typeof(oldComputed.dispose) == 'function'))
+        if (oldComputed && (typeof(oldComputed.dispose) === 'function'))
             oldComputed.dispose();
         ko.utils.domData.set(element, templateComputedDomDataKey, (newComputed && newComputed.isActive()) ? newComputed : undefined);
     }
@@ -221,7 +221,7 @@
         'init': function(element, valueAccessor) {
             // Support anonymous templates
             var bindingValue = ko.utils.unwrapObservable(valueAccessor());
-            if (typeof bindingValue == "string" || bindingValue.name) {
+            if (typeof bindingValue === "string" || bindingValue.name) {
                 // It's a named template - clear the element
                 ko.virtualElements.emptyNode(element);
             } else if ('nodes' in bindingValue) {
@@ -250,7 +250,7 @@
                 templateComputed = null,
                 templateName;
 
-            if (typeof options == "string") {
+            if (typeof options === "string") {
                 templateName = value;
                 options = {};
             } else {
@@ -286,7 +286,7 @@
     ko.expressionRewriting.bindingRewriteValidators.template = function(bindingValue) {
         var parsedBindingValue = ko.expressionRewriting.parseObjectLiteral(bindingValue);
 
-        if ((parsedBindingValue.length == 1) && parsedBindingValue[0].unknown)
+        if ((parsedBindingValue.length === 1) && parsedBindingValue[0].unknown)
             return null; // It looks like a string literal, not an object literal, so treat it as a named template (which is allowed for rewriting)
 
         if (ko.expressionRewriting.keyValueArrayContainsKey(parsedBindingValue, "name"))

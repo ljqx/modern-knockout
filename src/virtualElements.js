@@ -17,11 +17,11 @@
     var htmlTagsWithOptionallyClosingChildren = { 'ul': true, 'ol': true };
 
     function isStartComment(node) {
-        return (node.nodeType == Node.COMMENT_NODE) && startCommentRegex.test(commentNodesHaveTextProperty ? node.text : node.nodeValue);
+        return (node.nodeType === Node.COMMENT_NODE) && startCommentRegex.test(commentNodesHaveTextProperty ? node.text : node.nodeValue);
     }
 
     function isEndComment(node) {
-        return (node.nodeType == Node.COMMENT_NODE) && endCommentRegex.test(commentNodesHaveTextProperty ? node.text : node.nodeValue);
+        return (node.nodeType === Node.COMMENT_NODE) && endCommentRegex.test(commentNodesHaveTextProperty ? node.text : node.nodeValue);
     }
 
     function getVirtualChildren(startComment, allowUnbalanced) {

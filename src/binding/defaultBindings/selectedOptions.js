@@ -17,7 +17,7 @@ ko.bindingHandlers.selectedOptions = {
         var newValue = ko.utils.unwrapObservable(valueAccessor()),
             previousScrollTop = element.scrollTop;
 
-        if (newValue && typeof newValue.length == "number") {
+        if (newValue && typeof newValue.length === "number") {
             ko.utils.arrayForEach(element.getElementsByTagName("option"), function(node) {
                 var isSelected = ko.utils.arrayIndexOf(newValue, ko.selectExtensions.readValue(node)) >= 0;
                 if (node.selected != isSelected) {      // This check prevents flashing of the select element in IE

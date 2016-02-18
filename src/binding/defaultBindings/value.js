@@ -2,7 +2,7 @@ ko.bindingHandlers.value = {
     'after': ['options', 'foreach'],
     'init': function (element, valueAccessor, allBindings) {
         // If the value binding is placed on a radio/checkbox, then just pass through to checkedValue and quit
-        if (element.tagName.toLowerCase() == "input" && (element.type == "checkbox" || element.type == "radio")) {
+        if (element.tagName.toLowerCase() === "input" && (element.type === "checkbox" || element.type === "radio")) {
             ko.applyBindingAccessorsToNode(element, { 'checkedValue': valueAccessor });
             return;
         }
@@ -14,7 +14,7 @@ ko.bindingHandlers.value = {
         var elementValueBeforeEvent = null;
 
         if (requestedEventsToCatch) {
-            if (typeof requestedEventsToCatch == "string") // Allow both individual event names, and arrays of event names
+            if (typeof requestedEventsToCatch === "string") // Allow both individual event names, and arrays of event names
                 requestedEventsToCatch = [requestedEventsToCatch];
             ko.utils.arrayPushAll(eventsToCatch, requestedEventsToCatch);
             eventsToCatch = ko.utils.arrayGetDistinctValues(eventsToCatch);

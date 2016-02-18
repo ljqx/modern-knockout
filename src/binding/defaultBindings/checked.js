@@ -74,8 +74,8 @@ ko.bindingHandlers.checked = {
             }
         };
 
-        var isCheckbox = element.type == "checkbox",
-            isRadio = element.type == "radio";
+        var isCheckbox = element.type === "checkbox",
+            isRadio = element.type === "radio";
 
         // Only bind to check boxes and radio buttons
         if (!isCheckbox && !isRadio) {

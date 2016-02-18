@@ -5,7 +5,7 @@
         var tagNameLower = ko.utils.tagNameLower(node);
         if (ko.components.isRegistered(tagNameLower)) {
             // Try to determine that this node can be considered a *custom* element; see https://github.com/knockout/knockout/issues/1603
-            if (tagNameLower.indexOf('-') != -1 || ('' + node) == "[object HTMLUnknownElement]") {
+            if (tagNameLower.indexOf('-') !== -1 || ('' + node) === "[object HTMLUnknownElement]") {
                 return tagNameLower;
             }
         }

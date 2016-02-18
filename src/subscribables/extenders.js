@@ -23,7 +23,7 @@ ko.extenders = {
     'rateLimit': function(target, options) {
         var timeout, method, limitFunction;
 
-        if (typeof options == 'number') {
+        if (typeof options === 'number') {
             timeout = options;
         } else {
             timeout = options.timeout;
@@ -33,7 +33,7 @@ ko.extenders = {
         // rateLimit supersedes deferred updates
         target._deferUpdates = false;
 
-        limitFunction = method == 'notifyWhenChangesStop' ?  debounce : throttle;
+        limitFunction = method === 'notifyWhenChangesStop' ?  debounce : throttle;
         target.limit(function(callback) {
             return limitFunction(callback, timeout);
         });
@@ -58,7 +58,7 @@ ko.extenders = {
     },
 
     'notify': function(target, notifyWhen) {
-        target.equalityComparer = notifyWhen == "always" ?
+        target.equalityComparer = notifyWhen === "always" ?
             null :  // null equalityComparer means to always notify
             valuesArePrimitiveAndEqual;
     }
@@ -95,7 +95,7 @@ function applyExtenders(requestedExtenders) {
     if (requestedExtenders) {
         ko.utils.objectForEach(requestedExtenders, function(key, value) {
             var extenderHandler = ko.extenders[key];
-            if (typeof extenderHandler == 'function') {
+            if (typeof extenderHandler === 'function') {
                 target = extenderHandler(target, value) || target;
             }
         });

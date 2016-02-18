@@ -159,7 +159,7 @@ ko.subscribable.fn = ko_subscribable_fn;
 
 
 ko.isSubscribable = function (instance) {
-    return instance != null && typeof instance.subscribe == "function" && typeof instance.notifySubscribers == "function";
+    return instance != null && typeof instance.subscribe === "function" && typeof instance.notifySubscribers === "function";
 };
 
 ko.exportSymbol('subscribable', ko.subscribable);

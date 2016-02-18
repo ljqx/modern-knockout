@@ -17,7 +17,7 @@ ko.bindingHandlers.options = {
             return ko.utils.arrayFilter(element.options, function (node) { return node.selected; });
         }
 
-        var selectWasPreviouslyEmpty = element.length == 0,
+        var selectWasPreviouslyEmpty = element.length === 0,
             multiple = element.multiple,
             previousScrollTop = (!selectWasPreviouslyEmpty && multiple) ? element.scrollTop : null,
             unwrappedArray = ko.utils.unwrapObservable(valueAccessor()),
@@ -37,7 +37,7 @@ ko.bindingHandlers.options = {
         }
 
         if (unwrappedArray) {
-            if (typeof unwrappedArray.length == "undefined") // Coerce single value into array
+            if (typeof unwrappedArray.length === "undefined") // Coerce single value into array
                 unwrappedArray = [unwrappedArray];
 
             // Filter out any entries marked as destroyed
@@ -59,9 +59,9 @@ ko.bindingHandlers.options = {
 
         function applyToObject(object, predicate, defaultValue) {
             var predicateType = typeof predicate;
-            if (predicateType == "function")    // Given a function; run it against the data value
+            if (predicateType === "function")    // Given a function; run it against the data value
                 return predicate(object);
-            else if (predicateType == "string") // Given a string; treat it as a property name on the data value
+            else if (predicateType === "string") // Given a string; treat it as a property name on the data value
                 return object[predicate];
             else                                // Given no optionsText arg; use the data value itself
                 return defaultValue;
@@ -119,7 +119,7 @@ ko.bindingHandlers.options = {
         }
 
         var callback = setSelectionCallback;
-        if (allBindings.has('optionsAfterRender') && typeof allBindings.get('optionsAfterRender') == "function") {
+        if (allBindings.has('optionsAfterRender') && typeof allBindings.get('optionsAfterRender') === "function") {
             callback = function(arrayEntry, newOptions) {
                 setSelectionCallback(arrayEntry, newOptions);
                 ko.dependencyDetection.ignore(allBindings.get('optionsAfterRender'), null, [newOptions[0], arrayEntry !== captionPlaceholder ? arrayEntry : undefined]);

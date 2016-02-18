@@ -59,7 +59,7 @@ ko.bindingHandlers.textInput = {
         if (DEBUG && ko.bindingHandlers.textInput._forceUpdateOn) {
             // Provide a way for tests to specify exactly which events are bound
             ko.utils.arrayForEach(ko.bindingHandlers.textInput._forceUpdateOn, function(eventName) {
-                if (eventName.slice(0,5) == 'after') {
+                if (eventName.slice(0,5) === 'after') {
                     onEvent(eventName.slice(5), deferUpdateModel);
                 } else {
                     onEvent(eventName, updateModel);

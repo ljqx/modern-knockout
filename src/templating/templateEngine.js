@@ -37,13 +37,13 @@ ko.templateEngine.prototype.createJavaScriptEvaluatorBlock = function (script) {
 
 ko.templateEngine.prototype.makeTemplateSource = function(template, templateDocument) {
     // Named template
-    if (typeof template == "string") {
+    if (typeof template === "string") {
         templateDocument = templateDocument || document;
         var elem = templateDocument.getElementById(template);
         if (!elem)
             throw new Error("Cannot find template with ID " + template);
         return new ko.templateSources.domElement(elem);
-    } else if ((template.nodeType == Node.ELEMENT_NODE) || (template.nodeType == Node.COMMENT_NODE)) {
+    } else if ((template.nodeType === Node.ELEMENT_NODE) || (template.nodeType === Node.COMMENT_NODE)) {
         // Anonymous template
         return new ko.templateSources.anonymousTemplate(template);
     } else

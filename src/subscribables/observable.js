@@ -58,10 +58,10 @@ ko.isObservable = function (instance) {
 }
 ko.isWriteableObservable = function (instance) {
     // Observable
-    if ((typeof instance == 'function') && instance[protoProperty] === ko.observable)
+    if ((typeof instance === 'function') && instance[protoProperty] === ko.observable)
         return true;
     // Writeable dependent observable
-    if ((typeof instance == 'function') && (instance[protoProperty] === ko.dependentObservable) && (instance.hasWriteFunction))
+    if ((typeof instance === 'function') && (instance[protoProperty] === ko.dependentObservable) && (instance.hasWriteFunction))
         return true;
     // Anything else
     return false;
