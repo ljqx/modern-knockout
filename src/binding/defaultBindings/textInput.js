@@ -8,9 +8,7 @@ if (window && window.navigator) {
     };
 
     // Detect various browser versions because some old versions don't fully support the 'input' event
-    var operaVersion = window.opera && window.opera.version && parseInt(window.opera.version()),
-        userAgent = window.navigator.userAgent,
-        safariVersion = parseVersion(userAgent.match(/^(?:(?!chrome).)*version\/([^ ]*) safari/i));
+    var operaVersion = window.opera && window.opera.version && parseInt(window.opera.version());
 }
 
 ko.bindingHandlers['textInput'] = {
@@ -83,13 +81,7 @@ ko.bindingHandlers['textInput'] = {
               // through the user interface.
               onEvent('input', updateModel);
 
-              if (safariVersion < 5 && ko.utils.tagNameLower(element) === "textarea") {
-                  // Safari <5 doesn't fire the 'input' event for <textarea> elements (it does fire 'textInput'
-                  // but only when typing). So we'll just catch as much as we can with keydown, cut, and paste.
-                  onEvent('keydown', deferUpdateModel);
-                  onEvent('paste', deferUpdateModel);
-                  onEvent('cut', deferUpdateModel);
-              } else if (operaVersion < 11) {
+              if (operaVersion < 11) {
                   // Opera 10 doesn't always fire the 'input' event for cut, paste, undo & drop operations.
                   // We can try to catch some of those using 'keydown'.
                   onEvent('keydown', deferUpdateModel);
