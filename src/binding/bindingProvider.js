@@ -5,7 +5,7 @@
         this.bindingCache = {};
     };
 
-    ko.utils.extend(ko.bindingProvider.prototype, {
+    _.assign(ko.bindingProvider.prototype, {
         'nodeHasBindings': function(node) {
             switch (node.nodeType) {
                 case Node.ELEMENT_NODE: // Element

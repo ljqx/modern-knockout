@@ -433,7 +433,7 @@ describe('Binding dependencies', function() {
             ko.bindingHandlers.withProperties = {
                 init: function(element, valueAccessor, allBindings, viewModel, bindingContext) {
                     var childBindingContext = bindingContext.createChildContext(null, null, function(context) {
-                        ko.utils.extend(context, valueAccessor());
+                        _.assign(context, valueAccessor());
                     });
                     ko.applyBindingsToDescendants(childBindingContext, element);
                     return { controlsDescendantBindings: true };

@@ -7,17 +7,6 @@ ko.utils = (function () {
         }
     }
 
-    function extend(target, source) {
-        if (source) {
-            for(var prop in source) {
-                if(source.hasOwnProperty(prop)) {
-                    target[prop] = source[prop];
-                }
-            }
-        }
-        return target;
-    }
-
     function setPrototypeOf(obj, proto) {
         obj.__proto__ = proto;
         return obj;
@@ -107,8 +96,6 @@ ko.utils = (function () {
                     array.splice(existingEntryIndex, 1);
             }
         },
-
-        extend: extend,
 
         setPrototypeOf: setPrototypeOf,
 
@@ -468,7 +455,6 @@ ko.utils = (function () {
 ko.exportSymbol('utils', ko.utils);
 ko.exportSymbol('utils.arrayPushAll', ko.utils.arrayPushAll);
 ko.exportSymbol('utils.arrayRemoveItem', ko.utils.arrayRemoveItem);
-ko.exportSymbol('utils.extend', ko.utils.extend);
 ko.exportSymbol('utils.fieldsIncludedWithJsonPost', ko.utils.fieldsIncludedWithJsonPost);
 ko.exportSymbol('utils.getFormFields', ko.utils.getFormFields);
 ko.exportSymbol('utils.peekObservable', ko.utils.peekObservable);

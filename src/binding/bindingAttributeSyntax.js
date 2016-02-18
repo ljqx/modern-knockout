@@ -40,7 +40,7 @@
                     parentContext._subscribable();
 
                 // Copy $root and any custom properties from the parent context
-                ko.utils.extend(self, parentContext);
+                _.assign(self, parentContext);
 
                 // Because the above copy overwrites our own properties, we need to reset them.
                 self._subscribable = subscribable;
@@ -140,7 +140,7 @@
             // This "child" context doesn't directly track a parent observable view model,
             // so we need to manually set the $rawData value to match the parent.
             self.$rawData = parentContext.$rawData;
-            ko.utils.extend(self, typeof(properties) === "function" ? properties() : properties);
+            _.assign(self, typeof(properties) === "function" ? properties() : properties);
         });
     };
 

@@ -63,9 +63,9 @@ ko.computed = ko.dependentObservable = function (evaluatorFunctionOrOptions, eva
     if (options.pure) {
         state.pure = true;
         state.isSleeping = true;     // Starts off sleeping; will awake on the first subscription
-        ko.utils.extend(computedObservable, pureComputedOverrides);
+        _.assign(computedObservable, pureComputedOverrides);
     } else if (options.deferEvaluation) {
-        ko.utils.extend(computedObservable, deferEvaluationOverrides);
+        _.assign(computedObservable, deferEvaluationOverrides);
     }
 
     if (ko.options.deferUpdates) {
@@ -461,7 +461,7 @@ ko.pureComputed = function (evaluatorFunctionOrOptions, evaluatorFunctionTarget)
     if (typeof evaluatorFunctionOrOptions === 'function') {
         return ko.computed(evaluatorFunctionOrOptions, evaluatorFunctionTarget, {'pure':true});
     } else {
-        evaluatorFunctionOrOptions = ko.utils.extend({}, evaluatorFunctionOrOptions);   // make a copy of the parameter object
+        evaluatorFunctionOrOptions = _.clone(evaluatorFunctionOrOptions);
         evaluatorFunctionOrOptions.pure = true;
         return ko.computed(evaluatorFunctionOrOptions, evaluatorFunctionTarget);
     }
