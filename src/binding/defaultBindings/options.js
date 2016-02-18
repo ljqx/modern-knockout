@@ -30,7 +30,7 @@ ko.bindingHandlers.options = {
 
         if (!valueAllowUnset) {
             if (multiple) {
-                previousSelectedValues = ko.utils.arrayMap(selectedOptions(), ko.selectExtensions.readValue);
+                previousSelectedValues = _.map(selectedOptions(), ko.selectExtensions.readValue);
             } else if (element.selectedIndex >= 0) {
                 previousSelectedValues.push(ko.selectExtensions.readValue(element.options[element.selectedIndex]));
             }

@@ -71,20 +71,20 @@ jasmine.Matchers.prototype.toHaveOwnProperties = function (expectedProperties) {
 };
 
 jasmine.Matchers.prototype.toHaveTexts = function (expectedTexts) {
-    var texts = ko.utils.arrayMap(this.actual.childNodes, jasmine.nodeText);
+    var texts = _.map(this.actual.childNodes, jasmine.nodeText);
     this.actual = texts;   // Fix explanatory message
     return this.env.equals_(texts, expectedTexts);
 };
 
 jasmine.Matchers.prototype.toHaveValues = function (expectedValues) {
-    var values = ko.utils.arrayMap(this.actual.childNodes, function (node) { return node.value; });
+    var values = _.map(this.actual.childNodes, function (node) { return node.value; });
     this.actual = values;   // Fix explanatory message
     return this.env.equals_(values, expectedValues);
 };
 
 jasmine.Matchers.prototype.toHaveSelectedValues = function (expectedValues) {
     var selectedNodes = ko.utils.arrayFilter(this.actual.childNodes, function (node) { return node.selected; }),
-        selectedValues = ko.utils.arrayMap(selectedNodes, function (node) { return ko.selectExtensions.readValue(node); });
+        selectedValues = _.map(selectedNodes, function (node) { return ko.selectExtensions.readValue(node); });
     this.actual = selectedValues;   // Fix explanatory message
     return this.env.equals_(selectedValues, expectedValues);
 };

@@ -69,12 +69,12 @@ describe('Array to DOM node children mapping', function() {
         };
 
         ko.utils.setDomNodeChildrenFromArrayMapping(testNode, ["A", "B"], mapping);
-        expect(ko.utils.arrayMap(testNode.childNodes, function (x) { return x.innerHTML })).toEqual(["A", "B"]);
+        expect(_.map(testNode.childNodes, function (x) { return x.innerHTML })).toEqual(["A", "B"]);
         expect(mappingInvocations).toEqual(["A", "B"]);
 
         mappingInvocations = [];
         ko.utils.setDomNodeChildrenFromArrayMapping(testNode, ["first", "A", "middle1", "middle2", "B", "last"], mapping);
-        expect(ko.utils.arrayMap(testNode.childNodes, function (x) { return x.innerHTML })).toEqual(["first", "A", "middle1", "middle2", "B", "last"]);
+        expect(_.map(testNode.childNodes, function (x) { return x.innerHTML })).toEqual(["first", "A", "middle1", "middle2", "B", "last"]);
         expect(mappingInvocations).toEqual(["first", "middle1", "middle2", "last"]);
     });
 
@@ -88,12 +88,12 @@ describe('Array to DOM node children mapping', function() {
         };
 
         ko.utils.setDomNodeChildrenFromArrayMapping(testNode, ["first", "A", "middle1", "middle2", "B", "last"], mapping);
-        expect(ko.utils.arrayMap(testNode.childNodes, function (x) { return x.innerHTML })).toEqual(["first", "A", "middle1", "middle2", "B", "last"]);
+        expect(_.map(testNode.childNodes, function (x) { return x.innerHTML })).toEqual(["first", "A", "middle1", "middle2", "B", "last"]);
         expect(mappingInvocations).toEqual(["first", "A", "middle1", "middle2", "B", "last"]);
 
         mappingInvocations = [];
         ko.utils.setDomNodeChildrenFromArrayMapping(testNode, ["A", "B"], mapping);
-        expect(ko.utils.arrayMap(testNode.childNodes, function (x) { return x.innerHTML })).toEqual(["A", "B"]);
+        expect(_.map(testNode.childNodes, function (x) { return x.innerHTML })).toEqual(["A", "B"]);
         expect(mappingInvocations).toEqual([]);
     });
 
@@ -135,25 +135,25 @@ describe('Array to DOM node children mapping', function() {
         }
 
         ko.utils.setDomNodeChildrenFromArrayMapping(testNode, ["A"], mapping, null, callback);
-        expect(ko.utils.arrayMap(testNode.childNodes, function (x) { return x.innerHTML })).toEqual(["A"]);
+        expect(_.map(testNode.childNodes, function (x) { return x.innerHTML })).toEqual(["A"]);
         expect(mappingInvocations).toEqual(["A"]);
         expect(countCallbackInvocations).toEqual(mappingInvocations.length);
 
         mappingInvocations = [], countCallbackInvocations = 0;
         ko.utils.setDomNodeChildrenFromArrayMapping(testNode, ["B"], mapping, null, callback); // Delete and replace single item
-        expect(ko.utils.arrayMap(testNode.childNodes, function (x) { return x.innerHTML })).toEqual(["B"]);
+        expect(_.map(testNode.childNodes, function (x) { return x.innerHTML })).toEqual(["B"]);
         expect(mappingInvocations).toEqual(["B"]);
         expect(countCallbackInvocations).toEqual(mappingInvocations.length);
 
         mappingInvocations = [], countCallbackInvocations = 0;
         ko.utils.setDomNodeChildrenFromArrayMapping(testNode, ["A", "B", "C"], mapping, null, callback); // Add at beginning and end
-        expect(ko.utils.arrayMap(testNode.childNodes, function (x) { return x.innerHTML })).toEqual(["A", "B", "C"]);
+        expect(_.map(testNode.childNodes, function (x) { return x.innerHTML })).toEqual(["A", "B", "C"]);
         expect(mappingInvocations).toEqual(["A", "C"]);
         expect(countCallbackInvocations).toEqual(mappingInvocations.length);
 
         mappingInvocations = [], countCallbackInvocations = 0;
         ko.utils.setDomNodeChildrenFromArrayMapping(testNode, ["C", "B", "A"], mapping, null, callback); // Move items
-        expect(ko.utils.arrayMap(testNode.childNodes, function (x) { return x.innerHTML })).toEqual(["C", "B", "A"]);
+        expect(_.map(testNode.childNodes, function (x) { return x.innerHTML })).toEqual(["C", "B", "A"]);
         expect(mappingInvocations).toEqual([]);
         expect(countCallbackInvocations).toEqual(mappingInvocations.length);
 
@@ -166,14 +166,14 @@ describe('Array to DOM node children mapping', function() {
             callback(arrayItem, nodes);
         };
         ko.utils.setDomNodeChildrenFromArrayMapping(testNode, [observable, null, "B"], mapping, null, callback2); // Add to beginning; delete from end
-        expect(ko.utils.arrayMap(testNode.childNodes, function (x) { return x.innerHTML })).toEqual(["1", "null", "B"]);
+        expect(_.map(testNode.childNodes, function (x) { return x.innerHTML })).toEqual(["1", "null", "B"]);
         expect(mappingInvocations).toEqual([observable, null]);
         expect(countCallbackInvocations).toEqual(mappingInvocations.length);
 
         // Change the value of the mapped observable and verify that the DOM is updated
         mappingInvocations = [], countCallbackInvocations = 0;
         observable(2);
-        expect(ko.utils.arrayMap(testNode.childNodes, function (x) { return x.innerHTML })).toEqual(["2", "null", "B"]);
+        expect(_.map(testNode.childNodes, function (x) { return x.innerHTML })).toEqual(["2", "null", "B"]);
         expect(mappingInvocations).toEqual([observable]);
         expect(countCallbackInvocations).toEqual(mappingInvocations.length);
 

@@ -85,39 +85,6 @@ describe('arrayGetDistinctValues', function () {
     });
 });
 
-describe('arrayMap', function () {
-    it('Should return the array with every element transformed by the map function', function () {
-        var appendIndex = function (x, i) {
-            return x + i;
-        };
-
-        var result = ko.utils.arrayMap(["a", "b", "c"], appendIndex);
-
-        expect(result).toEqual(["a0", "b1", "c2"]);
-    });
-
-    it('Should return empty arrays for empty arrays, and not call the map function', function () {
-        var mapFunction = jasmine.createSpy('mapFunction');
-
-        var result = ko.utils.arrayMap([], mapFunction);
-
-        expect(result).toEqual([]);
-        expect(mapFunction).not.toHaveBeenCalled();
-    });
-
-    it('Should copy the array before returning it', function () {
-        var identityFunction = function(x) {
-            return x;
-        }
-
-        var input = ["a", "b", "c"];
-        var result = ko.utils.arrayMap(input, identityFunction);
-
-        expect(result).toEqual(input);
-        expect(result).not.toBe(input);
-    });
-});
-
 describe('arrayFilter', function () {
     it('Should filter the array to only show matching members', function () {
         var evenOnly = function (x, i) {
