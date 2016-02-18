@@ -264,7 +264,7 @@
                         cyclicDependencyStack.push(bindingKey);
                         _.each(binding.after, function(bindingDependencyKey) {
                             if (bindings[bindingDependencyKey]) {
-                                if (ko.utils.arrayIndexOf(cyclicDependencyStack, bindingDependencyKey) !== -1) {
+                                if (_.includes(cyclicDependencyStack, bindingDependencyKey)) {
                                     throw Error("Cannot combine the following bindings, because they have a cyclic dependency: " + cyclicDependencyStack.join(", "));
                                 } else {
                                     pushBinding(bindingDependencyKey);

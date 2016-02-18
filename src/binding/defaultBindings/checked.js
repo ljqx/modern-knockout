@@ -64,7 +64,7 @@ ko.bindingHandlers.checked = {
 
             if (valueIsArray) {
                 // When a checkbox is bound to an array, being checked represents its value being present in that array
-                element.checked = ko.utils.arrayIndexOf(modelValue, checkedValue()) >= 0;
+                element.checked = _.includes(modelValue, checkedValue());
             } else if (isCheckbox) {
                 // When a checkbox is bound to any other value (not an array), being checked represents the value being trueish
                 element.checked = modelValue;

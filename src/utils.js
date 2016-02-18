@@ -78,15 +78,6 @@ ko.utils = (function () {
     return {
         fieldsIncludedWithJsonPost: ['authenticity_token', /^__RequestVerificationToken(_.*)?$/],
 
-        arrayIndexOf: function (array, item) {
-            if (typeof Array.prototype.indexOf === "function")
-                return Array.prototype.indexOf.call(array, item);
-            for (var i = 0, j = array.length; i < j; i++)
-                if (array[i] === item)
-                    return i;
-            return -1;
-        },
-
         arrayFirst: function (array, predicate, predicateOwner) {
             for (var i = 0, j = array.length; i < j; i++)
                 if (predicate.call(predicateOwner, array[i], i))
@@ -95,7 +86,7 @@ ko.utils = (function () {
         },
 
         arrayRemoveItem: function (array, itemToRemove) {
-            var index = ko.utils.arrayIndexOf(array, itemToRemove);
+            var index = _.indexOf(array, itemToRemove);
             if (index > 0) {
                 array.splice(index, 1);
             }
@@ -108,7 +99,7 @@ ko.utils = (function () {
             array = array || [];
             var result = [];
             for (var i = 0, j = array.length; i < j; i++) {
-                if (ko.utils.arrayIndexOf(result, array[i]) < 0)
+                if (!_.includes(result, array[i]))
                     result.push(array[i]);
             }
             return result;
@@ -141,7 +132,7 @@ ko.utils = (function () {
         },
 
         addOrRemoveItem: function(array, value, included) {
-            var existingEntryIndex = ko.utils.arrayIndexOf(ko.utils.peekObservable(array), value);
+            var existingEntryIndex = _.indexOf(ko.utils.peekObservable(array), value);
             if (existingEntryIndex < 0) {
                 if (included)
                     array.push(value);
@@ -512,7 +503,6 @@ ko.exportSymbol('utils', ko.utils);
 ko.exportSymbol('utils.arrayFirst', ko.utils.arrayFirst);
 ko.exportSymbol('utils.arrayFilter', ko.utils.arrayFilter);
 ko.exportSymbol('utils.arrayGetDistinctValues', ko.utils.arrayGetDistinctValues);
-ko.exportSymbol('utils.arrayIndexOf', ko.utils.arrayIndexOf);
 ko.exportSymbol('utils.arrayMap', ko.utils.arrayMap);
 ko.exportSymbol('utils.arrayPushAll', ko.utils.arrayPushAll);
 ko.exportSymbol('utils.arrayRemoveItem', ko.utils.arrayRemoveItem);

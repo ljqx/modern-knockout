@@ -29,28 +29,6 @@ describe('unwrapObservable', function() {
     });
 });
 
-describe('arrayIndexOf', function () {
-    it('Should return the index if the element is found in the input array', function () {
-        var result = ko.utils.arrayIndexOf(["a", "b", "c"], "b");
-        expect(result).toBe(1);
-    });
-
-    it('Should return -1 for empty arrays', function () {
-        var result = ko.utils.arrayIndexOf([], "a");
-        expect(result).toBe(-1);
-    });
-
-    it('Should return -1 if the element is not found', function () {
-        var result = ko.utils.arrayIndexOf(["a", "b", "c"], "d");
-        expect(result).toBe(-1);
-    });
-
-    it('Should return the first index if the element is found twice', function () {
-        var result = ko.utils.arrayIndexOf(["a", "b", "c", "c"], "c");
-        expect(result).toBe(2);
-    });
-});
-
 describe('arrayRemoveItem', function () {
     it('Should remove the matching element if found', function () {
         var input = ["a", "b", "c"];

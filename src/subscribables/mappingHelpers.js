@@ -77,7 +77,7 @@
     objectLookup.prototype = {
         constructor: objectLookup,
         save: function(key, value) {
-            var existingIndex = ko.utils.arrayIndexOf(this.keys, key);
+            var existingIndex = _.indexOf(this.keys, key);
             if (existingIndex >= 0)
                 this.values[existingIndex] = value;
             else {
@@ -86,7 +86,7 @@
             }
         },
         get: function(key) {
-            var existingIndex = ko.utils.arrayIndexOf(this.keys, key);
+            var existingIndex = _.indexOf(this.keys, key);
             return (existingIndex >= 0) ? this.values[existingIndex] : undefined;
         }
     };

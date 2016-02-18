@@ -45,7 +45,7 @@ ko.observableArray.fn = {
         if (!arrayOfValues)
             return [];
         return this.remove(function (value) {
-            return ko.utils.arrayIndexOf(arrayOfValues, value) >= 0;
+            return _.includes(arrayOfValues, value);
         });
     },
 
@@ -70,13 +70,13 @@ ko.observableArray.fn = {
         if (!arrayOfValues)
             return [];
         return this.destroy(function (value) {
-            return ko.utils.arrayIndexOf(arrayOfValues, value) >= 0;
+            return _.includes(arrayOfValues, value);
         });
     },
 
     'indexOf': function (item) {
         var underlyingArray = this();
-        return ko.utils.arrayIndexOf(underlyingArray, item);
+        return _.indexOf(underlyingArray, item);
     },
 
     'replace': function(oldItem, newItem) {
