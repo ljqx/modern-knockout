@@ -12,9 +12,9 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/knockout/knockout.git"
+    "url": "https://github.com/ljqx/modern-knockout.git"
   },
-  "bugs": "https://github.com/knockout/knockout/issues",
+  "bugs": "https://github.com/ljqx/modern-knockout/issues",
   "testling": {
     "preprocess": "build/build.sh",
     "html": "spec/runner.html?src=build/output/knockout-latest.js&testling=true",

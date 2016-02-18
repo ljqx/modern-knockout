@@ -25,7 +25,8 @@ describe('Binding: Attr', function() {
         if (testNode.childNodes[0].outerHTML) { // Old Firefox doesn't support outerHTML
             expect(testNode.childNodes[0].outerHTML).toNotMatch('name="?([^">]+)');
         }
-        expect(testNode.childNodes[0].getAttribute("name")).toEqual("");
+        var name = testNode.childNodes[0].getAttribute("name");
+        expect(name === null || name === '').toEqual(true);
     });
 
     it('Should respond to changes in an observable value', function() {
