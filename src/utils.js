@@ -197,13 +197,6 @@ ko.utils = (function () {
             optionNode.selected = isSelected;
         },
 
-        stringStartsWith: function (string, startsWith) {
-            string = string || "";
-            if (startsWith.length > string.length)
-                return false;
-            return string.substring(0, startsWith.length) === startsWith;
-        },
-
         domNodeIsContainedBy: function (node, containedByNode) {
             if (node === containedByNode)
                 return true;
@@ -259,7 +252,7 @@ ko.utils = (function () {
         registerEventHandler: function (element, eventType, handler) {
             var wrappedHandler = ko.utils.catchFunctionErrors(handler);
 
-            if (!ko.options.useOnlyNativeEvents && jQueryInstance) {
+            if (!ko.options.useOnlyNativeEvents) {
                 jQueryInstance(element).bind(eventType, wrappedHandler);
             } else if (typeof element.addEventListener === "function")
                 element.addEventListener(eventType, wrappedHandler, false);
@@ -287,7 +280,7 @@ ko.utils = (function () {
             // In both cases, we'll use the click method instead.
             var useClickWorkaround = isClickOnCheckableElement(element, eventType);
 
-            if (!ko.options.useOnlyNativeEvents && jQueryInstance && !useClickWorkaround) {
+            if (!ko.options.useOnlyNativeEvents && !useClickWorkaround) {
                 jQueryInstance(element).trigger(eventType);
             } else if (typeof document.createEvent === "function") {
                 if (typeof element.dispatchEvent === "function") {

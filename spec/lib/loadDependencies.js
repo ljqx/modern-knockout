@@ -9,9 +9,9 @@
     var dependencies = {
         // All specs should pass with or without jQuery+Modernizr being referenced
         jquery: {
-            url: "http://code.jquery.com/jquery-1.11.3.js",
-            include: false,
-            versionString: "1.11.3"
+            url: "lib/jquery-2.2.0.min.js",
+            include: true,
+            versionString: "2.2.0"
         },
         modernizr: {
             url: "http://modernizr.com/downloads/modernizr-latest.js",

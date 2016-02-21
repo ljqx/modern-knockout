@@ -401,24 +401,14 @@ describe('Components: Custom elements', function() {
 
     it('Can nest custom elements', function() {
         // Note that, for custom elements to work properly on IE < 9, you *must*:
-        // (1) Reference jQuery
-        // (2) Register any component that will be used as a custom element
+        //     Register any component that will be used as a custom element
         //     (e.g., ko.components.register(...)) *before* the browser parses any
         //     markup containing that custom element
         //
-        // The reason for (2) is the same as the well-known issue that IE < 9 cannot
+        // The reason is the same as the well-known issue that IE < 9 cannot
         // parse markup containing HTML5 elements unless you've already called
         // document.createElement(thatElementName) first. Our old-IE compatibility
         // code causes this to happen automatically for all registered components.
-        //
-        // The reason for (1) is that KO's built-in simpleHtmlParse logic uses .innerHTML
-        // on a <div> that is not attached to any document, which means the trick from
-        // (1) does not work. Referencing jQuery overrides the HTML parsing logic to
-        // uses jQuery's, which uses a temporary document fragment, and our old-IE compatibility
-        // code has patched createDocumentFragment to enable preregistered components
-        // to act as custom elements in that document fragment. If we wanted, we could
-        // amend simpleHtmlParse to use a document fragment, but it seems unlikely that
-        // anyone targetting IE < 9 would not be using jQuery.
 
         this.after(function() {
             ko.components.unregister('outer-component');
