@@ -16,8 +16,8 @@ ko.utils = (function () {
 
     // Represent the known event types in a compact way, then at runtime transform it into a hash with event name as key (for fast lookup)
     var knownEvents = {}, knownEventTypesByEventName = {};
-    var keyEventTypeName = (navigator && /Firefox\/2/i.test(navigator.userAgent)) ? 'KeyboardEvent' : 'UIEvents';
-    knownEvents[keyEventTypeName] = ['keyup', 'keydown', 'keypress'];
+
+    knownEvents.UIEvents = ['keyup', 'keydown', 'keypress'];
     knownEvents.MouseEvents = ['click', 'dblclick', 'mousedown', 'mouseup', 'mousemove', 'mouseover', 'mouseout', 'mouseenter', 'mouseleave'];
     _.forOwn(knownEvents, function(knownEventsForType, eventType) {
         if (knownEventsForType.length) {
