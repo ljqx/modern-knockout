@@ -42,14 +42,14 @@ ko.bindingHandlers.options = {
 
             // Filter out any entries marked as destroyed
             filteredArray = _.filter(unwrappedArray, function(item) {
-                return includeDestroyed || item === undefined || item === null || !ko.utils.unwrapObservable(item._destroy);
+                return includeDestroyed || _.isNil(item) || !ko.utils.unwrapObservable(item._destroy);
             });
 
             // If caption is included, add it to the array
             if (allBindings.has('optionsCaption')) {
                 captionValue = ko.utils.unwrapObservable(allBindings.get('optionsCaption'));
                 // If caption value is null or undefined, don't show a caption
-                if (captionValue !== null && captionValue !== undefined) {
+                if (!_.isNil(captionValue)) {
                     filteredArray.unshift(captionPlaceholder);
                 }
             }

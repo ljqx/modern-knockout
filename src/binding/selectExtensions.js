@@ -53,7 +53,7 @@
                     }
                     break;
                 default:
-                    if ((value === null) || (value === undefined))
+                    if (_.isNil(value))
                         value = "";
                     element.value = value;
                     break;

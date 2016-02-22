@@ -289,7 +289,7 @@ ko.utils = (function () {
 
         setTextContent: function(element, textContent) {
             var value = ko.utils.unwrapObservable(textContent);
-            if ((value === null) || (value === undefined))
+            if (_.isNil(value))
                 value = "";
 
             // We need there to be exactly one child: a text node.

@@ -4,7 +4,7 @@ ko.bindingHandlers.style = {
         _.forOwn(value, function(styleValue, styleName) {
             styleValue = ko.utils.unwrapObservable(styleValue);
 
-            if (styleValue === null || styleValue === undefined || styleValue === false) {
+            if (_.isNil(styleValue) || styleValue === false) {
                 // Empty string removes the value, whereas null/undefined have no effect
                 styleValue = "";
             }

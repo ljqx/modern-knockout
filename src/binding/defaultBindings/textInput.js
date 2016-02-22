@@ -35,7 +35,7 @@ ko.bindingHandlers.textInput = {
         var updateView = function () {
             var modelValue = ko.utils.unwrapObservable(valueAccessor());
 
-            if (modelValue === null || modelValue === undefined) {
+            if (_.isNil(modelValue)) {
                 modelValue = '';
             }
 
