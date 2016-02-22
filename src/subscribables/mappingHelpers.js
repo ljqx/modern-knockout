@@ -24,7 +24,7 @@
         visitedObjects = visitedObjects || new objectLookup();
 
         rootObject = mapInputCallback(rootObject);
-        var canHaveProperties = (typeof rootObject === "object") && (rootObject !== null) && (rootObject !== undefined) && (!(rootObject instanceof RegExp)) && (!(rootObject instanceof Date)) && (!(rootObject instanceof String)) && (!(rootObject instanceof Number)) && (!(rootObject instanceof Boolean));
+        var canHaveProperties = _.isObjectLike(rootObject) && !_.isRegExp(rootObject) && !_.isDate(rootObject) && !_.isString(rootObject) && !_.isNumber(rootObject) && !_.isBoolean(rootObject);
         if (!canHaveProperties)
             return rootObject;
 

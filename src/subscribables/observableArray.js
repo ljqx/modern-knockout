@@ -1,7 +1,7 @@
 ko.observableArray = function (initialValues) {
     initialValues = initialValues || [];
 
-    if (typeof initialValues !== 'object' || !('length' in initialValues))
+    if (!_.isArrayLike(initialValues))
         throw new Error("The argument passed when initializing an observable array must be an array, or null, or undefined.");
 
     var result = ko.observable(initialValues);

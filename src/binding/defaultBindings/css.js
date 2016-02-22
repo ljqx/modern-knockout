@@ -11,7 +11,7 @@ ko.bindingHandlers.class = {
 ko.bindingHandlers.css = {
     'update': function (element, valueAccessor) {
         var value = ko.utils.unwrapObservable(valueAccessor());
-        if (value !== null && typeof value === "object") {
+        if (_.isObjectLike(value)) {
             _.forOwn(value, function(shouldHaveClass, className) {
                 shouldHaveClass = ko.utils.unwrapObservable(shouldHaveClass);
                 ko.utils.toggleDomNodeCssClass(element, className, shouldHaveClass);

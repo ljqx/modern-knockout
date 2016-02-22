@@ -37,7 +37,7 @@ ko.bindingHandlers.options = {
         }
 
         if (unwrappedArray) {
-            if (typeof unwrappedArray.length === "undefined") // Coerce single value into array
+            if (!_.isArrayLike(unwrappedArray)) // Coerce single value into array
                 unwrappedArray = [unwrappedArray];
 
             // Filter out any entries marked as destroyed

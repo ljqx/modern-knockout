@@ -40,7 +40,7 @@ ko.utils = (function () {
     function toggleDomNodeCssClass(node, classNames, shouldHaveClass) {
         var addOrRemoveFn;
         if (classNames) {
-            if (typeof node.classList === 'object') {
+            if (_.isObject(node.classList)) {
                 addOrRemoveFn = node.classList[shouldHaveClass ? 'add' : 'remove'];
                 _.each(classNames.match(cssClassNameRegex), function(className) {
                     addOrRemoveFn.call(node.classList, className);
@@ -282,8 +282,8 @@ ko.utils = (function () {
 
             if (!ko.options.useOnlyNativeEvents && !useClickWorkaround) {
                 jQueryInstance(element).trigger(eventType);
-            } else if (typeof document.createEvent === "function") {
-                if (typeof element.dispatchEvent === "function") {
+            } else if (_.isFunction(document.createEvent)) {
+                if (_.isFunction(element.dispatchEvent)) {
                     var eventCategory = knownEventTypesByEventName[eventType] || "HTMLEvents";
                     var event = document.createEvent(eventCategory);
                     event.initEvent(eventType, true, true, window, 0, 0, 0, 0, 0, false, false, false, false, 0, element);
@@ -381,7 +381,7 @@ ko.utils = (function () {
             var url = urlOrForm;
 
             // If we were given a form, use its 'action' URL and pick out any requested field values
-            if((typeof urlOrForm === 'object') && (ko.utils.tagNameLower(urlOrForm) === "form")) {
+            if(ko.utils.tagNameLower(urlOrForm) === "form") {
                 var originalForm = urlOrForm;
                 url = originalForm.action;
                 for (var i = includeFields.length - 1; i >= 0; i--) {

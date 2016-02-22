@@ -10,7 +10,7 @@ ko.templateRewriting = (function () {
             if (allValidators.hasOwnProperty(key)) {
                 var validator = allValidators[key];
 
-                if (typeof validator === "function") {
+                if (_.isFunction(validator)) {
                     var possibleErrorMessage = validator(keyValueArray[i].value);
                     if (possibleErrorMessage)
                         throw new Error(possibleErrorMessage);

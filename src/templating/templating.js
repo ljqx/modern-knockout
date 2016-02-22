@@ -86,7 +86,7 @@
         var renderedNodesArray = templateEngineToUse.renderTemplate(template, bindingContext, options, templateDocument);
 
         // Loosely check result is an array of DOM nodes
-        if ((typeof renderedNodesArray.length !== "number") || (renderedNodesArray.length > 0 && typeof renderedNodesArray[0].nodeType !== "number"))
+        if (!_.isArrayLike(renderedNodesArray) || (renderedNodesArray.length > 0 && typeof renderedNodesArray[0].nodeType !== "number"))
             throw new Error("Template engine must return an array of DOM nodes");
 
         var haveAddedNodesToParent = false;
@@ -118,7 +118,7 @@
         if (ko.isObservable(template)) {
             // 1. An observable, with string value
             return template();
-        } else if (typeof template === 'function') {
+        } else if (_.isFunction(template)) {
             // 2. A function of (data, context) returning a string
             return template(data, context);
         } else {
@@ -194,7 +194,7 @@
 
         return ko.dependentObservable(function () {
             var unwrappedArray = ko.utils.unwrapObservable(arrayOrObservableArray) || [];
-            if (typeof unwrappedArray.length === "undefined") // Coerce single value into array
+            if (!_.isArrayLike(unwrappedArray)) // Coerce single value into array
                 unwrappedArray = [unwrappedArray];
 
             // Filter out any entries marked as destroyed
@@ -212,7 +212,7 @@
     var templateComputedDomDataKey = ko.utils.domData.nextKey();
     function disposeOldComputedAndStoreNewOne(element, newComputed) {
         var oldComputed = ko.utils.domData.get(element, templateComputedDomDataKey);
-        if (oldComputed && (typeof(oldComputed.dispose) === 'function'))
+        if (oldComputed && _.isFunction(oldComputed.dispose))
             oldComputed.dispose();
         ko.utils.domData.set(element, templateComputedDomDataKey, (newComputed && newComputed.isActive()) ? newComputed : undefined);
     }
