@@ -23,7 +23,7 @@ ko.extenders = {
     'rateLimit': function(target, options) {
         var timeout, method, limitFunction;
 
-        if (typeof options === 'number') {
+        if (_.isNumber(options)) {
             timeout = options;
         } else {
             timeout = options.timeout;
@@ -64,10 +64,8 @@ ko.extenders = {
     }
 };
 
-var primitiveTypes = { 'undefined':1, 'boolean':1, 'number':1, 'string':1 };
 function valuesArePrimitiveAndEqual(a, b) {
-    var oldValueIsPrimitive = (a === null) || (typeof(a) in primitiveTypes);
-    return oldValueIsPrimitive ? (a === b) : false;
+    return !_.isObject(a) && a === b;
 }
 
 function throttle(callback, timeout) {
