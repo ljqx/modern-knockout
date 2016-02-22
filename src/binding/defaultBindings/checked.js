@@ -83,7 +83,7 @@ ko.bindingHandlers.checked = {
         }
 
         var rawValue = valueAccessor(),
-            valueIsArray = isCheckbox && (ko.utils.unwrapObservable(rawValue) instanceof Array),
+            valueIsArray = isCheckbox && _.isArray(ko.utils.unwrapObservable(rawValue)),
             rawValueIsNonArrayObservable = !(valueIsArray && rawValue.push && rawValue.splice),
             oldElemValue = valueIsArray ? checkedValue() : undefined,
             useCheckedValue = isRadio || valueIsArray;

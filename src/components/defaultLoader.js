@@ -103,7 +103,7 @@
         if (_.isString(templateConfig)) {
             // Markup - parse it
             callback(ko.utils.parseHtmlFragment(templateConfig));
-        } else if (templateConfig instanceof Array) {
+        } else if (_.isArray(templateConfig)) {
             // Assume already an array of DOM nodes - pass through unchanged
             callback(templateConfig);
         } else if (isDocumentFragment(templateConfig)) {

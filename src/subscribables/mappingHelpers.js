@@ -28,7 +28,7 @@
         if (!canHaveProperties)
             return rootObject;
 
-        var outputProperties = rootObject instanceof Array ? [] : {};
+        var outputProperties = _.isArray(rootObject) ? [] : {};
         visitedObjects.save(rootObject, outputProperties);
 
         visitPropertiesOrArrayEntries(rootObject, function(indexer) {
@@ -55,7 +55,7 @@
     }
 
     function visitPropertiesOrArrayEntries(rootObject, visitorCallback) {
-        if (rootObject instanceof Array) {
+        if (_.isArray(rootObject)) {
             for (var i = 0; i < rootObject.length; i++)
                 visitorCallback(i);
 
