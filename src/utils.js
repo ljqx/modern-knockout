@@ -254,20 +254,9 @@ ko.utils = (function () {
 
             if (!ko.options.useOnlyNativeEvents) {
                 jQueryInstance(element).bind(eventType, wrappedHandler);
-            } else if (_.isFunction(element.addEventListener))
-                element.addEventListener(eventType, wrappedHandler, false);
-            else if (typeof element.attachEvent !== "undefined") {
-                var attachEventHandler = function (event) { wrappedHandler.call(element, event); },
-                    attachEventName = "on" + eventType;
-                element.attachEvent(attachEventName, attachEventHandler);
-
-                // IE does not dispose attachEvent handlers automatically (unlike with addEventListener)
-                // so to avoid leaks, we have to remove them manually. See bug #856
-                ko.utils.domNodeDisposal.addDisposeCallback(element, function() {
-                    element.detachEvent(attachEventName, attachEventHandler);
-                });
-            } else
-                throw new Error("Browser doesn't support addEventListener or attachEvent");
+            } else {
+              element.addEventListener(eventType, wrappedHandler, false);
+            }
         },
 
         triggerEvent: function (element, eventType) {
