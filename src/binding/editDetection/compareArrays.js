@@ -24,7 +24,7 @@ ko.utils.compareArrays = (function () {
     function compareArrays(oldArray, newArray, options) {
         // For backward compatibility, if the third arg is actually a bool, interpret
         // it as the old parameter 'dontLimitMoves'. Newer code should use { dontLimitMoves: true }.
-        options = (typeof options === 'boolean') ? { 'dontLimitMoves': options } : (options || {});
+        options = _.isBoolean(options) ? { 'dontLimitMoves': options } : (options || {});
         oldArray = oldArray || [];
         newArray = newArray || [];
 

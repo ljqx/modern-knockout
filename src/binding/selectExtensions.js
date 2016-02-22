@@ -35,7 +35,7 @@
                             element[hasDomDataExpandoProperty] = true;
 
                             // Special treatment of numbers is just for backward compatibility. KO 1.2.1 wrote numerical values to element.value.
-                            element.value = typeof value === "number" ? value : "";
+                            element.value = _.isNumber(value) ? value : "";
                             break;
                     }
                     break;
