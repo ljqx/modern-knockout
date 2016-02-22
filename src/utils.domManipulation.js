@@ -30,8 +30,8 @@
         // There's no legitimate reason to display a stringified observable without unwrapping it, so we'll unwrap it
         html = ko.utils.unwrapObservable(html);
 
-        if ((html !== null) && (html !== undefined)) {
-            if (typeof html !== 'string')
+        if (!_.isNil(html)) {
+            if (!_.isString(html))
                 html = html.toString();
 
             jQueryInstance(node).html(html);

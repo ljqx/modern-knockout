@@ -45,7 +45,7 @@ ko.utils = (function () {
                 _.each(classNames.match(cssClassNameRegex), function(className) {
                     addOrRemoveFn.call(node.classList, className);
                 });
-            } else if (typeof node.className.baseVal === 'string') {
+            } else if (_.isString(node.className.baseVal)) {
                 // SVG tag .classNames is an SVGAnimatedString instance
                 toggleObjectClassPropertyString(node.className, 'baseVal', classNames, shouldHaveClass);
             } else {
@@ -345,7 +345,7 @@ ko.utils = (function () {
 
         getFormFields: function(form, fieldName) {
             var fields = _.toArray(form.getElementsByTagName("input")).concat(_.toArray(form.getElementsByTagName("textarea")));
-            var isMatchingField = (typeof fieldName === 'string')
+            var isMatchingField = _.isString(fieldName)
                 ? function(field) { return field.name === fieldName }
                 : function(field) { return fieldName.test(field.name) }; // Treat fieldName as regex or object containing predicate
             var matches = [];
@@ -357,7 +357,7 @@ ko.utils = (function () {
         },
 
         parseJson: function (jsonString) {
-            if (typeof jsonString === "string") {
+            if (_.isString(jsonString)) {
                 jsonString = _.trim(jsonString);
                 if (jsonString) {
                     if (JSON && JSON.parse) // Use native parsing where available

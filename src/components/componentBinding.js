@@ -23,7 +23,7 @@
                 var value = ko.utils.unwrapObservable(valueAccessor()),
                     componentName, componentParams;
 
-                if (typeof value === 'string') {
+                if (_.isString(value)) {
                     componentName = value;
                 } else {
                     componentName = ko.utils.unwrapObservable(value.name);

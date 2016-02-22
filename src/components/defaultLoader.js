@@ -100,7 +100,7 @@
     }
 
     function resolveTemplate(errorCallback, templateConfig, callback) {
-        if (typeof templateConfig === 'string') {
+        if (_.isString(templateConfig)) {
             // Markup - parse it
             callback(ko.utils.parseHtmlFragment(templateConfig));
         } else if (templateConfig instanceof Array) {
@@ -114,7 +114,7 @@
             if (isDomElement(element)) {
                 // Element instance - copy its child nodes
                 callback(cloneNodesFromTemplateSourceElement(element));
-            } else if (typeof element === 'string') {
+            } else if (_.isString(element)) {
                 // Element ID - find it, then copy its child nodes
                 var elemInstance = document.getElementById(element);
                 if (elemInstance) {
@@ -192,7 +192,7 @@
     }
 
     function possiblyGetConfigFromAmd(errorCallback, config, callback) {
-        if (typeof config.require === 'string') {
+        if (_.isString(config.require)) {
             // The config is the value of an AMD module
             if (amdRequire || window.require) {
                 (amdRequire || window.require)([config.require], callback);

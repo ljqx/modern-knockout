@@ -37,7 +37,7 @@ ko.templateEngine.prototype.createJavaScriptEvaluatorBlock = function (script) {
 
 ko.templateEngine.prototype.makeTemplateSource = function(template, templateDocument) {
     // Named template
-    if (typeof template === "string") {
+    if (_.isString(template)) {
         templateDocument = templateDocument || document;
         var elem = templateDocument.getElementById(template);
         if (!elem)

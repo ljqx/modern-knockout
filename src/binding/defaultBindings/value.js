@@ -14,7 +14,7 @@ ko.bindingHandlers.value = {
         var elementValueBeforeEvent = null;
 
         if (requestedEventsToCatch) {
-            if (typeof requestedEventsToCatch === "string") // Allow both individual event names, and arrays of event names
+            if (_.isString(requestedEventsToCatch)) // Allow both individual event names, and arrays of event names
                 requestedEventsToCatch = [requestedEventsToCatch];
             eventsToCatch = _.union(eventsToCatch, requestedEventsToCatch);
         }

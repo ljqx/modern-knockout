@@ -130,7 +130,7 @@ ko.expressionRewriting = (function () {
             propertyAccessorResultStrings = [],
             makeValueAccessors = bindingOptions.valueAccessors,
             bindingParams = bindingOptions.bindingParams,
-            keyValueArray = typeof bindingsStringOrKeyValueArray === "string" ?
+            keyValueArray = _.isString(bindingsStringOrKeyValueArray) ?
                 parseObjectLiteral(bindingsStringOrKeyValueArray) : bindingsStringOrKeyValueArray;
 
         _.each(keyValueArray, function(keyValue) {

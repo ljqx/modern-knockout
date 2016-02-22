@@ -221,7 +221,7 @@
         'init': function(element, valueAccessor) {
             // Support anonymous templates
             var bindingValue = ko.utils.unwrapObservable(valueAccessor());
-            if (typeof bindingValue === "string" || bindingValue.name) {
+            if (_.isString(bindingValue) || bindingValue.name) {
                 // It's a named template - clear the element
                 ko.virtualElements.emptyNode(element);
             } else if ('nodes' in bindingValue) {
@@ -250,7 +250,7 @@
                 templateComputed = null,
                 templateName;
 
-            if (typeof options === "string") {
+            if (_.isString(options)) {
                 templateName = value;
                 options = {};
             } else {
