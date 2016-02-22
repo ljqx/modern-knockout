@@ -53,7 +53,7 @@ ko.utils.domNodeDisposal = new (function () {
 
     return {
         addDisposeCallback : function(node, callback) {
-            if (typeof callback !== "function")
+            if (!_.isFunction(callback))
                 throw new Error("Callback must be a function");
             getDisposeCallbacksCollection(node, true).push(callback);
         },
@@ -94,7 +94,7 @@ ko.utils.domNodeDisposal = new (function () {
             // Special support for jQuery here because it's so commonly used.
             // Many jQuery plugins (including jquery.tmpl) store data using jQuery's equivalent of domData
             // so notify it to tear down any resources associated with the node & descendants here.
-            if (jQueryInstance && (typeof jQueryInstance.cleanData === "function"))
+            if (jQueryInstance && _.isFunction(jQueryInstance.cleanData))
                 jQueryInstance.cleanData([node]);
         }
     };

@@ -11,7 +11,7 @@ ko.computed = ko.dependentObservable = function (evaluatorFunctionOrOptions, eva
             options.read = evaluatorFunctionOrOptions;
         }
     }
-    if (typeof options.read !== "function")
+    if (!_.isFunction(options.read))
         throw Error("Pass a function that returns the value of the ko.computed");
 
     var writeFunction = options.write;
@@ -35,7 +35,7 @@ ko.computed = ko.dependentObservable = function (evaluatorFunctionOrOptions, eva
 
     function computedObservable() {
         if (arguments.length > 0) {
-            if (typeof writeFunction === "function") {
+            if (_.isFunction(writeFunction)) {
                 // Writing a value
                 writeFunction.apply(state.evaluatorFunctionTarget, arguments);
             } else {
@@ -53,7 +53,7 @@ ko.computed = ko.dependentObservable = function (evaluatorFunctionOrOptions, eva
     }
 
     computedObservable[computedState] = state;
-    computedObservable.hasWriteFunction = typeof writeFunction === "function";
+    computedObservable.hasWriteFunction = _.isFunction(writeFunction);
 
     ko.subscribable.fn.init(computedObservable);
 

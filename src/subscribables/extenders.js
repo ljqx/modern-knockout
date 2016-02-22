@@ -95,7 +95,7 @@ function applyExtenders(requestedExtenders) {
     if (requestedExtenders) {
         _.forOwn(requestedExtenders, function(value, key) {
             var extenderHandler = ko.extenders[key];
-            if (typeof extenderHandler === 'function') {
+            if (_.isFunction(extenderHandler)) {
                 target = extenderHandler(target, value) || target;
             }
         });

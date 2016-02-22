@@ -12,7 +12,7 @@ ko.utils = (function () {
         return obj;
     }
 
-    var canUseSymbols = !DEBUG && typeof Symbol === 'function';
+    var canUseSymbols = !DEBUG && _.isFunction(Symbol);
 
     // Represent the known event types in a compact way, then at runtime transform it into a hash with event name as key (for fast lookup)
     var knownEventTypesByEventName = {};
@@ -254,7 +254,7 @@ ko.utils = (function () {
 
             if (!ko.options.useOnlyNativeEvents) {
                 jQueryInstance(element).bind(eventType, wrappedHandler);
-            } else if (typeof element.addEventListener === "function")
+            } else if (_.isFunction(element.addEventListener))
                 element.addEventListener(eventType, wrappedHandler, false);
             else if (typeof element.attachEvent !== "undefined") {
                 var attachEventHandler = function (event) { wrappedHandler.call(element, event); },

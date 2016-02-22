@@ -71,7 +71,7 @@
         }
 
         var self = this,
-            isFunc = typeof(dataItemOrAccessor) === "function" && !ko.isObservable(dataItemOrAccessor),
+            isFunc = _.isFunction(dataItemOrAccessor) && !ko.isObservable(dataItemOrAccessor),
             nodes,
             subscribable;
 
@@ -140,7 +140,7 @@
             // This "child" context doesn't directly track a parent observable view model,
             // so we need to manually set the $rawData value to match the parent.
             self.$rawData = parentContext.$rawData;
-            _.assign(self, typeof(properties) === "function" ? properties() : properties);
+            _.assign(self, _.isFunction(properties) ? properties() : properties);
         });
     };
 
@@ -168,7 +168,7 @@
     // Given a bindings function or object, create and return a new object that contains
     // binding value-accessors functions. This is used by ko.applyBindingsToNode.
     function makeBindingAccessors(bindings, context, node) {
-        if (typeof bindings === 'function') {
+        if (_.isFunction(bindings)) {
             return makeAccessorsFromFunction(bindings.bind(null, context, node));
         } else {
             return _.mapValues(bindings, _.constant);
@@ -294,7 +294,7 @@
 
         // Use bindings if given, otherwise fall back on asking the bindings provider to give us some bindings
         var bindings;
-        if (sourceBindings && typeof sourceBindings !== 'function') {
+        if (sourceBindings && !_.isFunction(sourceBindings)) {
             bindings = sourceBindings;
         } else {
             var provider = ko.bindingProvider.instance,
@@ -360,7 +360,7 @@
 
                 try {
                     // Run init, ignoring any dependencies
-                    if (typeof handlerInitFn === "function") {
+                    if (_.isFunction(handlerInitFn)) {
                         ko.dependencyDetection.ignore(function() {
                             var initResult = handlerInitFn(node, getValueAccessor(bindingKey), allBindings, bindingContext.$data, bindingContext);
 
@@ -374,7 +374,7 @@
                     }
 
                     // Run update in its own computed wrapper
-                    if (typeof handlerUpdateFn === "function") {
+                    if (_.isFunction(handlerUpdateFn)) {
                         ko.dependentObservable(
                             function() {
                                 handlerUpdateFn(node, getValueAccessor(bindingKey), allBindings, bindingContext.$data, bindingContext);

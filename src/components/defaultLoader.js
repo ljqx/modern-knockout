@@ -131,7 +131,7 @@
     }
 
     function resolveViewModel(errorCallback, viewModelConfig, callback) {
-        if (typeof viewModelConfig === 'function') {
+        if (_.isFunction(viewModelConfig)) {
             // Constructor - convert to standard factory function format
             // By design, this does *not* supply componentInfo to the constructor, as the intent is that
             // componentInfo contains non-viewmodel data (e.g., the component's element) that should only
@@ -139,7 +139,7 @@
             callback(function (params /*, componentInfo */) {
                 return new viewModelConfig(params);
             });
-        } else if (typeof viewModelConfig[createViewModelKey] === 'function') {
+        } else if (_.isFunction(viewModelConfig[createViewModelKey])) {
             // Already a factory function - use it as-is
             callback(viewModelConfig[createViewModelKey]);
         } else if ('instance' in viewModelConfig) {

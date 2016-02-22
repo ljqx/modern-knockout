@@ -60,7 +60,7 @@
                 visitorCallback(i);
 
             // For arrays, also respect toJSON property for custom mappings (fixes #278)
-            if (typeof rootObject.toJSON === 'function')
+            if (_.isFunction(rootObject.toJSON))
                 visitorCallback('toJSON');
         } else {
             for (var propertyName in rootObject) {

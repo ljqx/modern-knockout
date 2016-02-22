@@ -8,7 +8,7 @@
                 currentLoadingOperationId,
                 disposeAssociatedComponentViewModel = function () {
                     var currentViewModelDispose = currentViewModel && currentViewModel.dispose;
-                    if (typeof currentViewModelDispose === 'function') {
+                    if (_.isFunction(currentViewModelDispose)) {
                         currentViewModelDispose.call(currentViewModel);
                     }
                     currentViewModel = null;

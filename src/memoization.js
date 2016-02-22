@@ -23,7 +23,7 @@ ko.memoization = (function () {
 
     return {
         memoize: function (callback) {
-            if (typeof callback !== "function")
+            if (!_.isFunction(callback))
                 throw new Error("You can only pass a function to ko.memoization.memoize()");
             var memoId = generateRandomId();
             memos[memoId] = callback;

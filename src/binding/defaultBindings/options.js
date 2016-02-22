@@ -119,7 +119,7 @@ ko.bindingHandlers.options = {
         }
 
         var callback = setSelectionCallback;
-        if (allBindings.has('optionsAfterRender') && typeof allBindings.get('optionsAfterRender') === "function") {
+        if (allBindings.has('optionsAfterRender') && _.isFunction(allBindings.get('optionsAfterRender'))) {
             callback = function(arrayEntry, newOptions) {
                 setSelectionCallback(arrayEntry, newOptions);
                 ko.dependencyDetection.ignore(allBindings.get('optionsAfterRender'), null, [newOptions[0], arrayEntry !== captionPlaceholder ? arrayEntry : undefined]);
