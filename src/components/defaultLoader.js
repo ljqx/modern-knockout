@@ -111,7 +111,7 @@
             callback(_.toArray(templateConfig.childNodes));
         } else if (templateConfig.element) {
             var element = templateConfig.element;
-            if (isDomElement(element)) {
+            if (_.isElement(element)) {
                 // Element instance - copy its child nodes
                 callback(cloneNodesFromTemplateSourceElement(element));
             } else if (_.isString(element)) {
@@ -173,14 +173,6 @@
         // Regular elements such as <div>, and <template> elements on old browsers that don't really
         // understand <template> and just treat it as a regular container
         return ko.utils.cloneNodes(elemInstance.childNodes);
-    }
-
-    function isDomElement(obj) {
-        if (window.HTMLElement) {
-            return obj instanceof HTMLElement;
-        } else {
-            return obj && obj.tagName && obj.nodeType === Node.ELEMENT_NODE;
-        }
     }
 
     function isDocumentFragment(obj) {

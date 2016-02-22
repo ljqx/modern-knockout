@@ -15,7 +15,7 @@ ko.memoization = (function () {
             var memoId = ko.memoization.parseMemoText(rootNode.nodeValue);
             if (memoId != null)
                 appendToArray.push({ domNode: rootNode, memoId: memoId });
-        } else if (rootNode.nodeType === Node.ELEMENT_NODE) {
+        } else if (_.isElement(rootNode)) {
             for (var i = 0, childNodes = rootNode.childNodes, j = childNodes.length; i < j; i++)
                 findMemoNodes(childNodes[i], appendToArray);
         }
