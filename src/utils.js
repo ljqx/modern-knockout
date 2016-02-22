@@ -265,27 +265,15 @@ ko.utils = (function () {
 
             // For click events on checkboxes and radio buttons, jQuery toggles the element checked state *after* the
             // event handler runs instead of *before*. (This was fixed in 1.9 for checkboxes but not for radio buttons.)
-            // IE doesn't change the checked state when you trigger the click event using "fireEvent".
-            // In both cases, we'll use the click method instead.
             var useClickWorkaround = isClickOnCheckableElement(element, eventType);
 
             if (!ko.options.useOnlyNativeEvents && !useClickWorkaround) {
                 jQueryInstance(element).trigger(eventType);
-            } else if (_.isFunction(document.createEvent)) {
-                if (_.isFunction(element.dispatchEvent)) {
-                    var eventCategory = knownEventTypesByEventName[eventType] || "HTMLEvents";
-                    var event = document.createEvent(eventCategory);
-                    event.initEvent(eventType, true, true, window, 0, 0, 0, 0, 0, false, false, false, false, 0, element);
-                    element.dispatchEvent(event);
-                }
-                else
-                    throw new Error("The supplied element doesn't support dispatchEvent");
-            } else if (useClickWorkaround && element.click) {
-                element.click();
-            } else if (typeof element.fireEvent !== "undefined") {
-                element.fireEvent("on" + eventType);
             } else {
-                throw new Error("Browser doesn't support triggering events");
+                var eventCategory = knownEventTypesByEventName[eventType] || "HTMLEvents";
+                var event = document.createEvent(eventCategory);
+                event.initEvent(eventType, true, true, window, 0, 0, 0, 0, 0, false, false, false, false, 0, element);
+                element.dispatchEvent(event);
             }
         },
 
