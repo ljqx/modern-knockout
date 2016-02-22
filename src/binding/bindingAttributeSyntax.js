@@ -148,13 +148,6 @@
         return this.createChildContext(dataItemOrAccessor, dataItemAlias, null, { "exportDependencies": true });
     };
 
-    // Returns the valueAccesor function for a binding value
-    function makeValueAccessor(value) {
-        return function() {
-            return value;
-        };
-    }
-
     // Returns the value of a valueAccessor function
     function evaluateValueAccessor(valueAccessor) {
         return valueAccessor();
@@ -178,7 +171,7 @@
         if (typeof bindings === 'function') {
             return makeAccessorsFromFunction(bindings.bind(null, context, node));
         } else {
-            return _.mapValues(bindings, makeValueAccessor);
+            return _.mapValues(bindings, _.constant);
         }
     }
 
