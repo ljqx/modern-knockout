@@ -9,7 +9,7 @@
     var dependencies = {
         // All specs should pass with or without jQuery+Modernizr being referenced
         jquery: {
-            url: "lib/jquery-2.2.0.min.js",
+            url: "../node_modules/jquery/dist/jquery.js",
             include: true,
             versionString: "2.2.0"
         },
