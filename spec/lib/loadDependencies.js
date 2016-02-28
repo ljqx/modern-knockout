@@ -28,10 +28,6 @@
             url: "lib/innershiv.js",
             include: true
         },
-        json2: {
-            url: "lib/json2.js",
-            include: true
-        },
         lodash: {
             url: '../node_modules/lodash/lodash.js',
             include: true
